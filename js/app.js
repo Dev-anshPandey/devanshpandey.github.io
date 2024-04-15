@@ -26,13 +26,15 @@ feather.replace()
 
 // Contact Form
 function validateForm() {
+    console.log("inside 0");
     var name = document.forms["myForm"]["name"].value;
     var email = document.forms["myForm"]["email"].value;
-	var subject = document.forms["myForm"]["subject"].value;
-    var number = document.forms["myForm"]["number"].value;	
+    var subject = document.forms["myForm"]["subject"].value;
+    var number = document.forms["myForm"]["number"].value;
     var comments = document.forms["myForm"]["comments"].value;
     document.getElementById("error-msg").style.opacity = 0;
     document.getElementById('error-msg').innerHTML = "";
+    console.log("inside 1");
     if (name == "" || name == null) {
         document.getElementById('error-msg').innerHTML = "<div class='alert alert-danger error_message'>*Please enter a Name*</div>";
         fadeIn();
@@ -47,8 +49,8 @@ function validateForm() {
         document.getElementById('error-msg').innerHTML = "<div class='alert alert-danger error_message'>*Please enter a Subject*</div>";
         fadeIn();
         return false;
-	}
-	if (number == "" || number == null) {
+    }
+    if (number == "" || number == null) {
         document.getElementById('error-msg').innerHTML = "<div class='alert alert-danger error_message'>*Please enter a number*</div>";
         fadeIn();
         return false;
@@ -64,8 +66,8 @@ function validateForm() {
             document.getElementById("simple-msg").innerHTML = this.responseText;
             document.forms["myForm"]["name"].value = "";
             document.forms["myForm"]["email"].value = "";
-			document.forms["myForm"]["subject"].value = "";
-            document.forms["myForm"]["number"].value = "";			
+            document.forms["myForm"]["subject"].value = "";
+            document.forms["myForm"]["number"].value = "";
             document.forms["myForm"]["comments"].value = "";
         }
     };
@@ -107,7 +109,7 @@ function setColor(theme) {
 
 
 
-  
+
 
 
 
