@@ -1,97 +1,812 @@
 <!DOCTYPE html>
-<html lang="en" data-color-scheme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devansh Pandey - Software Development Engineer</title>
     <meta name="description" content="Portfolio of Devansh Pandey, Software Development Engineer specializing in Flutter and mobile app development">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f1f5f9;
+            --text: #cbd5e1;
+            --text-dark: #64748b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            top: -250px;
+            right: -250px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            bottom: -200px;
+            left: -200px;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(50px, -50px) rotate(120deg); }
+            66% { transform: translate(-30px, 30px) rotate(240deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-logo a:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.8s backwards;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, white, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* About Section */
+        .about-content p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .highlight {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .highlight:hover {
+            transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+        }
+
+        .highlight h4 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: fadeInLeft 0.6s ease;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -3.5rem;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border: 3px solid var(--darker);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .timeline-content {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(10px);
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .duration {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .timeline-content li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .timeline-content li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-duration {
+            color: var(--text-dark);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--primary);
+        }
+
+        /* Education & Skills Grid */
+        .education-grid, .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card, .certification-card {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .education-card:hover, .certification-card:hover {
+            transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+        }
+
+        .education-icon, .cert-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .education-card h3, .certification-card h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card h4, .certification-card p {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .grade {
+            color: var(--text-dark);
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .skill-category h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 15px;
+            color: var(--text);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-dark);
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* Mobile Menu Toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: rgba(15, 23, 42, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: left 0.3s ease;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.5);
+                padding: 2rem 0;
+                gap: 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            }
+
+            .nav-link {
+                font-size: 1.125rem;
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+                min-height: 90vh;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .social-link {
+                justify-content: center;
+            }
+
+            .about-highlights {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+
+            .timeline-dot {
+                left: -2rem;
+                width: 12px;
+                height: 12px;
+            }
+
+            .timeline-content {
+                padding: 1.5rem;
+            }
+
+            .timeline-content h3 {
+                font-size: 1.25rem;
+            }
+
+            .timeline-content:hover {
+                transform: translateX(5px);
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                padding: 1.5rem;
+            }
+
+            .education-grid, .certifications-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .skill-tags {
+                justify-content: center;
+            }
+
+            .nav-container {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .project-icon, .education-icon, .cert-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .timeline-dot {
+                left: -1.5rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+    </style>
 </head>
 <body>
+    <div class="bg-animation"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="#home">Devansh Pandey</a>
             </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#experience" class="nav-link">Experience</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#projects" class="nav-link">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#education" class="nav-link">Education</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#skills" class="nav-link">Skills</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#certifications" class="nav-link">Certifications</a>
-                </li>
-            </ul>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
+                <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="#education" class="nav-link">Education</a></li>
+                <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="#certifications" class="nav-link">Certifications</a></li>
+            </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Devansh Pandey</h1>
-                <p class="hero-subtitle">Software Development Engineer</p>
-                <p class="hero-description">Passionate mobile developer specializing in cross-platform applications with Flutter. Experienced in building scalable, user-friendly mobile solutions.</p>
-                <div class="social-links">
-                    <a href="https://linkedin.com/in/devanshpandey87" target="_blank" class="social-link" title="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/Dev-anshPandey" target="_blank" class="social-link" title="GitHub">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="mailto:devanshpandey87@gmail.com" class="social-link" title="Email">
-                        <i class="fas fa-envelope"></i>
-                        <span>Email</span>
-                    </a>
-                </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Devansh Pandey</h1>
+            <p class="hero-subtitle">Software Development Engineer</p>
+            <p class="hero-description">Passionate mobile developer specializing in cross-platform applications with Flutter and React Native. Experienced in building scalable, user-friendly mobile solutions.</p>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/devanshpandey87" target="_blank" class="social-link">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/Dev-anshPandey" target="_blank" class="social-link">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="mailto:devanshpandey87@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <p>I'm a dedicated Software Development Engineer with expertise in Flutter and cross-platform mobile development. Currently working as a Junior SDE-I at Exly, I focus on developing and maintaining scalable mobile applications that enhance user experience.</p>
-                <p>My journey in software development spans across mobile app development, data services, and full-stack solutions. I have experience working with modern technologies like Flutter, Firebase, and various APIs to create robust applications.</p>
-                <div class="about-highlights">
-                    <div class="highlight">
-                        <h4>1 Year</h4>
-                        <p>Mobile Development Experience</p>
-                    </div>
-                    <div class="highlight">
-                        <h4>5+ Projects</h4>
-                        <p>Completed Successfully</p>
-                    </div>
-                    <div class="highlight">
-                        <h4>Flutter Expert</h4>
-                        <p>Cross-platform Development</p>
-                    </div>
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <p>I'm a passionate Software Developer with a strong foundation in mobile and web development. I specialize in building cross-platform applications using Flutter, React Native, Firebase, and integrating REST APIs. My experience includes delivering scalable and user-friendly apps, from ideation to deployment.</p>
+            <p>At Exly, I currently work as a Junior SDE-I, where I develop and enhance mobile features using React Native, troubleshoot performance issues, and collaborate across teams to ship impactful updates. Previously, I worked at UKG as a Data Services Consultant, where I worked on complex data migration projects using SQL and automation tools like Easymorph.</p>
+            <p>I'm always excited to learn new technologies and solve real-world problems through code. My goal is to contribute to innovative products and be part of a forward-thinking engineering team.</p>
+            <div class="about-highlights">
+                <div class="highlight">
+                    <h4>📌 Key Skills</h4>
+                    <p>Flutter, React Native, Firebase, REST APIs, SQL, Git, Agile</p>
+                </div>
+                <div class="highlight">
+                    <h4>🎯 Looking For</h4>
+                    <p>SDE roles to build impactful products with strong teams</p>
+                </div>
+                <div class="highlight">
+                    <h4>🚀 Mission</h4>
+                    <p>Let's connect and build something great!</p>
                 </div>
             </div>
         </div>
@@ -99,45 +814,46 @@
 
     <!-- Experience Section -->
     <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>Junior SDE-I</h3>
-                        <h4>Exly</h4>
-                        <p class="duration">Apr 2025 – Present</p>
-                        <ul>
-                            <li>Develop and maintain cross-platform mobile applications using Flutter</li>
-                            <li>Implement new features, bug fixes, and performance improvements to enhance user experience</li>
-                            <li>Collaborate with senior engineers and product teams to release scalable production-ready updates</li>
-                        </ul>
-                    </div>
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Junior SDE-I</h3>
+                    <h4>Exly</h4>
+                    <p class="duration">Apr 2025 – Present</p>
+                    <ul>
+                        <li>Develop and maintain multiple production-level applications, ensuring seamless deployment cycles and regular feature
+                            rollouts.</li>
+                        <li>Collaborate with teams to design scalable solutions, reducing crash rates through improved error handling and performance
+                            optimizations.</li>
+                        <li>Refactor legacy modules, improving maintainability and reducing code review time by 12%.</li>
+                    </ul>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>SDE-I Internship</h3>
-                        <h4>Exly</h4>
-                        <p class="duration">Jan 2025 – Apr 2025</p>
-                        <ul>
-                            <li>Contributed to feature development and app optimization using Flutter</li>
-                            <li>Participated in code reviews and debugging sessions, ensuring smooth application performance</li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>SDE-I Internship</h3>
+                    <h4>Exly</h4>
+                    <p class="duration">Jan 2025 – Apr 2025</p>
+                    <ul>
+                        <li>Contributed to the end-to-end development of new features, focusing on responsiveness and modular architecture.</li>
+                        <li>Participated in code reviews and implemented improvements that decreased bug recurrence by 8% during QA cycles.</li>
+                    </ul>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>Data Services Consultant I</h3>
-                        <h4>UKG (Ultimate Kronos Group)</h4>
-                        <p class="duration">Jul 2024 – Oct 2024</p>
-                        <ul>
-                            <li>Migrated client data from legacy systems into UKG Pro using SQL queries</li>
-                            <li>Performed data cleaning, transformation using T-SQL, Able2Extract, and Advanced Excel</li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Data Services Consultant I</h3>
+                    <h4>UKG (Ultimate Kronos Group)</h4>
+                    <p class="duration">Jul 2024 – Oct 2024</p>
+                    <ul>
+                        <li>Migrated client data from legacy systems to cloud-based platforms using SQL, ensuring 100% data accuracy during
+                            validation.</li>
+                        <li>Performed large-scale data cleaning and transformation using T-SQL and automation tools.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -145,136 +861,135 @@
 
     <!-- Projects Section -->
     <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h3>Kaash</h3>
-                    <p class="project-duration">July 2025 – Present</p>
-                    <p class="project-description">Worked on updates and maintenance of Flutter app for live consultations with astrologers. Improved app stability and integration of spiritual guidance modules.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Flutter</span>
-                    </div>
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <a href="https://play.google.com/store/apps/details?id=com.kaash.vaastu&hl=en_IN" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-star"></i>
                 </div>
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Mutual Network</h3>
-                    <p class="project-duration">May 2023 – Nov 2023</p>
-                    <p class="project-description">Social networking app enabling mutual connections, messaging, post creation, and reactions. Integrated real-time messaging and post filters using socket programming.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Flutter</span>
-                        <span class="tech-tag">Socket Programming</span>
-                    </div>
+                <h3>Kaash</h3>
+                <p class="project-duration">July 2025 – Present</p>
+                <p class="project-description">Worked on updates and maintenance of Flutter app for live consultations with astrologers. Improved app stability and integration of spiritual guidance modules.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter</span>
                 </div>
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h3>Vitals</h3>
-                    <p class="project-duration">Nov 2022 – Jan 2023</p>
-                    <p class="project-description">Built a fitness & health tracking app using mobile pedometer APIs. Implemented daily step tracking, UI dashboards, and Firebase backend integration.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Flutter</span>
-                        <span class="tech-tag">Firebase</span>
-                        <span class="tech-tag">Mobile APIs</span>
-                    </div>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.mutual.live&hl=en" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-users"></i>
                 </div>
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <h3>Food Ordering App</h3>
-                    <p class="project-duration">Jan 2023 – Feb 2023</p>
-                    <p class="project-description">Developed online food delivery app with cart, search, payment, and live location. Integrated Google Maps & Razorpay Payment Gateway.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Flutter</span>
-                        <span class="tech-tag">Google Maps</span>
-                        <span class="tech-tag">Razorpay</span>
-                    </div>
+                <h3>Mutual Network</h3>
+                <p class="project-duration">May 2023 – Nov 2023</p>
+                <p class="project-description">Social networking app enabling mutual connections, messaging, post creation, and reactions. Integrated real-time messaging and post filters using socket programming.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Socket Programming</span>
                 </div>
-            </div>
+            </a>
+            <a href="https://github.com/Dev-anshPandey/vitals" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Vitals</h3>
+                <p class="project-duration">Nov 2022 – Jan 2023</p>
+                <p class="project-description">Built a fitness & health tracking app using mobile pedometer APIs. Implemented daily step tracking, UI dashboards, and Firebase backend integration.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Firebase</span>
+                    <span class="tech-tag">Mobile APIs</span>
+                </div>
+            </a>
+            <a href="https://github.com/Dev-anshPandey/eight-main" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3>Food Ordering App</h3>
+                <p class="project-duration">Jan 2023 – Feb 2023</p>
+                <p class="project-description">Developed online food delivery app with cart, search, payment, and live location. Integrated Google Maps & Razorpay Payment Gateway.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Google Maps</span>
+                    <span class="tech-tag">Razorpay</span>
+                </div>
+            </a>
         </div>
     </section>
 
     <!-- Education Section -->
     <section id="education" class="education">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-grid">
-                <div class="education-card">
-                    <div class="education-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3>Bachelor of Technology in Computer Science Engineering</h3>
-                    <h4>KIET Group of Institutions</h4>
-                    <p class="duration">2020 – 2024</p>
-                    <p class="grade">CGPA: 8.2</p>
+        <h2 class="section-title">Education</h2>
+        <div class="education-grid">
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
-                <div class="education-card">
-                    <div class="education-icon">
-                        <i class="fas fa-school"></i>
-                    </div>
-                    <h3>XII (CBSE)</h3>
-                    <h4>Krishna Public School</h4>
-                    <p class="duration">2020</p>
-                    <p class="grade">94.2%</p>
+                <h3>Bachelor of Technology in Computer Science Engineering</h3>
+                <h4>KIET Group of Institutions</h4>
+                <p class="duration">2020 – 2024</p>
+                <p class="grade">CGPA: 8.2</p>
+            </div>
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-school"></i>
                 </div>
-                <div class="education-card">
-                    <div class="education-icon">
-                        <i class="fas fa-school"></i>
-                    </div>
-                    <h3>X (CBSE)</h3>
-                    <h4>Krishna Public School</h4>
-                    <p class="duration">2018</p>
-                    <p class="grade">92.2%</p>
+                <h3>XII (CBSE)</h3>
+                <h4>Krishna Public School</h4>
+                <p class="duration">2020</p>
+                <p class="grade">94.2%</p>
+            </div>
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-school"></i>
                 </div>
+                <h3>X (CBSE)</h3>
+                <h4>Krishna Public School</h4>
+                <p class="duration">2018</p>
+                <p class="grade">92.2%</p>
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
     <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Programming Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">
-                            <i class="fab fa-java"></i>
-                            Java
-                        </span>
-                        <span class="skill-tag">
-                            <i class="fas fa-code"></i>
-                            Dart
-                        </span>
-                    </div>
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Programming Languages</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">
+                        <i class="fab fa-java"></i>
+                        Java
+                    </span>
+                    <span class="skill-tag">
+                        <i class="fas fa-code"></i>
+                        Dart
+                    </span>
                 </div>
-                <div class="skill-category">
-                    <h3>Frameworks & Tools</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">
-                            <i class="fas fa-mobile-alt"></i>
-                            Flutter
-                        </span>
-                        <span class="skill-tag">
-                            <i class="fab fa-git-alt"></i>
-                            Git
-                        </span>
-                        <span class="skill-tag">
-                            <i class="fas fa-code"></i>
-                            VS Code
-                        </span>
-                        <span class="skill-tag">
-                            <i class="fab fa-android"></i>
-                            Android Studio
-                        </span>
-                    </div>
+            </div>
+            <div class="skill-category">
+                <h3>Frameworks & Tools</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">
+                        <i class="fas fa-mobile-alt"></i>
+                        Flutter
+                    </span>
+                    <span class="skill-tag">
+                        <i class="fas fa-mobile-alt"></i>
+                        React Native
+                    </span>
+                    <span class="skill-tag">
+                        <i class="fab fa-git-alt"></i>
+                        Git
+                    </span>
+                    <span class="skill-tag">
+                        <i class="fas fa-code"></i>
+                        VS Code
+                    </span>
+                    <span class="skill-tag">
+                        <i class="fab fa-android"></i>
+                        Android Studio
+                    </span>
+                    
                 </div>
             </div>
         </div>
@@ -282,48 +997,66 @@
 
     <!-- Certifications Section -->
     <section id="certifications" class="certifications">
-        <div class="container">
-            <h2 class="section-title">Certifications</h2>
-            <div class="certifications-grid">
-                <div class="certification-card">
-                    <div class="cert-icon">
-                        <i class="fas fa-certificate"></i>
-                    </div>
-                    <h3>Data Mining</h3>
-                    <p>NPTEL</p>
+        <h2 class="section-title">Certifications</h2>
+        <div class="certifications-grid">
+            <a href="https://drive.google.com/file/d/1HrK-Lm7-AxkZ6dPC3TL0Lr0g2T0Xgi7v/view" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div class="cert-icon">
+                    <i class="fas fa-certificate"></i>
                 </div>
-                <div class="certification-card">
-                    <div class="cert-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>Artificial Intelligence</h3>
-                    <p>Coursera</p>
+                <h3>Data Mining</h3>
+                <p>NPTEL</p>
+            </a>
+            <a href="https://www.coursera.org/account/accomplishments/verify/S5HP72TVNGT3" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div class="cert-icon">
+                    <i class="fas fa-robot"></i>
                 </div>
-                <div class="certification-card">
-                    <div class="cert-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Cloud Computing</h3>
-                    <p>NPTEL</p>
+                <h3>Artificial Intelligence</h3>
+                <p>Coursera</p>
+            </a>
+            <a href="https://drive.google.com/file/d/1A8dKImGa_La3fblVfBKrwm1tUfQoVn3D/view" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div class="cert-icon">
+                    <i class="fas fa-cloud"></i>
                 </div>
-                <div class="certification-card">
-                    <div class="cert-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <h3>YPStem Hackathon</h3>
-                    <p>Competition</p>
-                </div>
-            </div>
+                <h3>Cloud Computing</h3>
+                <p>NPTEL</p>
+            </a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Devansh Pandey. All rights reserved.</p>
-        </div>
+    <footer>
+        <p>&copy; 2025 Devansh Pandey. All rights reserved.</p>
     </footer>
 
-    <script src="app.js"></script>
-</body>
-</html>
+    <script>
+        // Mobile Menu Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
