@@ -21,16 +21,16 @@
   --color-accent-500: #0ea5e9;
 
   /* Semantic Colors for Dark Professional Theme */
-  --color-background: var(--color-gray-900);
-  --color-surface: var(--color-gray-800);
-  --color-surface-light: var(--color-gray-700);
-  --color-text: var(--color-gray-100);
-  --color-text-secondary: var(--color-gray-300);
-  --color-text-muted: var(--color-gray-400);
-  --color-primary: var(--color-primary-500);
-  --color-primary-hover: var(--color-primary-400);
-  --color-accent: var(--color-accent-500);
-  --color-border: rgba(255, 255, 255, 0.1);
+  --color-background: #0a0a0a;
+  --color-surface: #121212;
+  --color-surface-light: #1a1a1a;
+  --color-text: #ededed;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-accent: #8b5cf6;
+  --color-border: rgba(255, 255, 255, 0.08);
 
   /* Typography */
   --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -62,11 +62,11 @@
   --radius-full: 9999px;
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --glass-bg: rgba(30, 41, 59, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  --glass-bg: rgba(18, 18, 18, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.04);
 }
 
 /* Base Styles */
@@ -107,7 +107,7 @@ ul {
   width: 100vw;
   height: 100vh;
   z-index: -2;
-  background: radial-gradient(circle at center, var(--color-gray-800) 0%, var(--color-gray-900) 100%);
+  background: radial-gradient(circle at center, #171717 0%, #0a0a0a 100%);
 }
 
 .hero-bg-layer {
@@ -569,44 +569,73 @@ section {
 }
 
 /* Skills */
-.skills-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+.skills-showcase {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: var(--space-32);
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
-.skill-category h3 {
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--space-16);
-  text-align: center;
-}
-
-.skill-tags {
+.skill-icon-wrapper {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-12);
   justify-content: center;
-}
-
-.skill-tag {
+  align-items: center;
+  width: 100px;
+  height: 100px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  padding: var(--space-12) var(--space-24);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  font-size: var(--font-size-sm);
-  transition: all var(--transition-normal);
+  border-radius: 20%;
+  font-size: 50px;
+  color: var(--color-text-secondary);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  overflow: visible;
 }
 
-.skill-tag:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--color-primary);
+.skill-icon-wrapper::after {
+  content: attr(data-skill);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
   color: var(--color-white);
-  transform: translateY(-2px);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.skill-icon-wrapper:hover {
+  transform: translateY(-10px) scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 30px -10px var(--color-primary);
+}
+
+.skill-icon-wrapper:hover::after {
+  opacity: 1;
+  visibility: visible;
+  bottom: -30px;
+}
+
+.skill-icon-wrapper i {
+  transition: all 0.3s ease;
+}
+
+.skill-icon-wrapper:hover i {
+  filter: drop-shadow(0 0 10px currentColor);
 }
 
 /* Footer */
