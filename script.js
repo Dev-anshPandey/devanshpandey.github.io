@@ -1,161 +1,163 @@
-function buildGlobe(canvas, options) {
-    const cfg = Object.assign({
-      radius:    200,
-      latLines:  14,
-      lngLines:  16,
-      dotRadius: 1.4,
-      color:     '#c0392b',
-      glowColor: 'rgba(192,57,43,0.18)',
-      speed:     0.0018,
-      tilt:      0.38
-    }, options);
+/**
+ * Minimalist Constellation Network (High-Visibility & Retina-Safe)
+ */
+function buildMinimalNetwork(canvas, options) {
+  const cfg = Object.assign({
+    particleCount: 65,       
+    maxDistance: 150,        
+    mouseDistance: 200,      
+    baseColor: '192, 57, 43',// Theme red
+    particleSize: 2,         // Slightly larger dots
+    speed: 0.35              
+  }, options);
+
+  const dpr = window.devicePixelRatio || 1;
+  const ctx = canvas.getContext('2d');
   
-    const dpr = window.devicePixelRatio || 1;
-  
-    function resize() {
-      canvas.width  = canvas.offsetWidth  * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
+  let cssWidth, cssHeight;
+
+  // Retina-safe resize function
+  function resize() {
+    cssWidth = canvas.offsetWidth;
+    cssHeight = canvas.offsetHeight;
+    
+    // Set actual canvas size multiplied by device pixel ratio
+    canvas.width  = cssWidth * dpr;
+    canvas.height = cssHeight * dpr;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Track mouse position
+  const mouse = { x: -1000, y: -1000 };
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  canvas.addEventListener('mouseleave', () => {
+    mouse.x = -1000;
+    mouse.y = -1000;
+  });
+
+  // Particle Class
+  class Particle {
+    constructor() {
+      this.x = Math.random() * cssWidth;
+      this.y = Math.random() * cssHeight;
+      this.vx = (Math.random() - 0.5) * cfg.speed;
+      this.vy = (Math.random() - 0.5) * cfg.speed;
+      this.radius = Math.random() * cfg.particleSize + 1; // Brighter dots
     }
-    resize();
-    window.addEventListener('resize', resize);
-  
-    const ctx = canvas.getContext('2d');
-    let angle = 0;
-  
-    const points = [];
-    for (let lat = -90; lat <= 90; lat += 180 / cfg.latLines) {
-      for (let lng = 0; lng < 360; lng += 360 / cfg.lngLines) {
-        const phi   = (lat * Math.PI) / 180;
-        const theta = (lng * Math.PI) / 180;
-        points.push({
-          x0: cfg.radius * Math.cos(phi) * Math.cos(theta),
-          y0: cfg.radius * Math.sin(phi),
-          z0: cfg.radius * Math.cos(phi) * Math.sin(theta)
-        });
-      }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // Wrap around screen edges smoothly
+      if (this.x < 0) this.x = cssWidth;
+      if (this.x > cssWidth) this.x = 0;
+      if (this.y < 0) this.y = cssHeight;
+      if (this.y > cssHeight) this.y = 0;
     }
-  
-    const segments = [];
-    const step = 2;
-  
-    for (let lat = -80; lat <= 80; lat += 180 / cfg.latLines) {
-      const phi  = (lat * Math.PI) / 180;
-      const ring = [];
-      for (let lng = 0; lng <= 360; lng += step) {
-        const theta = (lng * Math.PI) / 180;
-        ring.push({
-          x0: cfg.radius * Math.cos(phi) * Math.cos(theta),
-          y0: cfg.radius * Math.sin(phi),
-          z0: cfg.radius * Math.cos(phi) * Math.sin(theta)
-        });
-      }
-      segments.push(ring);
-    }
-    for (let lng = 0; lng < 360; lng += 360 / cfg.lngLines) {
-      const theta = (lng * Math.PI) / 180;
-      const ring  = [];
-      for (let lat = -90; lat <= 90; lat += step) {
-        const phi = (lat * Math.PI) / 180;
-        ring.push({
-          x0: cfg.radius * Math.cos(phi) * Math.cos(theta),
-          y0: cfg.radius * Math.sin(phi),
-          z0: cfg.radius * Math.cos(phi) * Math.sin(theta)
-        });
-      }
-      segments.push(ring);
-    }
-  
-    function project(p) {
-      const sinA = Math.sin(angle), cosA = Math.cos(angle);
-      const sinT = Math.sin(cfg.tilt), cosT = Math.cos(cfg.tilt);
-      const x1 = p.x0 * cosA - p.z0 * sinA;
-      const z1 = p.x0 * sinA + p.z0 * cosA;
-      const y1 = p.y0;
-      const y2 = y1 * cosT - z1 * sinT;
-      const z2 = y1 * sinT + z1 * cosT;
-      const cx = canvas.width  / 2 / dpr;
-      const cy = canvas.height / 2 / dpr;
-      return { sx: cx + x1, sy: cy + y2, z: z2 };
-    }
-  
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.save();
-      ctx.scale(dpr, dpr);
-  
-      const cx = canvas.width  / 2 / dpr;
-      const cy = canvas.height / 2 / dpr;
-  
-      const grd = ctx.createRadialGradient(cx, cy, cfg.radius * 0.4, cx, cy, cfg.radius * 1.15);
-      grd.addColorStop(0, cfg.glowColor);
-      grd.addColorStop(1, 'transparent');
+
+    draw() {
       ctx.beginPath();
-      ctx.arc(cx, cy, cfg.radius * 1.15, 0, Math.PI * 2);
-      ctx.fillStyle = grd;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${cfg.baseColor}, 0.8)`; // High opacity
       ctx.fill();
-  
-      for (const ring of segments) {
-        ctx.beginPath();
-        let first = true;
-        for (const p of ring) {
-          const { sx, sy } = project(p);
-          if (first) { ctx.moveTo(sx, sy); first = false; }
-          else ctx.lineTo(sx, sy);
-        }
-        ctx.strokeStyle = cfg.color;
-        ctx.globalAlpha = 0.2;
-        ctx.lineWidth   = 0.55;
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-      }
-  
-      for (const p of points) {
-        const { sx, sy, z } = project(p);
-        const depth = (z + cfg.radius) / (2 * cfg.radius);
-        const alpha = 0.12 + 0.8 * depth;
-        const r     = cfg.dotRadius * (0.45 + 0.65 * depth);
-        ctx.beginPath();
-        ctx.arc(sx, sy, r, 0, Math.PI * 2);
-        ctx.fillStyle   = depth > 0.48 ? cfg.color : 'rgba(192,57,43,0.45)';
-        ctx.globalAlpha = alpha;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-  
-      ctx.restore();
-      angle += cfg.speed;
-      requestAnimationFrame(draw);
     }
-  
-    draw();
+  }
+
+  const particles = [];
+  for (let i = 0; i < cfg.particleCount; i++) {
+    particles.push(new Particle());
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Scale context for Retina displays
+    ctx.save();
+    ctx.scale(dpr, dpr);
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+
+      // Connect to other particles
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < cfg.maxDistance) {
+          // Opacity fades as they get further apart
+          const alpha = (1 - dist / cfg.maxDistance) * 0.65; // Brighter lines
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(${cfg.baseColor}, ${alpha})`;
+          ctx.lineWidth = 1.2; // Thicker lines
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+
+      // Connect to mouse
+      const mouseDx = particles[i].x - mouse.x;
+      const mouseDy = particles[i].y - mouse.y;
+      const mouseDist = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
+
+      if (mouseDist < cfg.mouseDistance) {
+        // Subtle magnetic pull to the mouse
+        particles[i].x -= mouseDx * 0.02;
+        particles[i].y -= mouseDy * 0.02;
+
+        // Draw line to mouse
+        const mouseAlpha = (1 - mouseDist / cfg.mouseDistance) * 0.8;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(${cfg.baseColor}, ${mouseAlpha})`;
+        ctx.lineWidth = 1.5;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+
+      particles[i].draw();
+    }
+
+    ctx.restore();
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+// Initialize on load
+window.addEventListener('load', () => {
+  const heroCanvas    = document.getElementById('globe-hero');
+  const contactCanvas = document.getElementById('globe-contact');
+
+  if (heroCanvas) {
+    buildMinimalNetwork(heroCanvas, {
+      particleCount: 80,
+      maxDistance: 140,
+      speed: 0.35
+    });
   }
   
-  window.addEventListener('load', () => {
-    const heroCanvas    = document.getElementById('globe-hero');
-    const contactCanvas = document.getElementById('globe-contact');
-  
-    if (heroCanvas) {
-      buildGlobe(heroCanvas, {
-        radius:    215,
-        latLines:  13,
-        lngLines:  15,
-        speed:     0.0015,
-        glowColor: 'rgba(192,57,43,0.18)'
-      });
-    }
-    if (contactCanvas) {
-      buildGlobe(contactCanvas, {
-        radius:    175,
-        latLines:  12,
-        lngLines:  14,
-        speed:     0.002,
-        glowColor: 'rgba(192,57,43,0.13)'
-      });
-    }
-  });
-  
-  const observer = new IntersectionObserver(
-    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.1 }
-  );
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  if (contactCanvas) {
+    buildMinimalNetwork(contactCanvas, {
+      particleCount: 50,
+      maxDistance: 120,
+      speed: 0.25
+    });
+  }
+});
+
+// Scroll fade-in observer
+const observer = new IntersectionObserver(
+  (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.1 }
+);
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
