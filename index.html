@@ -1,360 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Devansh Pandey — Cross Platform Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
-<!-- Link to external CSS file -->
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Devansh Pandey — Frontend & AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#hero" class="nav-logo">D<span>.</span>P</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#blogs">Blogs</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  <!-- 1. NAVIGATION -->
+  <nav>
+    <a href="#hero" class="nav-logo">devansh.dev</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#academic">Academic</a></li>
+      <li><a href="#writing">Writing</a></li>
+    </ul>
+  </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="globe-wrap globe-hero">
-    <canvas class="globe" id="globe-hero"></canvas>
+  <!-- STICKY TABLE OF CONTENTS -->
+  <div class="side-toc">
+    <a href="#hero" title="Top"></a>
+    <a href="#about" title="About"></a>
+    <a href="#experience" title="Experience"></a>
+    <a href="#projects" title="Projects"></a>
+    <a href="#skills" title="Skills"></a>
+    <a href="#academic" title="Education"></a>
+    <a href="#writing" title="Writing"></a>
   </div>
+
   <div class="container">
-    <div class="hero-inner">
-      <div class="fade-in">
-        <div class="hero-eyebrow">
-          <span class="avail-dot"></span>
-          Available for work
-        </div>
-        <h1 class="hero-name">Devansh<br/>Pandey</h1>
-        <p class="hero-desc">
-          Cross Platform Application Developer crafting seamless, performant experiences across iOS, Android, Web, and Desktop — from a single codebase.
-        </p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">View Work &rarr;</a>
-          <a href="#contact" class="btn btn-ghost">Get in touch</a>
-        </div>
+
+    <!-- 2. HERO SECTION & 20. RESUME DOWNLOAD -->
+    <header id="hero" class="hero section visible">
+      <div class="hero-badge">
+        <span class="dot"></span> Open to new opportunities
+      </div>
+      <h1 class="text-gradient">Engineering seamless products.</h1>
+      <p>Mobile Engineer transitioning to AI backends. I specialize in React Native, Flutter, and FastAPI to build
+        high-performance, intelligent applications.</p>
+
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="https://github.com/Dev-anshPandey" class="btn btn-secondary">
+          <!-- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg> -->
+          Github
+        </a>
       </div>
 
-      <div class="hero-stats fade-in delay-2">
-        <div class="stat-item">
-          <span class="stat-num">3+</span>
-          <span class="stat-lbl">Years building</span>
+      <div class="mockup-window">
+        <div class="mockup-header">
+          <div class="mockup-dots"><span></span><span></span><span></span></div>
+          <div class="mockup-tabs">
+            <span class="mockup-tab active" data-target="tech">stack.ts</span>
+            <span class="mockup-tab" data-target="focus">focus.py</span>
+          </div>
         </div>
-        <div class="stat-item">
-          <span class="stat-num">4+</span>
-          <span class="stat-lbl">Companies</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">5</span>
-          <span class="stat-lbl">Platforms</span>
+        <div class="mockup-body" id="mockup-content">
+          <pre><code><span class="keyword">const</span> developer = {
+  <span class="string">role</span>: <span class="string">'Frontend & Mobile'</span>,
+  <span class="string">tools</span>: [<span class="string">'React Native'</span>, <span class="string">'Flutter'</span>, <span class="string">'TypeScript'</span>],
+  <span class="function">optimize</span>: () => {
+    <span class="keyword">return</span> <span class="string">'60fps stable performance'</span>;
+  }
+};</code></pre>
         </div>
       </div>
+    </header>
+
+    <!-- 3. ABOUT ME -->
+    <section id="about" class="section">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <div class="about-prose">
+          <p>I started my career wrestling with Flutter and React Native at Exly, learning the hard way how to maintain
+            60fps on low-end Android devices and keep state management from turning into spaghetti. Mobile gave me a
+            deep appreciation for user experience and performance.</p>
+          <p>Lately, I've been fascinated by the backend—specifically LLMs, GenAI, and Python. I’m currently
+            transitioning my focus to AI Engineering, building systems that do the heavy lifting behind the scenes.</p>
+          <p>I believe great software is invisible — it gets out of the user's way and simply does what they need.</p>
+        </div>
+        <div class="about-quick-facts bento-card">
+          <h3>Quick Facts</h3>
+          <ul>
+            <li><strong>Location:</strong> Delhi, India (Open to Remote)</li>
+            <li><strong>Focus:</strong> Cross-Platform Dev & AI Backends</li>
+            <li><strong>Experience:</strong> 1.5+ Years</li>
+            <li><strong>Languages:</strong> TS, Python, Dart, Java</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CAREER TIMELINE SUMMARY -->
+    <section id="timeline" class="section">
+      <h2>Career Timeline</h2>
+      <div class="horizontal-timeline">
+        <div class="ht-node">
+          <div class="ht-dot"></div>
+          <div class="ht-year">2023</div>
+          <div class="ht-lbl">Intern @ Dao Studio</div>
+        </div>
+        <div class="ht-node">
+          <div class="ht-dot"></div>
+          <div class="ht-year">2024</div>
+          <div class="ht-lbl">Consultant @ UKG</div>
+        </div>
+        <div class="ht-node">
+          <div class="ht-dot active"></div>
+          <div class="ht-year">2025</div>
+          <div class="ht-lbl">Software Eng @ Exly</div>
+        </div>
+        <div class="ht-line"></div>
+      </div>
+    </section>
+
+    <!-- 5. PROFESSIONAL EXPERIENCE (DETAILED) -->
+    <section id="experience" class="section">
+      <h2>Professional Experience</h2>
+      <div class="accordion-list">
+
+        <!-- Role 1 -->
+        <div class="accordion-item expanded">
+          <div class="accordion-header">
+            <div>
+              <h3>Junior Software Engineer</h3>
+              <span class="company">Exly</span>
+            </div>
+            <span class="date">Apr 2025 — Present</span>
+          </div>
+          <div class="accordion-body">
+            <p>Developing and maintaining multiple production-grade applications using Flutter and React Native.
+              Spearheaded framework-agnostic architectural standards.</p>
+            <ul>
+              <li>Refactored legacy UI modules into a strict reusable component library.</li>
+              <li>Ripped out 25% of redundant codebase, directly improving PR review times.</li>
+            </ul>
+            <div class="tech-tags">
+              <span>Flutter</span><span>React Native</span><span>Agile</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role 2 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div>
+              <h3>Software Engineering Intern</h3>
+              <span class="company">Exly</span>
+            </div>
+            <span class="date">Jan 2025 — Apr 2025</span>
+          </div>
+          <div class="accordion-body">
+            <p>Engineered end-to-end mobile features with a focus on modular code structure and efficient API
+              integration.</p>
+            <ul>
+              <li>Enhanced app stability by 8% through rigorous debugging and automated testing.</li>
+              <li>Conducted peer code reviews ensuring standard compliances.</li>
+            </ul>
+            <div class="tech-tags">
+              <span>Flutter</span><span>API Integration</span><span>Testing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div>
+              <h3>Data Services Consultant I</h3>
+              <span class="company">UKG (Ultimate Kronos Group)</span>
+            </div>
+            <span class="date">Jul 2024 — Oct 2024</span>
+          </div>
+          <div class="accordion-body">
+            <p>Streamlined large-scale data migration workflows, ensuring 100% data accuracy during high-volume cloud
+              transitions.</p>
+            <ul>
+              <li>Automated repetitive data transformation tasks, improving operational efficiency by ~30%.</li>
+            </ul>
+            <div class="tech-tags">
+              <span>Data Migration</span><span>Cloud</span><span>Automation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role 4 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div>
+              <h3>Software Engineer Intern</h3>
+              <span class="company">Dao Studio</span>
+            </div>
+            <span class="date">Dec 2023 — Jun 2024</span>
+          </div>
+          <div class="accordion-body">
+            <p>Built cross-platform utility applications focusing on offline-first capabilities.</p>
+            <ul>
+              <li>Integrated local caching mechanisms to support high-performance offline functionality.</li>
+              <li>Implemented real-time notification systems and improved threading logic to enhance UI responsiveness.
+              </li>
+            </ul>
+            <div class="tech-tags">
+              <span>Flutter</span><span>Offline-first</span><span>Push Notifications</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role 5 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div>
+              <h3>Software Engineer Intern</h3>
+              <span class="company">Mutual Connects</span>
+            </div>
+            <span class="date">Dec 2023 — Jan 2024</span>
+          </div>
+          <div class="accordion-body">
+            <p>Built an application that brings mutuals to your private network to engage and build lasting friendships.
+            </p>
+            <div class="tech-tags">
+              <span>React Native</span><span>Web Sockets</span><span>Push Notifications</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. FEATURED PROJECTS / CASE STUDIES -->
+    <section id="projects" class="section">
+      <h2>Featured Projects</h2>
+      <div class="bento-grid">
+
+        <!-- Kaash -->
+        <div class="bento-item large bento-card case-study-trigger">
+          <div class="project-tag">Production App (Play Store)</div>
+          <br>
+          <h3 class="project-title">Kaash Astrology</h3>
+          <br>
+          <p class="project-desc">Live consultation app serving thousands. Overcame critical frame drop issues by
+            refactoring state management.</p>
+          <div class="project-visual">
+            <div class="stat-group">
+              <div class="stat">
+                <span class="stat-val">+5.7%</span>
+                <span class="stat-lbl">Frame Rate Stability</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <br>
+            <div class="tech-tags"><span>Flutter</span><span>Firebase</span><span>Analytics</span></div>
+            <br> <a href="https://play.google.com/store/apps/details?id=com.kaash.vaastu&hl=en_US" target="_blank"
+              class="project-link">View App</a>
+          </div>
+        </div>
+
+        <!-- Mutual Network -->
+        <div class="bento-item bento-card">
+          <div class="project-tag">Social</div>
+          <br>
+          <h3 class="project-title">Mutual Network</h3>
+          <br>
+          <p class="project-desc">Expanded social network app on the Play Store. Built responsive frontend with
+            real-time messaging, JWT auth, and advanced search filtering.</p>
+          <div class="card-footer" style="margin-top:auto;">
+            <br>
+            <div class="tech-tags"><span>React Native</span><span>JWT</span></div>
+            <br> <a href="https://play.google.com/store/apps/details?id=com.mutual.live&hl=en" target="_blank"
+              class="project-link">View App</a>
+          </div>
+        </div>
+
+        <!-- Vitals -->
+        <div class="bento-item bento-card">
+          <br>
+          <div class="project-tag">Hardware Integration</div>
+          <br>
+          <h3 class="project-title">Vitals</h3>
+          <br>
+          <p class="project-desc">Health activity tracker utilizing hardware sensor data for real-time monitoring and
+            visualization.</p>
+          <div class="card-footer" style="margin-top:auto;">
+            <br>
+            <div class="tech-tags"><span>Flutter</span><span>Sensors</span></div>
+            <br> <a href="https://github.com/Dev-anshPandey/vitals" target="_blank" class="project-link">Source</a>
+          </div>
+        </div>
+
+        <!-- Food App -->
+        <div class="bento-item bento-card">
+          <br>
+          <div class="project-tag">E-Commerce</div>
+          <br>
+          <h3 class="project-title">Food Ordering App</h3>
+          <br>
+          <p class="project-desc">Cross-platform application featuring search, cart management, and online payment via
+            Razor Pay API.</p>
+          <div class="card-footer" style="margin-top:auto;">
+            <br>
+            <div class="tech-tags"><span>Flutter</span><span>Razor Pay</span></div>
+            <br> <a href="https://github.com/Dev-anshPandey/eight-main" target="_blank" class="project-link">Source</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. ALL PROJECTS ARCHIVE -->
+    <!-- <section id="archive" class="section">
+    <h2>Project Archive</h2>
+    <div class="table-responsive">
+      <table class="archive-table">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Project</th>
+            <th>Built with</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024</td>
+            <td><strong>Kaash Astrology</strong></td>
+            <td><span class="tech-pill">Flutter</span> <span class="tech-pill">Firebase</span></td>
+            <td><a href="#" class="table-link">Play Store &nearr;</a></td>
+          </tr>
+          <tr>
+            <td>2024</td>
+            <td><strong>Mutual Network</strong></td>
+            <td><span class="tech-pill">React Native</span> <span class="tech-pill">WebSockets</span></td>
+            <td><a href="#" class="table-link">Play Store &nearr;</a></td>
+          </tr>
+          <tr>
+            <td>2023</td>
+            <td><strong>Vitals</strong></td>
+            <td><span class="tech-pill">Flutter</span> <span class="tech-pill">Android Native</span></td>
+            <td><a href="#" class="table-link">GitHub &nearr;</a></td>
+          </tr>
+          <tr>
+            <td>2023</td>
+            <td><strong>Food Ordering</strong></td>
+            <td><span class="tech-pill">Flutter</span> <span class="tech-pill">RazorPay</span></td>
+            <td><a href="#" class="table-link">GitHub &nearr;</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-</section>
+  </section> -->
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container fade-in">
-    <div class="section-tag">About</div>
-    <h2>Crafting apps<br/>that just work.</h2>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>I'm a cross-platform application developer currently working at Exly, building and maintaining production-grade apps using Flutter and React Native. I focus on performance, clean architecture, and user experiences that feel native everywhere.</p>
-        <p>I believe great software is invisible — it gets out of the user's way and simply does what they need. That philosophy drives every line of code I write.</p>
-        <p>Based in Delhi, India. Open to remote opportunities worldwide.</p>
-      </div>
-      <ul class="about-list">
-        <li><span class="lbl">Location</span><span class="val">Delhi, India</span></li>
-        <li><span class="lbl">Focus</span><span class="val">Cross-Platform Dev</span></li>
-        <li><span class="lbl">Primary Stack</span><span class="val">Flutter / React Native</span></li>
-        <li><span class="lbl">Education</span><span class="val">B.Tech CSE — KIET</span></li>
-        <li><span class="lbl">Languages</span><span class="val">Dart, JS/TS, Java</span></li>
-        <li><span class="lbl">Status</span><span class="val open">Open to work</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
+    <!-- 8. TECHNICAL SKILLS & 9. TECH STACK & 10. TOOLS -->
+    <section id="skills" class="section">
+      <h2>Technical Skills</h2>
+      <div class="masonry-grid">
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="container fade-in">
-    <div class="section-tag">Skills</div>
-    <h2>What I work<br/>with.</h2>
-
-    <div class="skills-layout">
-      <!-- Left: categorised skill rows -->
-      <div class="skills-left">
-        <div class="skill-row">
-          <div class="skill-cat">Languages</div>
+        <div class="skill-category bento-card">
+          <h3>Languages</h3>
           <div class="skill-pills">
-            <span class="skill-pill">Java</span>
-            <span class="skill-pill">JavaScript</span>
             <span class="skill-pill">TypeScript</span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">Python</span>
             <span class="skill-pill">Dart</span>
+            <span class="skill-pill">Java</span>
           </div>
         </div>
-        <div class="skill-row">
-          <div class="skill-cat">Frameworks</div>
+
+        <div class="skill-category bento-card">
+          <h3>Mobile & Frontend</h3>
           <div class="skill-pills">
-            <span class="skill-pill">Flutter</span>
             <span class="skill-pill">React Native</span>
+            <span class="skill-pill">Flutter</span>
             <span class="skill-pill">Expo</span>
-            <span class="skill-pill">Firebase</span>
+            <span class="skill-pill">React</span>
           </div>
         </div>
-        <div class="skill-row">
-          <div class="skill-cat">State Management</div>
+
+        <div class="skill-category bento-card">
+          <h3>Backend & Cloud</h3>
           <div class="skill-pills">
-            <span class="skill-pill">BLoC</span>
-            <span class="skill-pill">Riverpod</span>
+            <span class="skill-pill">FastAPI</span>
+            <span class="skill-pill">Firebase</span>
+            <span class="skill-pill">Supabase</span>
+            <span class="skill-pill">REST APIs</span>
+          </div>
+        </div>
+
+        <div class="skill-category bento-card">
+          <h3>State Management</h3>
+          <div class="skill-pills">
             <span class="skill-pill">Redux</span>
             <span class="skill-pill">Zustand</span>
+            <span class="skill-pill">Riverpod</span>
+            <span class="skill-pill">BLoC</span>
           </div>
         </div>
-        <div class="skill-row">
-          <div class="skill-cat">Tools & DevOps</div>
+
+        <div class="skill-category bento-card">
+          <h3>Tools & DevOps</h3>
           <div class="skill-pills">
-            <span class="skill-pill">Git</span>
-            <span class="skill-pill">GitHub</span>
+            <span class="skill-pill">Git / GitHub</span>
+            <span class="skill-pill">Fastlane</span>
             <span class="skill-pill">Android Studio</span>
             <span class="skill-pill">VS Code</span>
-            <span class="skill-pill">Fastlane</span>
           </div>
         </div>
-        <div class="skill-row">
-          <div class="skill-cat">Platforms</div>
-          <div class="skill-pills">
-            <span class="skill-pill">iOS</span>
-            <span class="skill-pill">Android</span>
-            <span class="skill-pill">Web</span>
-            <span class="skill-pill">macOS</span>
-            <span class="skill-pill">Windows</span>
+
+        <!-- 11. WHAT I'M LEARNING NOW -->
+        <div class="skill-category bento-card highlight-border">
+          <h3>What I'm Learning Now</h3>
+          <div class="learning-list">
+            <div class="learning-item">Retrieval-Augmented Generation (RAG)</div>
+            <div class="learning-item">PyTorch Tensors</div>
+            <div class="learning-item">Advanced FastAPI Architecture</div>
           </div>
         </div>
+
+      </div>
+    </section>
+
+    <!-- 12. EDUCATION -->
+    <section id="academic" class="section">
+      <h2>Education</h2>
+      <div class="academic-timeline">
+
+        <div class="academic-item">
+          <div class="ac-date">2020 — 2024</div>
+          <h3 class="ac-degree">B.Tech in Computer Science & Engineering</h3>
+          <div class="ac-school">KIET Group of Institutions · Ghaziabad, India</div>
+          <div class="ac-metrics"><strong>CGPA:</strong> 8.18</div>
+          <div class="ac-courses">
+            <strong>Key Coursework:</strong> Data Structures, Algorithms, DBMS, Operating Systems, Computer Networks.
+          </div>
+        </div>
+
+        <div class="academic-item">
+          <div class="ac-date">2018 — 2020</div>
+          <h3 class="ac-degree">XII & X (CBSE)</h3>
+          <div class="ac-school">Krishna Public School</div>
+          <div class="ac-metrics"><strong>XII:</strong> 94.2% · <strong>X:</strong> 92.2%</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 13. CERTIFICATIONS, 14. ACHIEVEMENTS, 15. HACKATHONS -->
+    <!-- <section id="achievements" class="section">
+    <h2>Certifications & Awards</h2>
+    <div class="badges-grid">
+      
+      <div class="badge-card">
+        <div class="badge-icon">AI</div>
+        <h4>Artificial Intelligence</h4>
+        <p>Coursera Certification</p>
       </div>
 
-      <!-- Right: education + certifications -->
-      <div class="skills-right">
-        <div class="edu-header">
-          <div class="edu-header-title">Education</div>
-        </div>
-        <div class="edu-item">
-          <div class="edu-year">2020 — 2024</div>
-          <div class="edu-school">KIET Group of Institutions</div>
-          <div class="edu-degree">B.Tech in Computer Science &amp; Engineering<br/>CGPA: 8.18 · Ghaziabad, India</div>
-        </div>
-        <div class="edu-item">
-          <div class="edu-year">2018 — 2020</div>
-          <div class="edu-school">Krishna Public School</div>
-          <div class="edu-degree">XII (CBSE): 94.2%<br/>X (CBSE): 92.2%</div>
-        </div>
-        <div class="cert-section">
-          <div class="cert-label">Certifications</div>
-          <div class="cert-list">
-            <div class="cert-item">Artificial Intelligence — Coursera</div>
-            <div class="cert-item">Data Mining — NPTEL</div>
-            <div class="cert-item">Cloud Computing — NPTEL</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="container fade-in">
-    <div class="section-tag">Projects</div>
-    <h2>Selected<br/>work.</h2>
-    <div class="proj-list">
-
-      <a href="https://play.google.com/store/apps/details?id=com.kaash.vaastu&hl=en_US" target="_blank" class="proj-item">
-        <div>
-          <div class="proj-num">01</div>
-          <div class="proj-title">Kaash</div>
-          <div class="proj-desc">Live astrology consultations app on the Play Store. Optimized rendering performance and state management logic, increasing app stability and frame rates by 5.7%. Integrated real-time analytics and crash reporting.</div>
-          <div class="proj-stack">
-            <span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Analytics</span>
-          </div>
-        </div>
-        <div class="proj-arrow">&nearr;</div>
-      </a>
-
-      <a href="https://play.google.com/store/apps/details?id=com.mutual.live&hl=en" target="_blank" class="proj-item">
-        <div>
-          <div class="proj-num">02</div>
-          <div class="proj-title">Mutual Network</div>
-          <div class="proj-desc">Expanded social network app on the Play Store. Built responsive frontend with real-time messaging, secure JWT-based authentication, and an advanced search and filtering system for content discovery.</div>
-          <div class="proj-stack">
-            <span class="tag">React Native</span><span class="tag">JWT</span><span class="tag">Real-time</span>
-          </div>
-        </div>
-        <div class="proj-arrow">&nearr;</div>
-      </a>
-
-      <a href="https://github.com/Dev-anshPandey/vitals" target="_blank" class="proj-item">
-        <div>
-          <div class="proj-num">03</div>
-          <div class="proj-title">Vitals</div>
-          <div class="proj-desc">Health activity tracker utilizing hardware sensor data for real-time activity monitoring. Features interactive data visualization dashboards displaying historical user health progress metrics.</div>
-          <div class="proj-stack">
-            <span class="tag">Flutter</span><span class="tag">Sensors</span><span class="tag">Data Viz</span>
-          </div>
-        </div>
-        <div class="proj-arrow">&nearr;</div>
-      </a>
-
-      <a href="https://github.com/Dev-anshPandey/eight-main" target="_blank" class="proj-item">
-        <div>
-          <div class="proj-num">04</div>
-          <div class="proj-title">Food Ordering Application</div>
-          <div class="proj-desc">An online food ordering cross platform mobile application
-            Tech Stack - Flutter , Firebase , Google Map & Razor Pay API
-            Features - Search Food Items , Add to Cart , Online Payment , Creative and Interactive UI</div>
-          <div class="proj-stack">
-            <span class="tag">Flutter</span><span class="tag">Sensors</span><span class="tag">Data Viz</span>
-          </div>
-        </div>
-        <div class="proj-arrow">&nearr;</div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container fade-in">
-    <div class="section-tag">Experience</div>
-    <h2>Where I've<br/>worked.</h2>
-    <div class="exp-list">
-
-      <div class="exp-item">
-        <div class="exp-date">Apr 2025 — Present</div>
-        <div>
-          <div class="exp-role">Junior Software Engineer</div>
-          <div class="exp-company">Exly</div>
-          <div class="exp-detail">Developing and maintaining multiple production-grade applications using Flutter and React Native, ensuring framework-agnostic architectural standards. Refactored legacy UI modules into reusable components, reducing code redundancy by 25%.</div>
-          <div class="exp-tags">
-            <span class="tag">Flutter</span><span class="tag">React Native</span><span class="tag">Agile</span>
-          </div>
-        </div>
+      <div class="badge-card">
+        <div class="badge-icon">DB</div>
+        <h4>Data Mining</h4>
+        <p>NPTEL Certification</p>
       </div>
 
-      <div class="exp-item">
-        <div class="exp-date">Jan 2025 — Apr 2025</div>
-        <div>
-          <div class="exp-role">Software Engineering Intern</div>
-          <div class="exp-company">Exly</div>
-          <div class="exp-detail">Engineered end-to-end mobile features with a focus on modular code structure and efficient API integration. Enhanced app stability by 8% through rigorous debugging, peer code reviews, and automated testing.</div>
-          <div class="exp-tags">
-            <span class="tag">Flutter</span><span class="tag">API Integration</span><span class="tag">Testing</span>
-          </div>
-        </div>
+      <div class="badge-card">
+        <div class="badge-icon">CC</div>
+        <h4>Cloud Computing</h4>
+        <p>NPTEL Certification</p>
       </div>
 
-      <div class="exp-item">
-        <div class="exp-date">Jul 2024 — Oct 2024</div>
-        <div>
-          <div class="exp-role">Data Services Consultant I</div>
-          <div class="exp-company">UKG (Ultimate Kronos Group)</div>
-          <div class="exp-detail">Streamlined large-scale data migration workflows, ensuring 100% data accuracy during high-volume cloud transitions. Automated repetitive data transformation tasks, improving operational efficiency by ~30%.</div>
-          <div class="exp-tags">
-            <span class="tag">Data Migration</span><span class="tag">Cloud</span><span class="tag">Automation</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-date">Dec 2023 — Jun 2024</div>
-        <div>
-          <div class="exp-role">Software Engineer Intern</div>
-          <div class="exp-company">Dao Studio</div>
-          <div class="exp-detail">Built cross-platform utility applications with local caching mechanisms to support high-performance offline functionality. Implemented real-time notification systems and improved threading logic to enhance UI responsiveness.</div>
-          <div class="exp-tags">
-            <span class="tag">Flutter</span><span class="tag">Offline-first</span><span class="tag">Push Notifications</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-date">Dec 2023 — Jan 2024</div>
-        <div>
-          <div class="exp-role">Software Engineer Intern</div>
-          <div class="exp-company">Mutual Connects</div>
-          <div class="exp-detail">Built an application that brings mutuals to your private network with whom you can engage , network and build lasting friendships with</div>
-          <div class="exp-tags">
-            <span class="tag">Flutter</span><span class="tag">Web Sockets</span><span class="tag">Push Notifications</span>
-          </div>
-        </div>
+      <div class="badge-card">
+        <div class="badge-icon">🏆</div>
+        <h4>Hackathon Finalist</h4>
+        <p>Global App Innovation Challenge (Placeholder)</p>
       </div>
 
     </div>
-  </div>
-</section>
+  </section> -->
 
-<!-- BLOGS -->
-<section id="blogs">
-  <div class="container fade-in">
-    <div class="section-tag">Writings</div>
-    <h2>Thoughts &<br/>Articles.</h2>
-    <div class="proj-list">
+    <!-- 16. TECHNICAL BLOGS & 17. ENGINEERING ARTICLES -->
+    <section id="writing" class="section">
+      <h2>Writing & Engineering Notes</h2>
 
-      <a href="https://medium.com/@devanshpandey87/how-i-fixed-react-navigation-type-errors-in-typescript-without-losing-my-mind-12191da976df" target="_blank" class="proj-item">
-        <div>
-          <div class="proj-num">01</div>
-          <div class="proj-title">How I Fixed React Navigation Type Errors in TypeScript (Without Losing My Mind)</div>
-          <div class="proj-desc">A deep dive into resolving tricky TypeScript type errors while using React Navigation in React Native applications.</div>
-          <div class="proj-stack">
-            <span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Mobile</span>
+      <div class="blog-filters">
+        <span class="filter active">All</span>
+        <span class="filter">React Native</span>
+        <span class="filter">TypeScript</span>
+        <span class="filter">Architecture</span>
+      </div>
+
+      <div class="blog-list">
+
+        <a href="https://medium.com/@devanshpandey87/how-i-fixed-react-navigation-type-errors-in-typescript-without-losing-my-mind-12191da976df"
+          target="_blank" class="blog-card bento-card">
+          <div class="blog-meta">
+            <span class="blog-tag">React Native</span>
+            <span class="blog-time">6 min read</span>
           </div>
-        </div>
-        <div class="proj-arrow">&nearr;</div>
-      </a>
+          <h3 class="blog-title">How I Fixed React Navigation Type Errors in TypeScript (Without Losing My Mind)</h3>
+          <p class="blog-desc">A deep dive into resolving tricky TypeScript type errors while using React Navigation in
+            React Native applications.</p>
+          <div class="blog-date">Published on Medium</div>
+        </a>
 
+        <!-- Placeholder for future articles -->
+        <a href="#" class="blog-card bento-card">
+          <div class="blog-meta">
+            <span class="blog-tag">Architecture</span>
+            <span class="blog-time">8 min read</span>
+          </div>
+          <h3 class="blog-title">Bridging Flutter to Native: When Abstractions Leak (Coming Soon)</h3>
+          <p class="blog-desc">An engineering note on why I had to write custom Android MethodChannels to process raw
+            sensor data without draining battery.</p>
+          <div class="blog-date">Draft</div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- 18. OPEN SOURCE CONTRIBUTIONS -->
+    <!-- <section id="opensource" class="section">
+     <h2>Open Source</h2>
+    <div class="bento-card">
+      <div class="os-header">
+        <h3>GitHub Contributions</h3>
+        <a href="https://github.com/Dev-anshPandey" target="_blank" class="project-link">View Profile</a>
+      </div>
+      <p class="project-desc">Actively contributing to open-source mobile tooling and maintaining personal repositories showcasing robust cross-platform architectures.</p>
+      <div class="os-graph-mock"> -->
+    <!-- CSS pure grid to mock a github contribution graph -->
+    <!-- <div class="github-graph"></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section> -->
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="globe-wrap globe-contact">
-    <canvas class="globe" id="globe-contact"></canvas>
   </div>
-  <div class="container">
-    <div class="contact-inner fade-in">
-      <div class="section-tag">Contact</div>
-      <h2>Let's build<br/>something.</h2>
-      <p>Open to freelance projects, full-time roles, and interesting collaborations. Let's talk.</p>
+
+  <!-- 19. CONTACT SECTION -->
+  <footer id="contact">
+    <div class="footer-inner">
+      <h2>Let's build something.</h2>
+      <p>Open to full-time roles in AI startups or product companies looking for a dev who knows mobile but is hungry
+        for backend and GenAI work.</p>
+
       <div class="contact-links">
-        <a href="mailto:devanshpandey87@gmail.com" class="c-link primary">Send an email</a>
-        <a href="https://github.com/Dev-anshPandey" target="_blank" class="c-link">GitHub</a>
-        <a href="https://linkedin.com/in/devanshpandey87" target="_blank" class="c-link">LinkedIn</a>
-        <a href="https://medium.com/@devanshpandey87" target="_blank" class="c-link">Medium</a>
+        <a href="mailto:devanshpandey87@gmail.com" class="btn btn-primary">Send an Email</a>
+        <a href="https://github.com/Dev-anshPandey" target="_blank" class="btn btn-outline">GitHub</a>
+        <a href="https://linkedin.com/in/devanshpandey87" target="_blank" class="btn btn-outline">LinkedIn</a>
+        <a href="https://medium.com/@devanshpandey87" target="_blank" class="btn btn-outline">Medium</a>
+      </div>
+
+      <div class="footer-copyright">
+        Devansh Pandey — Built with precision. Designed for scale.
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- FOOTER -->
-<footer>
-  <span>Devansh Pandey &copy; 2026</span>
-  <span>Cross Platform Application Developer — Delhi, India</span>
-</footer>
-
-<!-- Link to external JS file -->
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

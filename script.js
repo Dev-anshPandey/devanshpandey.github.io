@@ -1,163 +1,126 @@
 /**
- * Minimalist Constellation Network (High-Visibility & Retina-Safe)
+ * script.js
+ * Handles scroll reveal intersections, mouse-tracking spotlights, interactive mockups, and accordions.
  */
-function buildMinimalNetwork(canvas, options) {
-  const cfg = Object.assign({
-    particleCount: 65,       
-    maxDistance: 150,        
-    mouseDistance: 200,      
-    baseColor: '192, 57, 43',// Theme red
-    particleSize: 2,         // Slightly larger dots
-    speed: 0.35              
-  }, options);
 
-  const dpr = window.devicePixelRatio || 1;
-  const ctx = canvas.getContext('2d');
+document.addEventListener('DOMContentLoaded', () => {
+
+  // 1. Scroll Reveal Logic (Intersection Observer)
+  const sections = document.querySelectorAll('.section');
+  const tocLinks = document.querySelectorAll('.side-toc a');
   
-  let cssWidth, cssHeight;
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
 
-  // Retina-safe resize function
-  function resize() {
-    cssWidth = canvas.offsetWidth;
-    cssHeight = canvas.offsetHeight;
-    
-    // Set actual canvas size multiplied by device pixel ratio
-    canvas.width  = cssWidth * dpr;
-    canvas.height = cssHeight * dpr;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        
+        // Update TOC
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${id}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
 
-  // Track mouse position
-  const mouse = { x: -1000, y: -1000 };
-  canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+  sections.forEach(sec => {
+    if (sec.id !== 'hero') {
+      observer.observe(sec);
+    }
   });
-  canvas.addEventListener('mouseleave', () => {
-    mouse.x = -1000;
-    mouse.y = -1000;
+
+  // 2. Mouse Tracking Spotlight for Bento Cards
+  const bentoCards = document.querySelectorAll('.bento-card');
+
+  bentoCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
   });
 
-  // Particle Class
-  class Particle {
-    constructor() {
-      this.x = Math.random() * cssWidth;
-      this.y = Math.random() * cssHeight;
-      this.vx = (Math.random() - 0.5) * cfg.speed;
-      this.vy = (Math.random() - 0.5) * cfg.speed;
-      this.radius = Math.random() * cfg.particleSize + 1; // Brighter dots
-    }
+  // 3. Interactive Mockup Tabs in Hero
+  const tabs = document.querySelectorAll('.mockup-tab');
+  const mockupContent = document.getElementById('mockup-content');
 
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // Wrap around screen edges smoothly
-      if (this.x < 0) this.x = cssWidth;
-      if (this.x > cssWidth) this.x = 0;
-      if (this.y < 0) this.y = cssHeight;
-      if (this.y > cssHeight) this.y = 0;
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${cfg.baseColor}, 0.8)`; // High opacity
-      ctx.fill();
-    }
+  const snippets = {
+    'tech': `
+<pre><code><span class="keyword">const</span> developer = {
+  <span class="string">role</span>: <span class="string">'Frontend & Mobile'</span>,
+  <span class="string">tools</span>: [<span class="string">'React Native'</span>, <span class="string">'Flutter'</span>, <span class="string">'TypeScript'</span>],
+  <span class="function">optimize</span>: () => {
+    <span class="keyword">return</span> <span class="string">'60fps stable performance'</span>;
   }
-
-  const particles = [];
-  for (let i = 0; i < cfg.particleCount; i++) {
-    particles.push(new Particle());
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+};</code></pre>`,
     
-    // Scale context for Retina displays
-    ctx.save();
-    ctx.scale(dpr, dpr);
+    'focus': `
+<pre><code><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI
+<span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel
 
-    // Draw connections
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
+app = <span class="function">FastAPI</span>()
 
-      // Connect to other particles
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+<span class="keyword">class</span> Query(BaseModel):
+    prompt: <span class="keyword">str</span>
 
-        if (dist < cfg.maxDistance) {
-          // Opacity fades as they get further apart
-          const alpha = (1 - dist / cfg.maxDistance) * 0.65; // Brighter lines
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(${cfg.baseColor}, ${alpha})`;
-          ctx.lineWidth = 1.2; // Thicker lines
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
+<span class="keyword">@app.post</span>(<span class="string">"/generate"</span>)
+<span class="keyword">async def</span> <span class="function">generate_response</span>(q: Query):
+    <span class="keyword">return</span> {<span class="string">"status"</span>: <span class="string">"Transitioning to AI Engineering"</span>}</code></pre>`
+  };
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      const target = tab.getAttribute('data-target');
+      if (snippets[target]) {
+        mockupContent.style.opacity = 0;
+        setTimeout(() => {
+          mockupContent.innerHTML = snippets[target];
+          mockupContent.style.opacity = 1;
+        }, 150);
+      }
+    });
+  });
+
+  // 4. Accordion Logic for Experience Section
+  const accordions = document.querySelectorAll('.accordion-header');
+  
+  accordions.forEach(header => {
+    header.addEventListener('click', () => {
+      const parent = header.parentElement;
+      
+      // Close all others
+      document.querySelectorAll('.accordion-item').forEach(item => {
+        if (item !== parent) {
+          item.classList.remove('expanded');
         }
-      }
+      });
+      
+      // Toggle current
+      parent.classList.toggle('expanded');
+    });
+  });
 
-      // Connect to mouse
-      const mouseDx = particles[i].x - mouse.x;
-      const mouseDy = particles[i].y - mouse.y;
-      const mouseDist = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
-
-      if (mouseDist < cfg.mouseDistance) {
-        // Subtle magnetic pull to the mouse
-        particles[i].x -= mouseDx * 0.02;
-        particles[i].y -= mouseDy * 0.02;
-
-        // Draw line to mouse
-        const mouseAlpha = (1 - mouseDist / cfg.mouseDistance) * 0.8;
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(${cfg.baseColor}, ${mouseAlpha})`;
-        ctx.lineWidth = 1.5;
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
-      }
-
-      particles[i].draw();
+  // 5. Github Graph Mock generation
+  const ghGraph = document.querySelector('.github-graph');
+  if (ghGraph) {
+    for (let i = 0; i < 48; i++) {
+      const cell = document.createElement('div');
+      ghGraph.appendChild(cell);
     }
-
-    ctx.restore();
-    requestAnimationFrame(draw);
   }
 
-  draw();
-}
-
-// Initialize on load
-window.addEventListener('load', () => {
-  const heroCanvas    = document.getElementById('globe-hero');
-  const contactCanvas = document.getElementById('globe-contact');
-
-  if (heroCanvas) {
-    buildMinimalNetwork(heroCanvas, {
-      particleCount: 80,
-      maxDistance: 140,
-      speed: 0.35
-    });
-  }
-  
-  if (contactCanvas) {
-    buildMinimalNetwork(contactCanvas, {
-      particleCount: 50,
-      maxDistance: 120,
-      speed: 0.25
-    });
-  }
 });
-
-// Scroll fade-in observer
-const observer = new IntersectionObserver(
-  (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-  { threshold: 0.1 }
-);
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
