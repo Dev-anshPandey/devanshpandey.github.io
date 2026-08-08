@@ -66,16 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
 };</code></pre>`,
     
     'focus': `
-<pre><code><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI
+<pre><code><span class="keyword">from</span> langchain.chains <span class="keyword">import</span> LLMChain
 <span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel
-
-app = <span class="function">FastAPI</span>()
 
 <span class="keyword">class</span> Query(BaseModel):
     prompt: <span class="keyword">str</span>
 
-<span class="keyword">@app.post</span>(<span class="string">"/generate"</span>)
-<span class="keyword">async def</span> <span class="function">generate_response</span>(q: Query):
+<span class="keyword">def</span> <span class="function">generate_response</span>(q: Query):
     <span class="keyword">return</span> {<span class="string">"status"</span>: <span class="string">"Transitioning to AI Engineering"</span>}</code></pre>`
   };
 
