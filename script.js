@@ -1,123 +1,118 @@
 /**
  * script.js
- * Handles scroll reveal intersections, mouse-tracking spotlights, interactive mockups, and accordions.
+ * Intro particle → name formation animation,
+ * Interactive constellation background,
+ * Scroll reveals, nav interactions, mobile menu.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. Scroll Reveal Logic (Intersection Observer)
-  const sections = document.querySelectorAll('.section');
-  const tocLinks = document.querySelectorAll('.side-toc a');
-  
+
+
+
+  // Background canvas hidden per preference
+  const bgCanvas = document.getElementById('bg-canvas');
+  if (bgCanvas) {
+    bgCanvas.style.display = 'none';
+  }
+
+
+  // ═══════════════════════════════════════════════════════════
+  // 3. NAVIGATION — Active section tracking
+  // ═══════════════════════════════════════════════════════════
+  const navBtns = document.querySelectorAll('.nav-desktop .nav-btn, .nav-mobile-menu .nav-btn');
+  const sectionIds = ['home', 'projects', 'skills', 'services', 'experience', 'certifications', 'education', 'writing', 'contact'];
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sectionId = btn.getAttribute('data-section');
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) mobileMenu.classList.remove('open');
+    });
+  });
+
+  function updateActiveNav() {
+    let current = 'home';
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 150) current = id;
+      }
+    }
+    navBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-section') === current);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+
+
+  // ═══════════════════════════════════════════════════════════
+  // 4. MOBILE MENU TOGGLE
+  // ═══════════════════════════════════════════════════════════
+  const menuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+  }
+
+
+  // ═══════════════════════════════════════════════════════════
+  // 5. SCROLL REVEAL (Intersection Observer)
+  // ═══════════════════════════════════════════════════════════
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealChildren = document.querySelectorAll('.reveal-children');
+
+  // Initially hide
+  revealElements.forEach(el => el.classList.add('scroll-hidden'));
+  revealChildren.forEach(parent => {
+    Array.from(parent.children).forEach(child => {
+      child.classList.add('scroll-hidden');
+    });
+  });
+
   const observerOptions = {
     root: null,
-    rootMargin: '0px',
+    rootMargin: '0px 0px -60px 0px',
     threshold: 0.1
   };
 
-  const observer = new IntersectionObserver((entries, obs) => {
+  const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        
-        // Update TOC
-        const id = entry.target.getAttribute('id');
-        tocLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${id}`) {
-            link.classList.add('active');
-          }
-        });
+        entry.target.classList.remove('scroll-hidden');
+        entry.target.classList.add('scroll-visible');
+        revealObserver.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  sections.forEach(sec => {
-    if (sec.id !== 'hero') {
-      observer.observe(sec);
-    }
-  });
+  revealElements.forEach(el => revealObserver.observe(el));
 
-  // 2. Mouse Tracking Spotlight for Bento Cards
-  const bentoCards = document.querySelectorAll('.bento-card');
-
-  bentoCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    });
-  });
-
-  // 3. Interactive Mockup Tabs in Hero
-  const tabs = document.querySelectorAll('.mockup-tab');
-  const mockupContent = document.getElementById('mockup-content');
-
-  const snippets = {
-    'tech': `
-<pre><code><span class="keyword">const</span> developer = {
-  <span class="string">role</span>: <span class="string">'Frontend & Mobile'</span>,
-  <span class="string">tools</span>: [<span class="string">'React Native'</span>, <span class="string">'Flutter'</span>, <span class="string">'TypeScript'</span>],
-  <span class="function">optimize</span>: () => {
-    <span class="keyword">return</span> <span class="string">'60fps stable performance'</span>;
-  }
-};</code></pre>`,
-    
-    'focus': `
-<pre><code><span class="keyword">from</span> langchain.chains <span class="keyword">import</span> LLMChain
-<span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel
-
-<span class="keyword">class</span> Query(BaseModel):
-    prompt: <span class="keyword">str</span>
-
-<span class="keyword">def</span> <span class="function">generate_response</span>(q: Query):
-    <span class="keyword">return</span> {<span class="string">"status"</span>: <span class="string">"Transitioning to AI Engineering"</span>}</code></pre>`
-  };
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      
-      const target = tab.getAttribute('data-target');
-      if (snippets[target]) {
-        mockupContent.style.opacity = 0;
-        setTimeout(() => {
-          mockupContent.innerHTML = snippets[target];
-          mockupContent.style.opacity = 1;
-        }, 150);
+  const childObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const children = Array.from(entry.target.children);
+        children.forEach((child, i) => {
+          setTimeout(() => {
+            child.classList.remove('scroll-hidden');
+            child.classList.add('scroll-visible');
+          }, i * 80);
+        });
+        childObserver.unobserve(entry.target);
       }
     });
-  });
+  }, observerOptions);
 
-  // 4. Accordion Logic for Experience Section
-  const accordions = document.querySelectorAll('.accordion-header');
-  
-  accordions.forEach(header => {
-    header.addEventListener('click', () => {
-      const parent = header.parentElement;
-      
-      // Close all others
-      document.querySelectorAll('.accordion-item').forEach(item => {
-        if (item !== parent) {
-          item.classList.remove('expanded');
-        }
-      });
-      
-      // Toggle current
-      parent.classList.toggle('expanded');
-    });
-  });
-
-  // 5. Github Graph Mock generation
-  const ghGraph = document.querySelector('.github-graph');
-  if (ghGraph) {
-    for (let i = 0; i < 48; i++) {
-      const cell = document.createElement('div');
-      ghGraph.appendChild(cell);
-    }
-  }
+  revealChildren.forEach(el => childObserver.observe(el));
 
 });
