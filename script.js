@@ -291,8 +291,20 @@
       answer: "Devansh's core stack includes Generative AI & LLMs (LangChain, OpenAI API, Anthropic API, RAG, Function Calling, Vector DBs), Mobile & Frontend (Flutter, React Native, React.js, Dart, TypeScript, JavaScript), and Tooling (Python, Firebase Crashlytics, WebSockets, Git)."
     },
     {
+      patterns: [/github/i, /code/i, /repo/i, /repositories/i, /oss/i, /open source/i],
+      answer: "You can explore Devansh's repositories and open-source code on GitHub at https://github.com/Dev-anshPandey (including The Chronicle at finite-press and Vitals)."
+    },
+    {
+      patterns: [/linkedin/i, /connect/i, /network/i, /profile/i],
+      answer: "You can connect with Devansh on LinkedIn at https://linkedin.com/in/devanshpandey87 to view his professional journey and network."
+    },
+    {
+      patterns: [/social/i, /links/i, /elsewhere/i, /handles/i, /accounts/i],
+      answer: "Devansh is active across GitHub (https://github.com/Dev-anshPandey), LinkedIn (https://linkedin.com/in/devanshpandey87), and Medium (https://medium.com/@devanshpandey87)."
+    },
+    {
       patterns: [/contact/i, /email/i, /phone/i, /hire/i, /available/i, /reach/i],
-      answer: "Devansh is available immediately (0 days notice) for Frontend, Mobile, and Client-Side AI Engineering roles. You can email him at devanshpandey87@gmail.com or call +91 8770101343."
+      answer: "Devansh is available immediately (0 days notice) for Frontend, Mobile, and Client-Side AI Engineering roles. You can email him at devanshpandey87@gmail.com, call +91 8770101343, or connect on LinkedIn (https://linkedin.com/in/devanshpandey87) and GitHub (https://github.com/Dev-anshPandey)."
     }
   ];
 
