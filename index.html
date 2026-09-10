@@ -198,10 +198,10 @@
             <div class="project-body-grid">
               <div class="project-body-desc">
                 <ul class="project-bullet-list">
-                  <li>Developed an automated document generation platform utilizing LLM APIs for structured content synthesis and formatting.</li>
-                  <li>Implemented a lightweight RAG pipeline using document chunking.</li>
-                  <li>Constructed system-level prompt constraints and function calling routines to ensure deterministic JSON outputs.</li>
-                  <li>Engineered a real-time streaming UI interface in React, allowing users to inspect generation stages token-by-token.</li>
+                  <li>Built an end-to-end RAG-style pipeline that researches web content, retrieves relevant context, and grounds LLM generation to produce structured e-newspaper articles – reducing hallucinated or unsupported claims versus ungrounded generation.</li>
+                  <li>Designed a personalization layer that captures user interest profiles and dynamically retrieves and ranks relevant content per user before generation.</li>
+                  <li>Implemented an automated content-discovery and retrieval pipeline (web crawling → context selection → LLM context injection) to supply grounded, up-to-date source material.</li>
+                  <li>Engineered structured LLM workflows using system prompts, function calling, and schema-constrained JSON outputs to enforce reliable, parseable generation for downstream rendering.</li>
                 </ul>
                 <div class="project-tags">
                   <span class="project-tag">LLM APIs</span>
@@ -258,8 +258,8 @@
             <div class="project-body-grid">
               <div class="project-body-desc">
                 <ul class="project-bullet-list">
-                  <li>Built booking and consultation UI modules in Flutter with real-time status tracking and dynamic state updates.</li>
-                  <li>Optimized list rendering pipelines and complex JSON parsing to ensure smooth scrolling on low-spec mobile devices.</li>
+                  <li>Built booking and consultation UI modules with real-time status tracking and dynamic state updates.</li>
+                  <li>Optimized list rendering and JSON parsing pipelines, improving scroll performance on low-spec devices.</li>
                   <li>Integrated Firebase Crashlytics to monitor client-side runtime errors and diagnose performance bottlenecks.</li>
                 </ul>
                 <div class="project-tags">
@@ -516,8 +516,9 @@
           <h3 class="exp-company">Exly <span class="yc-tag">YC W19</span></h3>
           <p class="exp-role">JUNIOR SOFTWARE ENGINEER</p>
           <ul class="exp-bullet-list">
-            <li>Built and maintained production features across Flutter and React Native apps, adhering to clean architecture and established coding standards.</li>
-            <li>Integrated LLM API endpoints to support AI-assisted user workflows, implementing streaming response handling, structured JSON parsing, and fallback UI states.</li>
+            <li>Integrated LLM API endpoints (OpenAI/Anthropic) into production app workflows, implementing streaming response handling, structured JSON parsing, and graceful fallback UI states for AI-assisted user flows.</li>
+            <li>Designed prompt and response-handling logic to keep LLM output reliable and parseable across varied user inputs, reducing malformed-response edge cases in production.</li>
+            <li>Built and maintained production features across Flutter and React Native apps, following clean architecture and established coding standards.</li>
             <li>Extracted repeated UI patterns into shared, reusable components across multiple screens, reducing redundant code and speeding up feature delivery.</li>
             <li>Collaborated in an agile team through sprint planning and code reviews, integrating native device capabilities into hybrid app flows.</li>
           </ul>
