@@ -251,8 +251,8 @@
   // Knowledge base responses
   const KB = [
     {
-      patterns: [/chronicle/i, /rag/i, /document gen/i, /finite press/i, /llm app/i],
-      answer: "The Chronicle (live at finitepress.com) is an automated document generation and intelligence platform Devansh developed using LLM APIs for structured content synthesis and formatting. It features a lightweight RAG pipeline with document chunking, strict system prompt constraints, function calling routines for deterministic JSON outputs, and a real-time streaming UI in React."
+      patterns: [/chronicle/i, /rag/i, /document gen/i, /thechronicle/i, /llm app/i],
+      answer: "The Chronicle (live at https://thechronicle-ai.vercel.app) is an automated document generation and intelligence platform Devansh developed using LLM APIs for structured content synthesis and formatting. It features a lightweight RAG pipeline with document chunking, strict system prompt constraints, function calling routines for deterministic JSON outputs, and a real-time streaming UI in React."
     },
     {
       patterns: [/kaash/i, /astrology/i, /consultation/i],
@@ -292,7 +292,7 @@
     },
     {
       patterns: [/github/i, /code/i, /repo/i, /repositories/i, /oss/i, /open source/i],
-      answer: "You can explore Devansh's repositories and open-source code on GitHub at https://github.com/Dev-anshPandey (including The Chronicle at finite-press and Vitals)."
+      answer: "You can explore Devansh's repositories and open-source code on GitHub at https://github.com/Dev-anshPandey (including Vitals)."
     },
     {
       patterns: [/linkedin/i, /connect/i, /network/i, /profile/i],
