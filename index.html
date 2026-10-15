@@ -8,7 +8,7 @@
       name="description"
       content="Devansh Pandey builds grounded AI experiences and production applications. Explore RAG assistants, The Chronicle, and mobile work with React Native and Flutter."
     />
-    <meta name="theme-color" content="#171c19" />
+    <meta name="theme-color" content="#b8e994" />
     <meta
       property="og:title"
       content="Devansh Pandey — AI & Application Engineer"
@@ -29,849 +29,634 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Manrope:wght@400;500;600;650;700;750;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
+
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <div class="container nav">
-        <a class="wordmark" href="#home" aria-label="Devansh Pandey, home"
-          ><span class="monogram" aria-hidden="true">dp<span>.</span></span
-          ><span
-            >Devansh Pandey<span class="wordmark-role"
-              >AI & Application Engineer</span
-            ></span
-          ></a
+      <a class="wordmark" href="#home" aria-label="Devansh Pandey, home"
+        >DEVANSH<span>®</span></a
+      ><button
+        class="menu-toggle"
+        aria-expanded="false"
+        aria-controls="navigation"
+        hidden
+      >
+        Menu <span aria-hidden="true">+</span>
+      </button>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href="#projects">Work</a><a href="#about">About</a
+        ><a href="#experience">Experience</a><a href="#writing">Notes</a
+        ><a class="nav-contact" href="#contact"
+          >Let’s talk <span aria-hidden="true">↗</span></a
         >
-        <button
-          class="menu-toggle"
-          aria-expanded="false"
-          aria-controls="navigation"
-          hidden
-        >
-          Menu <span aria-hidden="true">+</span>
-        </button>
-        <nav id="navigation" aria-label="Main navigation">
-          <a href="#projects">Selected work</a><a href="#about">About</a
-          ><a href="#experience">Experience</a
-          ><a href="#contact" class="nav-contact"
-            >Let’s talk <span aria-hidden="true">↗</span></a
-          >
-        </nav>
-      </div>
+      </nav>
     </header>
     <main id="main">
-      <section class="hero" id="home" aria-labelledby="hero-title">
-        <div class="container">
-          <div class="hero-topline">
-            <span class="eyebrow"
-              ><span class="status-dot"></span> OPEN TO AI & APPLICATION
-              ENGINEERING ROLES</span
-            ><span class="hero-location"
-              >DELHI NCR, INDIA <span aria-hidden="true">↗</span></span
+      <section class="hero grid-surface" id="home" aria-labelledby="hero-title">
+        <div class="hero-top">
+          <span><i class="status-dot"></i> OPEN TO OPPORTUNITIES</span
+          ><span>DELHI NCR, INDIA · IST</span>
+        </div>
+        <div class="hero-center">
+          <p class="eyebrow">DEVANSH PANDEY / AI & APPLICATION ENGINEER</p>
+          <h1 id="hero-title">
+            Curious mind.<br />Builder’s instinct.<br /><span class="highlight"
+              >Real-world impact.</span
             >
-          </div>
-          <div class="hero-grid">
-            <div class="hero-copy">
-              <p class="intro">Hi, I’m Devansh.</p>
-              <h1 id="hero-title">
-                Intelligence,<br />built for<br /><em>real life.</em>
-              </h1>
-              <p class="hero-description">
-                I build grounded AI experiences and the applications that bring
-                them to people. From retrieval to response. From first screen to
-                release.
-              </p>
-              <div class="hero-actions">
-                <a class="button button-mint" href="#projects"
-                  >Explore my work <span aria-hidden="true">↗</span></a
-                ><a class="text-link" href="#resumes"
-                  >Request résumé <span aria-hidden="true">↓</span></a
-                >
-              </div>
-            </div>
-            <div
-              class="engineering-visual"
-              aria-label="Interactive three-dimensional illustration of an AI application stack"
-            >
-              <div class="visual-heading">
-                <span class="eyebrow">THE WAY I BUILD</span
-                ><span class="micro-label">FIG. 01 / SYSTEM → EXPERIENCE</span>
-              </div>
-              <div class="stack-scene" id="stack-scene" aria-hidden="true">
-                <div class="scene-grid"></div>
-                <div class="stack-object" id="stack-object">
-                  <div class="stack-layer layer-data">
-                    <span class="layer-corner">01 / CONTEXT</span>
-                    <div class="data-lines">
-                      <i></i><i></i><i></i><i></i><i></i>
-                    </div>
-                    <span class="layer-end">RETRIEVE</span>
-                  </div>
-                  <div class="stack-layer layer-model">
-                    <span class="layer-corner">02 / INTELLIGENCE</span>
-                    <div class="chip">
-                      <span>AI</span><i></i><i></i><i></i><i></i>
-                    </div>
-                    <span class="layer-end">GROUND · GENERATE</span>
-                  </div>
-                  <div class="stack-layer layer-app">
-                    <span class="layer-corner">03 / EXPERIENCE</span>
-                    <div class="interface-preview">
-                      <div class="interface-icon">d<span>p.</span></div>
-                      <div class="interface-lines"><i></i><i></i></div>
-                      <div class="interface-response">
-                        <b>Built to be useful.</b
-                        ><span>Context in. Clarity out.</span><i></i>
-                      </div>
-                      <div class="interface-input">
-                        Ask. Explore. Connect. <span>↗</span>
-                      </div>
-                    </div>
-                    <span class="layer-end">SHIP TO PEOPLE ↗</span>
-                  </div>
-                </div>
-                <span class="scene-coordinate coord-left">X / CONTEXT</span
-                ><span class="scene-coordinate coord-right"
-                  >Y / EXPERIENCE</span
-                >
-              </div>
-              <div class="visual-controls" hidden>
-                <div
-                  class="segmented"
-                  role="group"
-                  aria-label="Explore the engineering stack"
-                >
-                  <button type="button" data-view="system" aria-pressed="true">
-                    AI system</button
-                  ><button
-                    type="button"
-                    data-view="application"
-                    aria-pressed="false"
-                  >
-                    Application
-                  </button>
-                </div>
-                <button
-                  class="motion-control"
-                  type="button"
-                  aria-pressed="false"
-                >
-                  Pause motion
-                </button>
-              </div>
-              <p class="visual-caption" id="visual-caption">
-                Relevant context → grounded generation → a useful experience.
-              </p>
-            </div>
-          </div>
-          <div class="hero-bottom">
-            <p>
-              Previously building at <strong>Exly <span>(YC W19)</span></strong
-              ><span class="divider">/</span><strong>UKG</strong
-              ><span class="divider">/</span><strong>Dao Studio</strong>
-            </p>
-            <a href="#projects" class="scroll-link"
-              >SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a
-            >
-          </div>
+          </h1>
+          <p class="hero-description">
+            I connect the intelligence behind a product<br
+              class="desktop-break"
+            />
+            with the experience in your hands.
+          </p>
+          <a class="button dark" href="#projects"
+            >Explore selected work <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <a
+          class="floating float-paper"
+          href="#chronicle"
+          aria-label="Explore The Chronicle project"
+          ><span class="micro">PERSONAL EDITION / 01</span
+          ><strong>The<br />Chronicle<span>✳</span></strong>
+          <div class="paper-lines"></div>
+          <span class="micro">YOUR WORLD. IN PERSPECTIVE.</span></a
+        >
+        <div class="floating float-chip" aria-hidden="true">
+          <span class="micro">CONTEXT → CLARITY</span>
+          <div class="chip-symbol">✳</div>
+          <span class="micro">BUILT WITH INTELLIGENCE</span>
+        </div>
+        <a
+          class="floating float-phone"
+          href="#kaash"
+          aria-label="Explore Kaash mobile application"
+          ><span class="micro">MOBILE / FLUTTER</span>
+          <div class="mini-phone">
+            <span>kaash✳</span>
+            <div class="call-avatar">✺</div>
+            <small>Good connections.<br />Made possible.</small
+            ><b>Let’s connect ↗</b>
+          </div></a
+        >
+        <div class="hero-bottom">
+          <span>FROM CONTEXT TO CODE TO CUSTOMER.</span
+          ><a href="#projects">SCROLL TO DISCOVER ↓</a>
         </div>
       </section>
-
-      <section
-        class="work-section section"
-        id="projects"
-        aria-labelledby="work-title"
-      >
-        <div class="container">
-          <div class="section-top">
-            <span class="eyebrow">01 / SELECTED WORK</span
-            ><span class="section-note"
-              >AI thinking. Product craftsmanship.</span
+      <div class="discipline-band" aria-label="Areas of expertise">
+        <span>APPLIED AI</span><b aria-hidden="true">✳</b
+        ><span>MOBILE APPS</span><b aria-hidden="true">✳</b
+        ><span>PRODUCT CRAFT</span><b aria-hidden="true">✳</b
+        ><span>BUILT TO SHIP</span><b aria-hidden="true">✳</b>
+      </div>
+      <section class="work section" id="projects" aria-labelledby="work-title">
+        <div class="section-top">
+          <span class="eyebrow">01 / SELECTED WORK</span
+          ><span class="micro">A FEW THINGS I’VE HELPED BRING TO LIFE</span>
+        </div>
+        <div class="section-heading">
+          <h2 id="work-title">
+            Good ideas.<br /><span class="serif">Working products.</span>
+          </h2>
+          <div class="work-intro">
+            <p>
+              From grounded AI to everyday applications.<br />A selection of
+              things built with care.
+            </p>
+            <div
+              class="filters"
+              role="group"
+              aria-label="Filter projects"
+              hidden
             >
-          </div>
-          <div class="section-heading">
-            <h2 id="work-title">
-              Ideas, engineered<br />into <em>experiences.</em>
-            </h2>
-            <div class="work-intro">
-              <p>
-                A selection of AI products and applications I’ve built and
-                contributed to.
-              </p>
-              <div
-                class="filters"
-                role="group"
-                aria-label="Filter projects"
-                hidden
-              >
-                <button data-filter="all" aria-pressed="true">
-                  All work <span>04</span></button
-                ><button data-filter="ai" aria-pressed="false">AI</button
-                ><button data-filter="apps" aria-pressed="false">
-                  Applications
-                </button>
-              </div>
+              <button data-filter="all" aria-pressed="true">
+                All work <span>04</span></button
+              ><button data-filter="ai" aria-pressed="false">AI</button
+              ><button data-filter="apps" aria-pressed="false">
+                Applications
+              </button>
             </div>
           </div>
-          <p class="sr-only" id="filter-status" role="status"></p>
-          <div class="project-grid">
-            <article class="project project-chronicle" data-category="ai">
-              <div
-                class="project-art chronicle-art"
-                aria-label="Illustrative newspaper interface for The Chronicle"
-              >
-                <span class="art-label">PERSONALIZED INTELLIGENCE</span>
-                <div class="newspaper">
-                  <div class="paper-meta">
-                    <span>YOUR WORLD. IN PERSPECTIVE.</span
-                    ><span>PERSONAL EDITION</span>
-                  </div>
-                  <div class="paper-title">The Chronicle<span>✳</span></div>
-                  <div class="paper-topics">
-                    TECHNOLOGY <span>WORLD</span> SCIENCE
-                    <span>YOUR INTERESTS</span>
-                  </div>
-                  <div class="paper-columns">
-                    <div>
-                      <span class="paper-kicker"
-                        >A LITTLE CONTEXT CHANGES EVERYTHING</span
-                      >
-                      <h3>The news you care about.<br />A clearer picture.</h3>
-                      <p>
-                        Relevant stories. Thoughtful summaries.<br />An edition
-                        shaped around your interests.
-                      </p>
-                      <div class="paper-rule"></div>
-                      <span class="paper-source"
-                        >RETRIEVE → GROUND → GENERATE</span
-                      >
-                    </div>
-                    <div class="paper-orbit">
-                      <div></div>
-                      <span>c.</span>
-                    </div>
-                  </div>
-                  <div class="paper-footer">
-                    <span>POWERED BY AI. GROUNDED IN SOURCES.</span
-                    ><span>01</span>
-                  </div>
+        </div>
+        <p class="sr-only" id="filter-status" role="status"></p>
+        <div class="project-grid">
+          <article class="project" id="chronicle" data-category="ai">
+            <a
+              class="project-art chronicle-art"
+              href="https://thechronicle-ai.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit The Chronicle"
+              ><span class="art-label">01 / PERSONALIZED INTELLIGENCE</span>
+              <div class="newspaper">
+                <div class="paper-meta">
+                  YOUR WORLD. IN PERSPECTIVE. <span>PERSONAL EDITION</span>
                 </div>
-                <span class="art-footnote">Interface illustration</span>
+                <div class="paper-title">The Chronicle <span>✳</span></div>
+                <div class="paper-topics">
+                  TECHNOLOGY / WORLD / SCIENCE / YOU
+                </div>
+                <div class="paper-content">
+                  <div>
+                    <small>A LITTLE CONTEXT CHANGES EVERYTHING</small>
+                    <h3>The news you care about.<br />A clearer picture.</h3>
+                    <p>
+                      Relevant stories. Thoughtful summaries.<br />An edition
+                      shaped around your interests.
+                    </p>
+                    <div class="paper-lines"></div>
+                  </div>
+                  <div class="paper-globe">◎</div>
+                </div>
+                <div class="paper-meta">
+                  POWERED BY AI. GROUNDED IN SOURCES.<span>01</span>
+                </div>
               </div>
-              <div class="project-meta">
-                <span>01 / APPLIED AI</span><span>2026</span>
-              </div>
-              <h3 class="project-title">
-                The Chronicle
+              <span class="art-note">ORIGINAL INTERFACE ILLUSTRATION</span
+              ><span class="art-arrow" aria-hidden="true">↗</span></a
+            >
+            <div class="project-meta">
+              <span>APPLIED AI</span><span>2026</span>
+            </div>
+            <h3 class="project-title">The Chronicle</h3>
+            <p>
+              A personalized AI newspaper. Retrieved news, grounded summaries,
+              and an edition shaped around the reader.
+            </p>
+            <ul class="tags">
+              <li>LLM APIs</li>
+              <li>Grounded generation</li>
+              <li>Personalization</li>
+            </ul>
+            <details>
+              <summary>Inside the build <span>+</span></summary>
+              <div class="case-content">
+                <p>
+                  Built the retrieval-to-generation workflow: content retrieval,
+                  grounding, prompt orchestration, summarization, and structured
+                  output.
+                </p>
                 <a
                   href="https://thechronicle-ai.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Visit The Chronicle live application"
-                  >↗</a
-                >
-              </h3>
-              <p class="project-description">
-                A personalized AI newspaper that turns retrieved news into
-                grounded, structured editions around the reader’s interests.
-              </p>
-              <ul class="tags" aria-label="Technologies">
-                <li>LLM APIs</li>
-                <li>Grounded generation</li>
-                <li>Personalization</li>
-              </ul>
-              <details class="case-study">
-                <summary>
-                  Inside the build <span aria-hidden="true">+</span>
-                </summary>
-                <div class="case-content">
-                  <h4>The challenge</h4>
-                  <p>
-                    Make a reader’s news feed more relevant while keeping
-                    generated summaries anchored to retrieved content.
-                  </p>
-                  <h4>My contribution</h4>
-                  <p>
-                    Built the retrieval-to-generation workflow: content
-                    retrieval, grounding, prompt orchestration, summarization,
-                    and structured output.
-                  </p>
-                  <a
-                    class="inline-link"
-                    href="https://thechronicle-ai.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Explore the live application ↗</a
-                  >
-                </div>
-              </details>
-            </article>
-            <article class="project project-assistant" data-category="ai">
-              <div
-                class="project-art assistant-art"
-                aria-label="Conceptual diagram of a creator-specific retrieval augmented generation workflow"
-              >
-                <span class="art-label">CONTEXT IS THE DIFFERENCE</span>
-                <div class="rag-illustration">
-                  <div class="rag-question">
-                    <span class="rag-avatar">?</span>Which course should I start
-                    with?
-                  </div>
-                  <div class="rag-path">
-                    <span></span><b>RETRIEVE RELEVANT CONTEXT</b><span></span>
-                  </div>
-                  <div class="context-documents">
-                    <div>
-                      <span>01</span><strong>Courses</strong><i></i><i></i>
-                    </div>
-                    <div>
-                      <span>02</span><strong>Content</strong><i></i><i></i>
-                    </div>
-                    <div>
-                      <span>03</span><strong>Creator</strong><i></i><i></i>
-                    </div>
-                  </div>
-                  <div class="rag-answer">
-                    <span class="answer-symbol">✳</span>
-                    <div>
-                      <strong>Answers with context.</strong
-                      ><span>Grounded in the creator’s information.</span>
-                    </div>
-                    <b>↗</b>
-                  </div>
-                </div>
-                <span class="art-footnote"
-                  >Workflow illustration / Exly creator apps</span
+                  >Explore the live application ↗</a
                 >
               </div>
-              <div class="project-meta">
-                <span>02 / PRODUCTION AI · EXLY</span><span>2025–2026</span>
-              </div>
-              <h3 class="project-title">
-                Creator AI Assistant
-                <span class="project-symbol" aria-hidden="true">✳</span>
-              </h3>
-              <p class="project-description">
-                Creator-specific course assistance, bringing retrieval-grounded
-                answers into existing production mobile applications.
-              </p>
-              <ul class="tags" aria-label="Technologies">
-                <li>RAG</li>
-                <li>LLM integration</li>
-                <li>Conversational UI</li>
-              </ul>
-              <details class="case-study">
-                <summary>
-                  Inside the build <span aria-hidden="true">+</span>
-                </summary>
-                <div class="case-content">
-                  <h4>The challenge</h4>
-                  <p>
-                    Answer questions about a creator’s courses, offerings, and
-                    content using that creator’s information.
-                  </p>
-                  <h4>My contribution</h4>
-                  <p>
-                    Built a retrieval-augmented workflow and integrated
-                    conversational interfaces, contextual requests, loading
-                    states, and graceful failure handling into production apps.
-                  </p>
-                  <p class="case-note">
-                    Professional work at Exly. No private source code or creator
-                    data is reproduced here.
-                  </p>
+            </details>
+          </article>
+          <article class="project" data-category="ai">
+            <div class="project-art assistant-art">
+              <span class="art-label">02 / CONTEXT IS THE DIFFERENCE</span>
+              <div class="assistant-demo">
+                <div class="question">
+                  Which course should I start with? <span>↗</span>
                 </div>
-              </details>
-            </article>
-            <article class="project project-kaash" data-category="apps">
-              <div
-                class="project-art kaash-art"
-                aria-label="Illustrative mobile consultation interface"
+                <div class="context-path">
+                  ↓ &nbsp; RETRIEVE RELEVANT CONTEXT &nbsp; ↓
+                </div>
+                <div class="documents">
+                  <div><span>01</span><b>Courses</b><i></i><i></i></div>
+                  <div><span>02</span><b>Content</b><i></i><i></i></div>
+                  <div><span>03</span><b>Creator</b><i></i><i></i></div>
+                </div>
+                <div class="answer">
+                  <b>✳</b>
+                  <div>
+                    <strong>Answers with context.</strong
+                    ><small>Grounded in the creator’s information.</small>
+                  </div>
+                </div>
+              </div>
+              <span class="art-note"
+                >ORIGINAL WORKFLOW ILLUSTRATION / EXLY</span
               >
-                <span class="art-label">HUMAN CONNECTION, ENGINEERED</span>
-                <div class="phone-composition">
-                  <span class="phone-orbit orbit-one"></span
-                  ><span class="phone-orbit orbit-two"></span>
-                  <div class="phone">
-                    <div class="phone-camera"></div>
-                    <div class="phone-top">kaash<span>✳</span></div>
-                    <p>
-                      A little guidance.<br /><strong
-                        >A meaningful connection.</strong
-                      >
-                    </p>
-                    <div class="consultation-portrait">
-                      <svg viewBox="0 0 180 130" aria-hidden="true">
-                        <circle cx="90" cy="50" r="27" />
-                        <path d="M34 133c0-33 22-52 56-52s56 19 56 52" />
-                        <circle
-                          class="portrait-ring"
-                          cx="90"
-                          cy="65"
-                          r="58"
-                        /></svg
-                      ><span>LIVE CONSULTATION</span>
-                    </div>
-                    <div class="phone-line">
-                      <i></i>
-                      <div>
-                        <b>Your consultation</b
-                        ><span>Video & real-time chat</span>
-                      </div>
-                    </div>
-                    <div class="phone-button">Connect with a consultant ↗</div>
-                    <div class="phone-home"></div>
-                  </div>
-                  <div class="call-chip">
-                    <span>↗</span>
-                    <div>
-                      From booking<br /><strong>to conversation.</strong>
-                    </div>
-                  </div>
+            </div>
+            <div class="project-meta">
+              <span>PRODUCTION AI · EXLY</span><span>2025–2026</span>
+            </div>
+            <h3 class="project-title">Creator AI Assistant</h3>
+            <p>
+              Creator-specific assistance that brings retrieval-grounded answers
+              into production mobile applications.
+            </p>
+            <ul class="tags">
+              <li>RAG</li>
+              <li>LLM integration</li>
+              <li>Conversational UI</li>
+            </ul>
+            <details>
+              <summary>Inside the build <span>+</span></summary>
+              <div class="case-content">
+                <p>
+                  Built a retrieval-augmented workflow and integrated
+                  conversational interfaces, contextual requests, loading
+                  states, and graceful failure handling into production apps.
+                </p>
+                <p>
+                  Professional work at Exly. No private source code or creator
+                  data is reproduced here.
+                </p>
+              </div>
+            </details>
+          </article>
+          <article class="project" id="kaash" data-category="apps">
+            <a
+              class="project-art kaash-art"
+              href="https://play.google.com/store/apps/details?id=com.kaash.vaastu&hl=en_US"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Kaash on Google Play"
+              ><span class="art-label">03 / HUMAN CONNECTION, ENGINEERED</span>
+              <div class="kaash-composition">
+                <div class="kaash-copy">
+                  A little<br />guidance.<br /><span
+                    >A meaningful<br />connection.</span
+                  ><b>kaash✳</b>
                 </div>
-                <span class="art-footnote">Interface illustration</span>
+                <div class="large-phone">
+                  <div class="phone-camera"></div>
+                  <b>kaash<span>✳</span></b>
+                  <p>Your space.<br />Your peace of mind.</p>
+                  <div class="consultation-avatar">✺</div>
+                  <small>LIVE CONSULTATION</small>
+                  <div class="phone-cta">Start a conversation ↗</div>
+                </div>
               </div>
-              <div class="project-meta">
-                <span>03 / MOBILE APPLICATION</span><span>2025</span>
-              </div>
-              <h3 class="project-title">
-                Kaash
+              <span class="art-note">ORIGINAL INTERFACE ILLUSTRATION</span
+              ><span class="art-arrow" aria-hidden="true">↗</span></a
+            >
+            <div class="project-meta">
+              <span>LIVE CONSULTATION APP</span><span>2024</span>
+            </div>
+            <h3 class="project-title">Kaash</h3>
+            <p>
+              Booking, video sessions, and real-time chat. A complete mobile
+              experience for meaningful consultations.
+            </p>
+            <ul class="tags">
+              <li>Flutter</li>
+              <li>Real-time communication</li>
+              <li>Crashlytics</li>
+            </ul>
+            <details>
+              <summary>Inside the build <span>+</span></summary>
+              <div class="case-content">
+                <p>
+                  Built booking and consultation interfaces, integrated APIs and
+                  live communication, and debugged rendering and state-update
+                  issues. Owned Play Store release management, from signing and
+                  versioning to store listings and crash monitoring.
+                </p>
                 <a
                   href="https://play.google.com/store/apps/details?id=com.kaash.vaastu&hl=en_US"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="View Kaash on Google Play"
-                  >↗</a
+                  >View on Google Play ↗</a
                 >
-              </h3>
-              <p class="project-description">
-                A live consultation platform connecting booking flows, video
-                sessions, and real-time chat in a production mobile experience.
-              </p>
-              <ul class="tags" aria-label="Technologies">
-                <li>Flutter</li>
-                <li>Real-time communication</li>
-                <li>Crashlytics</li>
-              </ul>
-              <details class="case-study">
-                <summary>
-                  Inside the build <span aria-hidden="true">+</span>
-                </summary>
-                <div class="case-content">
-                  <h4>My contribution</h4>
-                  <p>
-                    Built booking and consultation interfaces, integrated APIs
-                    and live communication, and debugged rendering and
-                    state-update issues.
-                  </p>
-                  <h4>Beyond the interface</h4>
-                  <p>
-                    Owned Play Store release management, from signing and
-                    versioning to store listings and post-release crash
-                    monitoring.
-                  </p>
-                  <a
-                    class="inline-link"
-                    href="https://play.google.com/store/apps/details?id=com.kaash.vaastu&hl=en_US"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View on Google Play ↗</a
-                  >
-                </div>
-              </details>
-            </article>
-            <article class="project project-mutual" data-category="apps">
-              <div
-                class="project-art mutual-art"
-                aria-label="Illustration of circle-based social connections"
-              >
-                <span class="art-label"
-                  >GOOD PRODUCTS BRING PEOPLE TOGETHER</span
-                >
-                <div class="network-illustration">
-                  <svg
-                    class="network-lines"
-                    viewBox="0 0 540 290"
-                    aria-hidden="true"
-                  >
-                    <ellipse cx="270" cy="145" rx="170" ry="98" />
-                    <ellipse cx="270" cy="145" rx="104" ry="65" />
-                    <path
-                      d="M110 82L270 145 399 53M155 231L270 145 450 196M270 145L273 22"
-                    />
-                  </svg>
-                  <div class="network-center">m<span>.</span></div>
-                  <span class="network-person person-a">AB</span
-                  ><span class="network-person person-b">RK</span
-                  ><span class="network-person person-c">SS</span
-                  ><span class="network-person person-d">DP</span
-                  ><span class="network-person person-e">AM</span>
-                  <div class="network-label">
-                    A shared connection.<br /><strong
-                      >A new conversation.</strong
-                    >
-                  </div>
-                </div>
-                <span class="art-footnote">Connection model illustration</span>
               </div>
-              <div class="project-meta">
-                <span>04 / SOCIAL APPLICATION</span><span>2023</span>
+            </details>
+          </article>
+          <article class="project" data-category="apps">
+            <a
+              class="project-art mutual-art"
+              href="https://play.google.com/store/apps/details?id=com.mutual.live&hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Mutual Network on Google Play"
+              ><span class="art-label">04 / BETTER TOGETHER</span>
+              <div class="network">
+                <div class="network-ring"></div>
+                <div class="network-ring inner"></div>
+                <div class="network-center">m.</div>
+                <span class="person pa">AB</span
+                ><span class="person pb">RK</span
+                ><span class="person pc">DP</span
+                ><span class="person pd">AM</span>
               </div>
-              <h3 class="project-title">
-                Mutual Network
+              <div class="network-caption">
+                A shared connection.<br /><b>A new conversation.</b>
+              </div>
+              <span class="art-note"
+                >ORIGINAL CONNECTION MODEL ILLUSTRATION</span
+              ><span class="art-arrow" aria-hidden="true">↗</span></a
+            >
+            <div class="project-meta">
+              <span>SOCIAL APPLICATION</span><span>2023</span>
+            </div>
+            <h3 class="project-title">Mutual Network</h3>
+            <p>
+              A social platform built around discovery, real-time conversations,
+              and circle-based relationships.
+            </p>
+            <ul class="tags">
+              <li>Socket.IO</li>
+              <li>JWT authentication</li>
+              <li>Mobile UI</li>
+            </ul>
+            <details>
+              <summary>Inside the build <span>+</span></summary>
+              <div class="case-content">
+                <p>
+                  Built feeds, posts, profiles, discovery, connections, and
+                  real-time chat. Implemented circle-based relationships,
+                  search, filtering, and authentication. Handled app signing,
+                  store listings, submission, and staged rollout monitoring.
+                </p>
                 <a
                   href="https://play.google.com/store/apps/details?id=com.mutual.live&hl=en"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="View Mutual Network on Google Play"
-                  >↗</a
+                  >View on Google Play ↗</a
                 >
-              </h3>
-              <p class="project-description">
-                A social platform built around feeds, discovery, real-time
-                conversations, and a distinctive circle-based relationship
-                interface.
-              </p>
-              <ul class="tags" aria-label="Technologies">
-                <li>Socket.IO</li>
-                <li>JWT authentication</li>
-                <li>Mobile UI</li>
-              </ul>
-              <details class="case-study">
-                <summary>
-                  Inside the build <span aria-hidden="true">+</span>
-                </summary>
-                <div class="case-content">
-                  <h4>My contribution</h4>
-                  <p>
-                    Built the application frontend: feeds, posts, profiles,
-                    discovery, connections, and real-time chat. Implemented
-                    circle-based relationships, search, filtering, and
-                    authentication.
-                  </p>
-                  <h4>Release ownership</h4>
-                  <p>
-                    Handled app signing, store listing setup, Play Store
-                    submission, and staged rollout monitoring.
-                  </p>
-                  <a
-                    class="inline-link"
-                    href="https://play.google.com/store/apps/details?id=com.mutual.live&hl=en"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View on Google Play ↗</a
-                  >
-                </div>
-              </details>
-            </article>
+              </div>
+            </details>
+          </article>
+        </div>
+        <div class="work-footer">
+          <p>The details matter. So does shipping.</p>
+          <a
+            class="text-link"
+            href="https://github.com/Dev-anshPandey"
+            target="_blank"
+            rel="noopener noreferrer"
+            >More on GitHub ↗</a
+          >
+        </div>
+      </section>
+      <section class="about section" id="about" aria-labelledby="about-title">
+        <div class="section-top">
+          <span class="eyebrow">02 / THE PERSON BEHIND THE PRODUCTS</span
+          ><span class="micro">CURIOUS BY DEFAULT. ENGINEER BY PRACTICE.</span>
+        </div>
+        <div class="about-grid">
+          <div>
+            <h2 id="about-title">
+              I care how<br />it <span class="serif">works.</span><br />And how
+              it<br /><span class="serif">feels.</span>
+            </h2>
+            <div class="about-stamp" aria-hidden="true">
+              ai <span>✳</span> app
+            </div>
           </div>
-          <div class="work-footer">
-            <p>The details matter. So does getting it into people’s hands.</p>
-            <a
-              class="inline-link"
-              href="https://github.com/Dev-anshPandey"
-              target="_blank"
-              rel="noopener noreferrer"
-              >More on GitHub ↗</a
+          <div class="about-copy">
+            <p class="large-copy">
+              Hi, I’m Devansh. I build at the intersection of applied AI and
+              application engineering.
+            </p>
+            <p>
+              My foundation is shipping mobile products: thoughtful interfaces,
+              reliable API integrations, and all the states between “loading”
+              and “done.”
+            </p>
+            <p>
+              Now I’m bringing that same attention to AI. From creator-specific
+              RAG assistants to a personalized newspaper, I turn useful context
+              into experiences people can actually use.
+            </p>
+            <p>
+              I like understanding the whole journey. The system behind the
+              screen. The small interaction that makes it click. The release
+              that puts it in someone’s hands.
+            </p>
+            <div class="about-facts">
+              <div>
+                <span class="micro">BASED IN</span
+                ><strong>Delhi NCR, India</strong>
+              </div>
+              <div>
+                <span class="micro">FOUNDATION</span
+                ><strong>B.Tech, Computer Science</strong>
+              </div>
+            </div>
+            <a class="text-link" href="#contact"
+              >A good conversation starts here ↗</a
             >
           </div>
         </div>
-      </section>
-
-      <section
-        class="about-section section"
-        id="about"
-        aria-labelledby="about-title"
-      >
-        <div class="container">
-          <div class="section-top">
-            <span class="eyebrow">02 / THE ENGINEER BEHIND THE WORK</span
-            ><span class="section-note">Curiosity, with a shipping habit.</span>
-          </div>
-          <div class="about-grid">
-            <div>
-              <h2 id="about-title">
-                Two disciplines.<br />One <em>product mindset.</em>
-              </h2>
-              <div class="about-mark" aria-hidden="true">
-                <span>{</span><span>ai <i>×</i> app</span><span>}</span>
-              </div>
-            </div>
-            <div class="about-copy">
-              <p class="large-copy">
-                The most interesting part of AI is what people can actually do
-                with it.
-              </p>
-              <p>
-                My foundation is application engineering: building mobile
-                interfaces, integrating APIs, handling the states between
-                “loading” and “done,” and shipping to the App Store and Play
-                Store.
-              </p>
-              <p>
-                Now I’m bringing that same attention to applied AI. I’ve built
-                creator-specific RAG assistants, integrated OpenAI and Anthropic
-                APIs into production workflows, and developed a personalized AI
-                newspaper.
-              </p>
-              <p>
-                I care about the whole journey: useful context, reliable
-                responses, and an interface that feels natural.
-              </p>
-              <div class="about-facts">
-                <div>
-                  <span>BASED IN</span><strong>Delhi NCR, India</strong>
-                </div>
-                <div>
-                  <span>EDUCATION</span
-                  ><strong>B.Tech, Computer Science</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="capabilities">
-            <article>
-              <span class="capability-number">01</span>
-              <h3>Applied intelligence</h3>
-              <p>
-                Context-aware features that make models useful inside real
-                products.
-              </p>
-              <ul>
-                <li>RAG & embeddings</li>
-                <li>OpenAI & Anthropic APIs</li>
-                <li>Prompt engineering & LangChain</li>
-                <li>Structured output & function calling</li>
-              </ul>
-            </article>
-            <article>
-              <span class="capability-number">02</span>
-              <h3>Application craft</h3>
-              <p>
-                Responsive interfaces and considered flows, across platforms and
-                states.
-              </p>
-              <ul>
-                <li>React Native & Flutter</li>
-                <li>React.js & TypeScript</li>
-                <li>REST APIs & Socket.IO</li>
-                <li>Notifications & deep linking</li>
-              </ul>
-            </article>
-            <article>
-              <span class="capability-number">03</span>
-              <h3>Production ownership</h3>
-              <p>
-                The work that turns a working feature into a dependable release.
-              </p>
-              <ul>
-                <li>Python & data automation</li>
-                <li>Firebase Crashlytics</li>
-                <li>Debugging & error handling</li>
-                <li>App Store & Play Store releases</li>
-              </ul>
-            </article>
-          </div>
+        <div class="capabilities">
+          <article>
+            <span class="capability-icon" aria-hidden="true">✳</span
+            ><span class="micro">01 / INTELLIGENCE</span>
+            <h3>Make it useful.</h3>
+            <p>
+              RAG & embeddings · OpenAI & Anthropic APIs · LangChain ·
+              Structured output & function calling
+            </p>
+          </article>
+          <article>
+            <span class="capability-icon" aria-hidden="true">⌘</span
+            ><span class="micro">02 / APPLICATIONS</span>
+            <h3>Make it intuitive.</h3>
+            <p>
+              React Native · Flutter · React.js · TypeScript · REST APIs ·
+              Socket.IO · Deep linking
+            </p>
+          </article>
+          <article>
+            <span class="capability-icon" aria-hidden="true">↗</span
+            ><span class="micro">03 / PRODUCTION</span>
+            <h3>Make it happen.</h3>
+            <p>
+              Python · Data automation · Firebase Crashlytics · Debugging · App
+              Store & Play Store releases
+            </p>
+          </article>
         </div>
       </section>
-
       <section
-        class="experience-section section"
+        class="experience section"
         id="experience"
         aria-labelledby="experience-title"
       >
-        <div class="container">
-          <div class="section-top">
-            <span class="eyebrow">03 / EXPERIENCE</span
-            ><span class="section-note"
-              >From data to interfaces to intelligence.</span
-            >
-          </div>
-          <div class="experience-grid">
-            <div class="experience-intro">
-              <h2 id="experience-title">Built through<br /><em>doing.</em></h2>
-              <p>
-                Hands-on engineering across production applications, AI
-                integrations, and enterprise data workflows.
-              </p>
-              <a class="inline-link" href="#resumes"
-                >Request the full résumé ↓</a
-              >
-            </div>
-            <div class="timeline">
-              <article class="timeline-item">
-                <div class="timeline-date">APR 2025 — AUG 2026</div>
-                <div class="timeline-company">
-                  <h3>Exly</h3>
-                  <span>YC W19</span>
-                </div>
-                <h4>Junior Software Engineer</h4>
-                <p>
-                  Built React Native and Flutter features, integrated OpenAI and
-                  Anthropic workflows, and shipped conversational experiences
-                  with streaming, structured responses, and graceful fallbacks.
-                </p>
-                <p>
-                  Owned API-to-interface implementation, production debugging,
-                  and mobile store release support.
-                </p>
-                <div class="experience-tags">
-                  AI INTEGRATION / MOBILE / RELEASES
-                </div>
-              </article>
-              <article class="timeline-item">
-                <div class="timeline-date">JAN 2025 — APR 2025</div>
-                <h3>Exly</h3>
-                <h4>Software Engineering Intern</h4>
-                <p>
-                  Delivered cross-platform features with API integration, error
-                  handling, testing, network fallbacks, and production bug
-                  fixes.
-                </p>
-              </article>
-              <article class="timeline-item">
-                <div class="timeline-date">JUL 2024 — OCT 2024</div>
-                <h3>UKG</h3>
-                <h4>Data Services Consultant I</h4>
-                <p>
-                  Supported enterprise cloud migrations with data validation and
-                  transformation, using Python scripts to automate repetitive
-                  cleaning tasks.
-                </p>
-              </article>
-              <article class="timeline-item">
-                <div class="timeline-date">DEC 2023 — JUN 2024</div>
-                <h3>Dao Studio</h3>
-                <h4>Software Engineer Intern</h4>
-                <p>
-                  Built cross-platform utility-app features involving APIs,
-                  local caching, notifications, and smoother mobile
-                  interactions.
-                </p>
-              </article>
-            </div>
-          </div>
-          <div class="education-row" id="education">
-            <span class="eyebrow">THE FOUNDATION</span>
-            <div>
-              <h3>KIET Group of Institutions</h3>
-              <p>B.Tech in Computer Science & Engineering</p>
-            </div>
-            <div class="education-result">
-              <span>2020 — 2024</span
-              ><strong>8.18 <span>/ 10 CGPA</span></strong>
-            </div>
-          </div>
-          <p class="certifications">
-            Continued learning <span>LLM Engineering · Udemy</span
-            ><span>Artificial Intelligence · Coursera</span
-            ><span>Data Mining & Cloud Computing · NPTEL</span>
-          </p>
+        <div class="section-top">
+          <span class="eyebrow">03 / EXPERIENCE</span
+          ><span class="micro">LEARNING BY BUILDING. GROWING BY SHIPPING.</span>
         </div>
+        <div class="experience-grid">
+          <div class="experience-intro">
+            <h2 id="experience-title">
+              The work<br />behind<br /><span class="serif">the work.</span>
+            </h2>
+            <p>
+              Hands-on engineering across AI integrations, production
+              applications, and enterprise data.
+            </p>
+            <a class="button outline" href="#resumes">Request my résumé ↗</a>
+          </div>
+          <div class="timeline">
+            <article>
+              <div class="timeline-top">
+                <h3>Exly <span>YC W19</span></h3>
+                <span class="micro">APR 2025 — AUG 2026</span>
+              </div>
+              <h4>Junior Software Engineer</h4>
+              <p>
+                Built React Native and Flutter features. Integrated OpenAI and
+                Anthropic workflows with streaming, structured responses, and
+                graceful fallbacks. Owned API-to-interface implementation,
+                production debugging, and mobile release support.
+              </p>
+              <div class="experience-tags">
+                AI INTEGRATION / MOBILE / RELEASES
+              </div>
+            </article>
+            <article>
+              <div class="timeline-top">
+                <h3>Exly</h3>
+                <span class="micro">JAN 2025 — APR 2025</span>
+              </div>
+              <h4>Software Engineering Intern</h4>
+              <p>
+                Delivered cross-platform features with API integration, error
+                handling, network fallbacks, testing, and production bug fixes.
+              </p>
+            </article>
+            <article>
+              <div class="timeline-top">
+                <h3>UKG</h3>
+                <span class="micro">JUL 2024 — OCT 2024</span>
+              </div>
+              <h4>Data Services Consultant I</h4>
+              <p>
+                Supported enterprise cloud migrations with data validation and
+                transformation. Automated repetitive cleaning tasks with Python.
+              </p>
+            </article>
+            <article>
+              <div class="timeline-top">
+                <h3>Dao Studio</h3>
+                <span class="micro">DEC 2023 — JUN 2024</span>
+              </div>
+              <h4>Software Engineer Intern</h4>
+              <p>
+                Built cross-platform utility-app features involving APIs, local
+                caching, notifications, and smoother mobile interactions.
+              </p>
+            </article>
+          </div>
+        </div>
+        <div class="education-row">
+          <span class="micro">THE FOUNDATION</span>
+          <div>
+            <h3>KIET Group of Institutions</h3>
+            <p>B.Tech in Computer Science & Engineering</p>
+          </div>
+          <span>2020 — 2024<br /><strong>8.18 / 10 CGPA</strong></span>
+        </div>
+        <p class="certifications">
+          CONTINUED LEARNING <span>LLM Engineering · Udemy</span
+          ><span>Artificial Intelligence · Coursera</span
+          ><span>Data Mining & Cloud Computing · NPTEL</span>
+        </p>
       </section>
-
       <section
-        class="writing-section"
+        class="writing section"
         id="writing"
         aria-labelledby="writing-title"
       >
-        <div class="container writing-grid">
-          <div>
-            <span class="eyebrow">04 / FIELD NOTES</span>
-            <h2 id="writing-title">
-              Sometimes, I write<br />down the <em>fix.</em>
-            </h2>
-          </div>
+        <div class="section-top">
+          <span class="eyebrow">04 / FIELD NOTES</span
+          ><span class="micro">A FEW THINGS LEARNED ALONG THE WAY</span>
+        </div>
+        <div class="writing-grid">
+          <h2 id="writing-title">
+            Build. Break.<br />Fix. <span class="serif">Share.</span>
+          </h2>
           <a
             class="writing-link"
             href="https://medium.com/@devanshpandey87/how-i-fixed-react-navigation-type-errors-in-typescript-without-losing-my-mind-12191da976df"
             target="_blank"
             rel="noopener noreferrer"
-            ><span class="eyebrow">ENGINEERING / TYPESCRIPT</span>
-            <h3>
-              How I Fixed React Navigation Type Errors in TypeScript
-              <span>(Without Losing My Mind)</span>
-            </h3>
-            <span class="inline-link">Read on Medium ↗</span></a
+            ><span class="micro">ENGINEERING / TYPESCRIPT</span>
+            <h3>How I Fixed React Navigation Type Errors in TypeScript</h3>
+            <p>(Without Losing My Mind)</p>
+            <span class="text-link">Read the story on Medium ↗</span></a
           >
         </div>
       </section>
-
       <section
-        class="contact-section section"
+        class="contact section grid-surface"
         id="contact"
         aria-labelledby="contact-title"
       >
-        <div class="container">
-          <div class="section-top">
-            <span class="eyebrow">05 / WHAT’S NEXT?</span
-            ><span class="contact-availability"
-              ><span class="status-dot"></span> AVAILABLE TO JOIN
-              IMMEDIATELY</span
+        <div class="section-top">
+          <span class="eyebrow">05 / NEXT CHAPTER</span
+          ><span class="micro"
+            ><i class="status-dot"></i> AVAILABLE TO JOIN IMMEDIATELY</span
+          >
+        </div>
+        <div class="contact-heading">
+          <p>HAVE SOMETHING IN MIND?</p>
+          <h2 id="contact-title">
+            Let’s make<br /><span>it happen.</span
+            ><a
+              href="mailto:devanshpandey87@gmail.com"
+              aria-label="Email Devansh"
+              class="contact-arrow"
+              >↗</a
             >
-          </div>
-          <div class="contact-grid">
-            <div>
-              <h2 id="contact-title">
-                Let’s build<br />something <em>useful.</em>
-              </h2>
-              <p>
-                Have an AI or application engineering opportunity?<br />I’d love
-                to hear what you’re working on.
-              </p>
-              <a class="contact-email" href="mailto:devanshpandey87@gmail.com"
-                >devanshpandey87@gmail.com <span aria-hidden="true">↗</span></a
-              ><button class="copy-email" type="button" hidden>
-                Copy email address <span aria-hidden="true">⧉</span></button
+          </h2>
+        </div>
+        <div class="contact-grid">
+          <div>
+            <p>
+              For AI & application engineering opportunities,<br />interesting
+              ideas, or a simple hello.
+            </p>
+            <a class="contact-email" href="mailto:devanshpandey87@gmail.com"
+              >devanshpandey87@gmail.com ↗</a
+            >
+            <div class="copy-row">
+              <button class="copy-email" type="button" hidden>
+                Copy email ⧉</button
               ><span class="copy-status" role="status"></span>
             </div>
-            <div class="contact-side">
-              <div class="resume-card" id="resumes">
-                <span class="eyebrow">A CLOSER LOOK</span>
-                <h3>Pick your perspective.</h3>
-                <p>
-                  Request my résumé with a focus on the role you’re hiring for.
-                </p>
-                <a
-                  href="mailto:devanshpandey87@gmail.com?subject=AI%20engineering%20resume%20request"
-                  >Request AI résumé <span aria-hidden="true">↗</span></a
-                ><a
-                  href="mailto:devanshpandey87@gmail.com?subject=Application%20engineering%20resume%20request"
-                  >Request application résumé
-                  <span aria-hidden="true">↗</span></a
-                >
-              </div>
-              <div class="socials">
-                <a
-                  href="https://github.com/Dev-anshPandey"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >GitHub ↗</a
-                ><a
-                  href="https://linkedin.com/in/devanshpandey87"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >LinkedIn ↗</a
-                ><a
-                  href="https://medium.com/@devanshpandey87"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Medium ↗</a
-                >
-              </div>
+            <div class="socials">
+              <a
+                href="https://github.com/Dev-anshPandey"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitHub ↗</a
+              ><a
+                href="https://linkedin.com/in/devanshpandey87"
+                target="_blank"
+                rel="noopener noreferrer"
+                >LinkedIn ↗</a
+              ><a
+                href="https://medium.com/@devanshpandey87"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Medium ↗</a
+              >
             </div>
           </div>
-          <footer class="footer">
-            <a class="footer-name" href="#home">Devansh Pandey<span>.</span></a>
-            <p>Thoughtfully built. Always evolving.</p>
-            <a href="#home">Back to top ↑</a>
-          </footer>
+          <div class="resume-card" id="resumes">
+            <span class="micro">WANT THE FULL PICTURE?</span>
+            <h3>Pick your perspective.</h3>
+            <p>Request a résumé focused on your role.</p>
+            <a
+              href="mailto:devanshpandey87@gmail.com?subject=AI%20engineering%20resume%20request"
+              >AI engineering résumé ↗</a
+            ><a
+              href="mailto:devanshpandey87@gmail.com?subject=Application%20engineering%20resume%20request"
+              >Application engineering résumé ↗</a
+            >
+          </div>
         </div>
+        <footer>
+          <a class="wordmark" href="#home">DEVANSH<span>®</span></a>
+          <p>THOUGHTFULLY BUILT. ALWAYS EVOLVING.</p>
+          <a href="#home">BACK TO TOP ↑</a>
+        </footer>
       </section>
     </main>
   </body>
