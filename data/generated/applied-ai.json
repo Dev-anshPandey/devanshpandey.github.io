@@ -1,0 +1,46 @@
+{
+  "id": "applied-ai",
+  "label": "Applied AI / GenAI",
+  "name": "Devansh Pandey",
+  "sourceFile": "Resume_Devansh.pdf",
+  "summary": "Software Engineer transitioning into Applied AI and Generative AI, with hands-on experience building RAG-based assistants, integrating LLM APIs, designing grounded generation workflows, and shipping conversational AI into production applications. Strong software-engineering foundation across Python, TypeScript, APIs, and production mobile systems.",
+  "experience": [
+    "Junior Software Engineer Apr 2025 – Aug 2026\nExly (YC W19)\n• Integrated OpenAI and Anthropic LLM APIs into production application workflows, including response handling,\nstructured JSON parsing, loading states, streaming conversational experiences, and graceful fallback behavior.\n• Designed prompt and response-handling logic for AI-assisted flows, keeping model outputs relevant, structured, and\nreliably consumable by application interfaces.\n• Contributed to creator-specific AI experiences while also building and maintaining production React Native and\nFlutter applications that consumed AI and backend APIs.\n• Worked across product requirements, API integration, UI implementation, debugging, code reviews, and production\nissue resolution within an agile engineering team.",
+    "Software Engineering Intern Jan 2025 – Apr 2025\nExly (YC W19)\n• Shipped production application features end-to-end with API integration, comprehensive error handling, testing, and\nnetwork fallback mechanisms.",
+    "Data Services Consultant I Jul 2024 – Oct 2024\nUKG (Ultimate Kronos Group)\n• Built Python scripts for data cleaning, transformation, validation, and automation across structured enterprise datasets\nused in client cloud-migration workflows.",
+    "Software Engineer Intern Dec 2023 – Jun 2024\nDao Studio\n• Built cross-platform application features involving APIs, local caching, notifications, and production-facing UI workflows."
+  ],
+  "projects": [
+    "Exly Creator App – Creator-Specific AI Course Assistant 2025 – 2026",
+    "Creator-Specific RAG Assistant\n• Built creator-specific conversational AI assistants that allow users to ask questions about courses, course content,\nofferings, and creator information using creator-specific data as grounding context.\n• Implemented a Retrieval-Augmented Generation (RAG) workflow that retrieves relevant course information\nbefore generation, enabling contextual answers instead of relying solely on the LLM’s general knowledge.\n• Integrated the assistant into existing production mobile applications with conversational UI, contextual request handling, API integration, loading states, and graceful failure handling.",
+    "Chronicle – Personalized AI Newspaper 2026",
+    "Live Application\n• Built an AI-powered newspaper platform that retrieves relevant news content and generates personalized editions based\non user-selected topics and interests.\n• Developed an end-to-end LLM workflow covering content retrieval, grounding, prompt orchestration, summarization,\nand structured generation.\n• Integrated LLM APIs to transform retrieved information into concise, newspaper-style summaries while keeping generated content grounded in retrieved sources."
+  ],
+  "skills": [
+    "Generative AI & LLMs: RAG, Prompt Engineering, Grounded Generation, OpenAI API, Anthropic API, LangChain,",
+    "Structured JSON Output, Function Calling, Embeddings, Vector Databases",
+    "Languages: Python, TypeScript, JavaScript, Dart, Java",
+    "Frontend & Mobile: React Native, Flutter, React.js",
+    "Developer Tools: Git, GitHub, Android Studio, VS Code"
+  ],
+  "education": [
+    "KIET Group of Institutions 2020 – 2024",
+    "Bachelor of Technology in Computer Science and Engineering, CGPA: 8.18 Ghaziabad, India"
+  ],
+  "certifications": [
+    "LLM Engineering: Master AI & Large Language Models (Udemy) | Artificial Intelligence (Coursera) | Data Mining",
+    "(NPTEL)"
+  ],
+  "links": [
+    "https://linkedin.com/in/devanshpandey87",
+    "https://github.com/Dev-anshPandey",
+    "https://devanshpandey.is-a.dev/",
+    "https://thechronicle-ai.vercel.app/"
+  ],
+  "contact": {
+    "email": "devanshpandey87@gmail.com",
+    "github": "https://github.com/Dev-anshPandey",
+    "linkedin": "https://linkedin.com/in/devanshpandey87",
+    "portfolio": "https://devanshpandey.is-a.dev/"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "forward-deployed",
+  "label": "Forward Deployed Engineer",
+  "name": "Devansh Pandey",
+  "sourceFile": "Devansh_Pandey_Forward_Deployed_Engineer_Resume.pdf",
+  "summary": "Software Engineer with experience translating product requirements into production applications, integrating AI and backend APIs, and supporting releases. Built creator-specific RAG assistants and grounded LLM workflows; automated enterprise data preparation for client cloud migrations. Brings hands-on implementation, debugging, and delivery experience to customer-focused engineering.",
+  "experience": [
+    "Exly (YC W19) | Junior Software Engineer Apr 2025 - Aug 2026\n• Translated product requirements into production application workflows, owning API integration, application\nstate, error handling, debugging, and release validation within an agile team.\n• Integrated OpenAI and Anthropic APIs into creator-facing AI experiences with streaming responses,\nstructured JSON parsing, prompt logic, and graceful fallback behavior.\n• Delivered real-time chat, video calling, notifications, and deep links; handled permissions, session states,\nand network failures across React Native and Flutter applications.\n• Investigated QA and production issues using Firebase Crashlytics; managed store submissions, build\nversioning, compliance checks, and review rejections through release.",
+    "Exly (YC W19) | Software Engineering Intern Jan 2025 - Apr 2025\n• Shipped cross-platform features from API integration through testing and production fixes under senior\nreview, including error handling and network fallback mechanisms.",
+    "UKG (Ultimate Kronos Group) | Data Services Consultant I Jul 2024 - Oct 2024\n• Supported client cloud migrations by building Python scripts to clean, transform, and validate structured\nenterprise datasets and automate repetitive data-preparation tasks.",
+    "Dao Studio | Software Engineer Intern Dec 2023 - Jun 2024\n• Integrated APIs, local caching, and notifications into cross-platform utility applications; improved UI-thread\nbehavior for smoother interactions."
+  ],
+  "projects": [
+    "Exly Creator App - Creator-Specific AI Course Assistant 2025 - 2026\n• Built a creator-specific RAG workflow to retrieve course and offering information as grounding context;\nintegrated the assistant into production apps with conversational UI and graceful failure handling.",
+    "Chronicle - Personalized AI Newspaper 2026\n• Built an end-to-end AI news workflow spanning content retrieval, grounding, prompt orchestration,\nsummarization, and structured generation, tailored to user-selected topics and interests.",
+    "Kaash - Live Consultation Platform Jul 2025 - Dec 2025\n• Delivered booking, live video, and chat integrations with application-state and error handling; owned Play\nStore signing, versioning, submission, and post-release crash monitoring.",
+    "Mutual Network - Social Networking Platform May 2023 - Nov 2023\n• Built social feeds, profiles, discovery, and relationship UI with Socket.IO chat and JWT authentication;\nmanaged Play Store submission and staged rollout monitoring."
+  ],
+  "skills": [
+    "AI & LLMs: RAG, OpenAI API, Anthropic API, LangChain, prompt engineering, embeddings, vector databases,",
+    "structured JSON output, function calling, streaming responses",
+    "Engineering: Python, TypeScript, JavaScript, Dart, Java, React.js, React Native, Flutter, REST APIs, Socket.IO,",
+    "JWT, Firebase, Crashlytics, Git, GitHub",
+    "Delivery: Requirements implementation, API integration, data validation, production debugging, error",
+    "handling, release validation, App Store / Play Store submissions"
+  ],
+  "education": [
+    "KIET Group of Institutions | B.Tech, Computer Science and Engineering 2020 - 2024",
+    "CGPA: 8.18 | Ghaziabad, India"
+  ],
+  "certifications": [
+    "LLM Engineering: Master AI & Large Language Models (Udemy); Artificial Intelligence",
+    "(Coursera); Data Mining and Cloud Computing (NPTEL)"
+  ],
+  "links": [
+    "https://linkedin.com/in/devanshpandey87",
+    "https://github.com/Dev-anshPandey",
+    "https://devanshpandey.is-a.dev/",
+    "https://thechronicle-ai.vercel.app/",
+    "https://play.google.com/store/apps/details?id=com.kaash.vaastu",
+    "https://play.google.com/store/apps/details?id=com.mutual.live"
+  ],
+  "contact": {
+    "email": "devanshpandey87@gmail.com",
+    "github": "https://github.com/Dev-anshPandey",
+    "linkedin": "https://linkedin.com/in/devanshpandey87",
+    "portfolio": "https://devanshpandey.is-a.dev/"
+  }
+}

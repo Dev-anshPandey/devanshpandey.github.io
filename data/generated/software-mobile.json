@@ -1,0 +1,44 @@
+{
+  "id": "software-mobile",
+  "label": "Software / Mobile Engineer",
+  "name": "Devansh Pandey",
+  "sourceFile": "DevanshPandey.pdf",
+  "summary": "Software Engineer experienced in building and shipping production mobile applications using React Native, Flutter, TypeScript, JavaScript, and Dart. Hands-on experience with real-time chat, video calling, push notifications, deep linking, Firebase Crashlytics, REST APIs, complex UI flows, and production debugging, with ownership across feature development, integration, testing, and release support.",
+  "experience": [
+    "Junior Software Engineer Apr 2025 – Aug 2026\nExly (YC W19)\n• Built and shipped production features across React Native and Flutter applications, owning implementation from API\nintegration and application state to UI behavior, debugging, and release validation.\n• Integrated production mobile workflows including video calling and real-time chat, handling permissions, session states,\nnetwork failures, loading states, and user-facing error scenarios.\n• Implemented push notification and deep-linking flows to route users from notifications and external entry points\ndirectly to relevant application screens.\n• Integrated Firebase Crashlytics, investigated production and QA-reported issues, resolved bugs within sprint timelines,\nand extracted repeated UI patterns into reusable components across the codebase.\n• Managed App Store and Play Store release submissions, including build versioning, store listing updates, compliance\nchecks, and resolving review rejections to keep release cycles on schedule.",
+    "Software Engineering Intern Jan 2025 – Apr 2025\nExly (YC W19)\n• Delivered cross-platform mobile features end-to-end under senior engineering review, including API integration, UI\nimplementation, error handling, testing, and production bug fixes.",
+    "Data Services Consultant I Jul 2024 – Oct 2024\nUKG (Ultimate Kronos Group)\n• Supported enterprise cloud-migration workflows by validating and transforming client datasets and building Python\nscripts to automate repetitive data-cleaning tasks.",
+    "Software Engineer Intern Dec 2023 – Jun 2024\nDao Studio\n• Built cross-platform utility-app features including local caching, notifications, and UI-thread improvements for smoother\nmobile interactions."
+  ],
+  "projects": [
+    "Kaash – Live Consultation Platform Jul 2025 – Dec 2025\nPlay Store\n• Built production consultation and booking experiences, implementing UI flows, API integration, application states,\nand user-facing error handling.\n• Integrated live video consultation and real-time chat workflows to support interactive sessions between users and\nconsultants.\n• Debugged rendering and state-update issues in complex mobile screens to improve responsiveness and maintain a\nstable consultation experience.\n• Owned end-to-end Play Store release management, including build signing, versioning, store listing content, and\nmonitoring post-release crash reports to catch regressions early.",
+    "Mutual Network – Social Networking Platform May 2023 – Nov 2023\nPlay Store\n• Built the frontend for a social media platform featuring feeds, post creation, user discovery, profiles, connections, and\nreal-time chat.\n• Developed a complex circle-based relationship UI for visualizing mutual connections and implemented search, filtering,\nSocket.IO communication, and JWT-based authentication.\n• Handled Play Store submission and release rollout, including app signing, store listing setup, and staged rollout\nmonitoring to catch device-specific issues before full release."
+  ],
+  "skills": [
+    "Languages: TypeScript, JavaScript, Dart, Java, Python",
+    "Mobile Development: React Native, Flutter",
+    "Mobile & API Integration: REST APIs, Firebase, Firebase Crashlytics, Push Notifications, Deep Linking, Socket.IO,",
+    "JWT Authentication",
+    "Developer Tools: Git, GitHub, Android Studio, VS Code"
+  ],
+  "education": [
+    "KIET Group of Institutions 2020 – 2024",
+    "Bachelor of Technology in Computer Science and Engineering, CGPA: 8.18 Ghaziabad, India"
+  ],
+  "certifications": [
+    "Artificial Intelligence (Coursera) | Data Mining (NPTEL) | Cloud Computing (NPTEL)"
+  ],
+  "links": [
+    "https://linkedin.com/in/devanshpandey87",
+    "https://github.com/Dev-anshPandey",
+    "https://devanshpandey.is-a.dev/",
+    "https://play.google.com/store/apps/details?id=com.kaash.vaastu",
+    "https://play.google.com/store/apps/details?id=com.mutual.live"
+  ],
+  "contact": {
+    "email": "devanshpandey87@gmail.com",
+    "github": "https://github.com/Dev-anshPandey",
+    "linkedin": "https://linkedin.com/in/devanshpandey87",
+    "portfolio": "https://devanshpandey.is-a.dev/"
+  }
+}

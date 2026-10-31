@@ -1,0 +1,16 @@
+node_modules/
+.next/
+out/
+.env*
+!.env.example
+.vercel/
+*.tsbuildinfo
+.DS_Store
+coverage/
+artifacts/
+resumes/
+*.pdf
+*.docx
+*.doc
+data/private/
+tmp/
