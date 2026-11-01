@@ -4,7 +4,8 @@ export type ResumeSection =
   | "projects"
   | "skills"
   | "education"
-  | "certifications";
+  | "certifications"
+  | "contact";
 export interface ResumeData {
   id: string;
   label: string;
@@ -28,13 +29,14 @@ export interface KnowledgeChunk {
   id: string;
   resumeId: string;
   section: ResumeSection;
+  title?: string;
   text: string;
   embedding: number[];
 }
 export interface KnowledgeBase {
   version: 1;
   embedding: {
-    provider: "local-hash" | "openai";
+    provider: "local-hash";
     model: string;
     dimensions: number;
   };

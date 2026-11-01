@@ -3,8 +3,7 @@ import { readFile, readdir, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { PDFParse } from "pdf-parse";
 import mammoth from "mammoth";
-import { embedMany } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { buildKnowledge } from "../lib/knowledge-build";
 import {
   cleanResumeText,
   localEmbedding,
@@ -63,6 +62,7 @@ for (const file of files) {
       `${file}: insufficient extractable text. OCR scanned résumés first; no empty knowledge files were written.`,
     );
   const sections: Record<ResumeSection, string[]> = {
+    contact: [],
     summary: [],
     experience: [],
     projects: [],
@@ -129,60 +129,8 @@ for (const file of files) {
     },
   });
 }
-const chunks: KnowledgeBase["chunks"] = [];
-for (const resume of resumes)
-  for (const section of Object.keys(headings)
-    .map((k) => headings[k])
-    .filter((s, i, a) => a.indexOf(s) === i)) {
-    const body = Array.isArray(resume[section])
-      ? resume[section].join("\n")
-      : resume[section];
-    const lines = body.split("\n");
-    let text = "";
-    const flush = () => {
-      if (text.trim())
-        chunks.push({
-          id: `${resume.id}-${section}-${chunks.length}`,
-          resumeId: resume.id,
-          section,
-          text: text.trim(),
-          embedding: [],
-        });
-    };
-    for (const line of lines) {
-      if (text.length + line.length > 900 && text.length) {
-        flush();
-        text = text.split("\n").slice(-2).join("\n") + "\n";
-      }
-      text += line + "\n";
-    }
-    flush();
-  }
-let embedding: KnowledgeBase["embedding"] = {
-  provider: "local-hash",
-  model: "lexical-hash-v1",
-  dimensions: 256,
-};
-if (process.env.OPENAI_API_KEY && !process.argv.includes("--offline")) {
-  const model = process.env.OPENAI_EMBEDDING_MODEL || "text-embedding-3-small";
-  const result = await embedMany({
-    model: openai.embeddingModel(model),
-    values: chunks.map((c) => c.text),
-    maxRetries: 2,
-  });
-  result.embeddings.forEach((vector, i) => {
-    chunks[i].embedding = vector;
-  });
-  embedding = {
-    provider: "openai",
-    model,
-    dimensions: result.embeddings[0].length,
-  };
-} else
-  chunks.forEach((c) => {
-    c.embedding = localEmbedding(c.text);
-  });
-const knowledge: KnowledgeBase = { version: 1, embedding, resumes, chunks };
+const knowledge = buildKnowledge(resumes);
+const { chunks, embedding } = knowledge;
 await mkdir("data/generated", { recursive: true });
 for (const resume of resumes)
   await writeFile(

@@ -1,4 +1,6 @@
 "use client";
+
+import { portfolioSourceUrl } from "@/data/portfolio-supplement";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -14,7 +16,6 @@ import {
   Moon,
   RotateCcw,
   Smile,
-  Sparkles,
   Square,
   Sun,
   X,
@@ -41,7 +42,6 @@ const icons = {
   me: Smile,
   projects: BriefcaseBusiness,
   skills: Layers3,
-  fun: Sparkles,
   contact: Mail,
 };
 const textOf = (m: PortfolioMessage) =>
@@ -217,29 +217,8 @@ export function Portfolio() {
     });
   }
   function choose(section: Section) {
-    if (busy || sending.current || !ready) return;
-    clearError();
-    setNotice("");
-    nearBottom.current = true;
-    const preset = presets.find((p) => p.id === section)!;
-    setMessages((current) => [
-      ...current,
-      {
-        id: crypto.randomUUID(),
-        role: "user",
-        parts: [{ type: "text", text: preset.question }],
-      },
-      {
-        id: crypto.randomUUID(),
-        role: "assistant",
-        metadata: {
-          section,
-          suggestions: contextualSuggestions(preset.question),
-          mode: "resume",
-        },
-        parts: [{ type: "text", text: sectionSummary(section) }],
-      },
-    ]);
+    const preset = presets.find((p) => p.id === section);
+    if (preset) ask(preset.question);
   }
   async function stopReply() {
     await stop();
@@ -446,8 +425,11 @@ export function Portfolio() {
                     transition={{ duration: reducedMotion ? 0 : 0.2 }}
                   >
                     {message.role === "assistant" &&
-                    message.metadata?.section ? (
-                      <ProfileCard section={message.metadata.section} />
+                    (message.metadata?.card || message.metadata?.section) ? (
+                      <ProfileCard
+                        section={message.metadata?.section}
+                        card={message.metadata?.card}
+                      />
                     ) : message.role === "assistant" ? (
                       <MessageContent text={textOf(message)} />
                     ) : (
@@ -476,10 +458,6 @@ export function Portfolio() {
                               Regenerate
                             </button>
                           )}
-                          {message.metadata?.mode === "resume" &&
-                            !message.metadata.section && (
-                              <span>Résumé extracts</span>
-                            )}
                         </div>
                         {message.metadata?.sources?.length ? (
                           <div className="answer-sources">
@@ -487,7 +465,7 @@ export function Portfolio() {
                             {message.metadata.sources.map((source) => (
                               <a
                                 key={source.id}
-                                href={`/api/resume/${source.id}`}
+                                href={source.id === "portfolio" ? portfolioSourceUrl : `/api/resume/${source.id}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >

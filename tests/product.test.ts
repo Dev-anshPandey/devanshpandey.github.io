@@ -5,7 +5,7 @@ import { simulateReadableStream } from "ai";
 import { chatSamples } from "./chat-samples";
 import { fastReply, policyReply } from "../lib/chat-policy";
 import { chatSchema } from "../lib/chat-validation";
-import { knowledge, searchChunks } from "../lib/retrieval";
+import { knowledge, retrieve, constructRetrievalQuery } from "../lib/retrieval";
 import { redactPrivateData } from "../lib/knowledge-schema";
 import { createAnswerResponse } from "../lib/chat-response";
 import {
@@ -21,7 +21,7 @@ const message = (text: string): PortfolioMessage => ({
 });
 
 for (const sample of chatSamples)
-  test(`${sample.behavior}: ${sample.input.slice(0, 70) || "(empty)"}`, () => {
+  test(`${sample.behavior}: ${sample.input.slice(0, 70) || "(empty)"}`, async () => {
     if (sample.behavior === "fast") {
       const response = fastReply(sample.input);
       assert.ok(response);
@@ -37,8 +37,7 @@ for (const sample of chatSamples)
       );
     if (sample.behavior === "retrieve")
       assert.ok(
-        searchChunks(sample.input)
-          .slice(0, 6)
+        (await retrieve(constructRetrievalQuery(sample.input).query))
           .some((c) =>
             c.text.toLowerCase().includes(sample.contains.toLowerCase()),
           ),
@@ -79,7 +78,7 @@ test("provider failure returns grounded fallback, not raw errors", async () => {
     paced: false,
   }).text();
   assert.match(body, /UKG/);
-  assert.match(body, /"mode":"resume"/);
+  assert.match(body, /"mode":"retrieval-fallback"/);
   assert.doesNotMatch(body, /DO_NOT_EXPOSE|invalid secret/);
 });
 test("interrupted stream preserves partial output and flags Continue", async () => {
@@ -88,7 +87,12 @@ test("interrupted stream preserves partial output and flags Continue", async () 
       stream: simulateReadableStream({
         chunks: [
           { type: "text-start", id: "x" },
-          { type: "text-delta", id: "x", delta: "At UKG, I used Python" },
+          {
+            type: "text-delta",
+            id: "x",
+            delta:
+              "At UKG, I used Python to automate data validation workflows.",
+          },
           { type: "error", error: new Error("provider disconnected") },
         ],
       }),
