@@ -5,7 +5,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 export class MemoryLimiter {
   private buckets = new Map<string, { count: number; reset: number }>();
   constructor(
-    private limit = 10,
+    private limit = 6,
     private windowMs = 60000,
   ) {}
   check(key: string, now = Date.now()) {
@@ -41,12 +41,14 @@ export async function rateLimit(request: Request) {
   if (url && token) {
     shared ??= new Ratelimit({
       redis: new Redis({ url, token }),
-      limiter: Ratelimit.slidingWindow(10, "1 m"),
+      limiter: Ratelimit.slidingWindow(6, "1 m"),
       prefix: "portfolio:chat",
       analytics: false,
-      timeout: 0,
+      timeout: 1000,
     });
-    return shared.limit(key);
+    const result = await shared.limit(key);
+    if (result.reason === "timeout") throw new Error("Rate limit unavailable");
+    return result;
   }
   return local.check(key);
 }

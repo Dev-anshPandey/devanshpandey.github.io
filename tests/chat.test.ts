@@ -163,34 +163,24 @@ test("SDK emits incremental UI-compatible stream events", async () => {
   assert.match(body, /\[DONE\]/);
 });
 
-test("route falls back without credentials, enforces 429, and disables paid generation in production", async () => {
+test("zero-API requests remain usable indefinitely, including production", async () => {
   const saved = { ...process.env };
   try {
-    Object.assign(process.env, { NODE_ENV: "development" });
-    delete process.env.OPENAI_API_KEY;
+    delete process.env.GROQ_API_KEY;
     delete process.env.UPSTASH_REDIS_REST_URL;
     delete process.env.UPSTASH_REDIS_REST_TOKEN;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) {
       const response = await POST(
-        request(
-          { messages: [message("Tell me about UKG")] },
-          { origin: "http://127.0.0.1:3000" },
-        ),
+        request({ messages: [message("Tell me about UKG")] }),
       );
       assert.equal(response.status, 200);
-      await response.body?.cancel();
+      assert.match(await response.text(), /UKG/);
     }
-    const limited = await POST(
-      request({ messages: [message("Tell me about UKG")] }),
-    );
-    assert.equal(limited.status, 429);
-    assert.ok(Number(limited.headers.get("retry-after")) > 0);
     Object.assign(process.env, { NODE_ENV: "production" });
-    const fallback = await POST(
-      request({ messages: [message("Tell me about UKG")] }),
+    assert.equal(
+      (await POST(request({ messages: [message("Me")] }))).status,
+      200,
     );
-    assert.equal(fallback.status, 200);
-    await fallback.body?.cancel();
   } finally {
     for (const key of Object.keys(process.env))
       if (!(key in saved)) delete process.env[key];

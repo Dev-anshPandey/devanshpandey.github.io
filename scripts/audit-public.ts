@@ -10,7 +10,7 @@ async function scan(directory: string) {
     }
     if (!/\.(ts|tsx|json|md|css)$/.test(file)) continue;
     const text = await readFile(file, "utf8");
-    if (/sk-(?:proj-)?[A-Za-z0-9_-]{20,}/.test(text))
+    if (/(?:sk-(?:proj-)?|gsk_)[A-Za-z0-9_-]{20,}/.test(text))
       errors.push(`${file}: possible provider credential`);
     if (file.startsWith("data/") && /(?:\+?91[ -]?)?[6-9]\d{9}\b/.test(text))
       errors.push(`${file}: possible unredacted phone number`);

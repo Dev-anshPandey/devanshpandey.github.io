@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { responseCardSchema } from "./portfolio-response";
 import type { PortfolioMessage } from "./chat-types";
 export const CHAT_STORAGE_KEY = "devansh-portfolio-chat:v2";
 const storedMessage = z.object({
@@ -9,20 +10,29 @@ const storedMessage = z.object({
     .max(8),
   metadata: z
     .object({
-      section: z
-        .enum(["me", "projects", "skills", "fun", "contact"])
-        .optional(),
+      card: responseCardSchema.optional(),
+      section: z.enum(["me", "projects", "skills", "contact"]).optional(),
       suggestions: z.array(z.string().max(160)).max(3).optional(),
       sources: z
         .array(
           z.object({
-            id: z.enum(["software-mobile", "applied-ai", "forward-deployed"]),
+            id: z.enum(["software-mobile", "applied-ai", "forward-deployed", "portfolio"]),
             title: z.string().max(80),
           }),
         )
-        .max(3)
+        .max(4)
         .optional(),
-      mode: z.enum(["local", "model", "resume"]).optional(),
+      mode: z
+        .enum([
+          "local",
+          "model",
+          "resume",
+          "rag-model",
+          "predefined-fallback",
+          "retrieval-fallback",
+          "unknown-fallback",
+        ])
+        .optional(),
       interrupted: z.boolean().optional(),
     })
     .optional(),
@@ -87,7 +97,7 @@ export async function resilientFetch(
         if (typeof body.error === "string") message = body.error;
       }
       const retryable =
-        response.status === 429 || response.status >= 500 || response.ok;
+        response.status >= 500 || response.ok;
       const seconds =
         response.status === 429
           ? Math.min(

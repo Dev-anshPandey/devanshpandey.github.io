@@ -2,6 +2,7 @@ import { chatSchema, readLimitedJson } from "@/lib/chat-validation";
 import { rateLimit } from "@/lib/rate-limit";
 import { createAnswerResponse } from "@/lib/chat-response";
 import { fastReply, policyReply } from "@/lib/chat-policy";
+import { detectIntent } from "@/lib/intent";
 export const runtime = "nodejs";
 export const maxDuration = 30;
 const failure = (
@@ -62,8 +63,12 @@ export async function POST(request: Request) {
     .at(-1)!
     .parts.map((p) => p.text)
     .join("");
-  // Cheap, deterministic small talk does not need a provider key or paid quota.
-  if (fastReply(question) || policyReply(question))
+  if (
+    fastReply(question) ||
+    policyReply(question) ||
+    detectIntent(question).local ||
+    !process.env.GROQ_API_KEY
+  )
     return createAnswerResponse(messages, {
       signal: request.signal,
       allowModel: false,
@@ -71,21 +76,11 @@ export async function POST(request: Request) {
   let allowModel = true;
   try {
     const result = await rateLimit(request);
-    if (!result.success) {
-      const seconds = Math.max(
-        1,
-        Math.ceil((result.reset - Date.now()) / 1000),
-      );
-      return failure(
-        `I’m getting a lot of questions. Please try again in ${seconds} seconds.`,
-        429,
-        { "Retry-After": String(seconds) },
-      );
-    }
+    allowModel = result.success;
   } catch {
     allowModel = false;
     console.warn(
-      "[portfolio owner] Shared rate limiting is unavailable. Paid generation is disabled; résumé-only fallback remains available.",
+      "[portfolio] Shared rate limiting unavailable; using fallback.",
     );
   }
   return createAnswerResponse(messages, { signal: request.signal, allowModel });

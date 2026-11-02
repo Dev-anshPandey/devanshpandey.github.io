@@ -5,95 +5,215 @@ import {
   tokens,
   type KnowledgeBase,
 } from "./knowledge-schema";
-import { embed } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { profile } from "../data/profile";
+import { detectIntent, projectAliases, type PortfolioIntent } from "./intent";
 export const knowledge = raw as KnowledgeBase;
-const stop = new Set([
-  "the",
-  "a",
-  "an",
-  "i",
-  "you",
-  "your",
-  "me",
-  "my",
-  "is",
-  "are",
-  "about",
-  "tell",
-  "what",
-  "how",
-  "do",
-  "can",
-  "and",
-  "in",
-  "of",
-  "to",
-  "have",
-  "has",
-  "did",
-  "with",
-  "more",
-]);
-export function searchChunks(query: string, vector?: number[]) {
-  const expanded = query
-    .replace(/experience|experiencia|अनुभव/gi, "experience Exly UKG Dao")
-    .replace(/education|degree|शिक्षा/gi, "education KIET CGPA")
-    .replace(/proyectos|प्रोजेक्ट/gi, "projects")
-    .replace(/कौशल|compétences/gi, "skills");
-  const terms = [
-    ...new Set(tokens(expanded).filter((t) => !stop.has(t) && t.length > 1)),
-  ];
-  const queryVector = vector || localEmbedding(expanded);
-  return knowledge.chunks
-    .map((chunk) => {
-      const body = chunk.text.toLowerCase();
-      const lexical =
-        terms.reduce(
-          (score, term) => score + (body.includes(term) ? 1 : 0),
-          0,
-        ) / Math.max(terms.length, 1);
-      const semantic =
-        vector || knowledge.embedding.provider === "local-hash"
-          ? cosine(queryVector, chunk.embedding)
-          : 0;
-      const sectionBonus = expanded.toLowerCase().includes(chunk.section)
-        ? 0.2
-        : 0;
-      return {
-        ...chunk,
-        score: lexical * 0.8 + semantic * 0.2 + sectionBonus,
-        lexical,
-      };
-    })
-    .filter((chunk) => chunk.lexical > 0 || (vector && chunk.score > 0.08))
-    .sort((a, b) => b.score - a.score);
+const stop = new Set(
+  "the a an i you your me my is are about tell what how do can and in of to have has did with more he his devansh pandey it that there this which was used use work worked done please on at for does explain".split(
+    " ",
+  ),
+);
+export const usefulTerms = (text: string) => [
+  ...new Set(
+    tokens(text)
+      .map((t) => t.replace(/\.$/, ""))
+      .filter((t) => !stop.has(t) && t.length > 1),
+  ),
+];
+const companies = [
+  ...new Set(
+    knowledge.resumes
+      .flatMap((r) =>
+        r.experience.map((b) => b.split("\n")[1]?.replace(/\s*\(.*/, "")),
+      )
+      .filter(Boolean),
+  ),
+];
+export const entities = [
+  ...projectAliases.map((p) => ({
+    name: p.title,
+    aliases: p.aliases,
+    section: "projects",
+  })),
+  ...companies.map((name) => ({
+    name,
+    aliases: [name.toLowerCase()],
+    section: "experience",
+  })),
+  { name: "KIET", aliases: ["kiet"], section: "education" },
+  ...profile.skills
+    .concat(profile.learning)
+    .map((name) => ({
+      name,
+      aliases: [name.toLowerCase()],
+      section: "skills",
+    })),
+];
+const includes = (text: string, alias: string) =>
+  new RegExp(
+    `(^|[^a-z0-9])${alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^a-z0-9])`,
+    "i",
+  ).test(text);
+export function matchedEntities(text: string) {
+  return entities.filter((e) => e.aliases.some((a) => includes(text, a)));
 }
-export async function retrieve(query: string, signal?: AbortSignal) {
-  let vector: number[] | undefined;
-  if (knowledge.embedding.provider === "openai" && process.env.OPENAI_API_KEY) {
-    try {
-      vector = (
-        await embed({
-          model: openai.embeddingModel(knowledge.embedding.model),
-          value: query,
-          maxRetries: 0,
-          abortSignal: signal,
-        })
-      ).embedding;
-    } catch {
-      console.warn(
-        "[portfolio] Query embedding unavailable; using lexical retrieval.",
-      );
+export type HistoryItem = {
+  role: string;
+  parts: { type: string; text?: string }[];
+};
+export function constructRetrievalQuery(
+  question: string,
+  history: HistoryItem[] = [],
+) {
+  const intent = detectIntent(question);
+  const explicit = matchedEntities(question);
+  let contextEntity = "";
+  const recent = history.slice(-6);
+  const ordinal = question
+    .match(/\b(first|second|third|fourth)\b/i)?.[1]
+    ?.toLowerCase();
+  if (
+    ordinal &&
+    recent.some((m) =>
+      /projects|built/i.test(m.parts.map((p) => p.text || "").join(" ")),
+    )
+  )
+    contextEntity =
+      profile.projects[["first", "second", "third", "fourth"].indexOf(ordinal)]
+        ?.title || "";
+  else if (
+    !explicit.some(
+      (e) => e.section === "projects" || e.section === "experience",
+    ) &&
+    /\b(it|that|there|those|they|model|stack|architecture|continue|more|database)\b/i.test(
+      question,
+    )
+  ) {
+    for (const m of [...recent].reverse()) {
+      const matches = matchedEntities(
+        m.parts.map((p) => p.text || "").join(" "),
+      ).filter((e) => e.section === "projects" || e.section === "experience");
+      if (matches.length) {
+        contextEntity = matches[0].name;
+        break;
+      }
     }
   }
-  const seen = new Set<string>();
-  return searchChunks(query, vector)
-    .filter((chunk) => {
-      const key = chunk.text.replace(/\s+/g, "").slice(0, 140);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
+  const categories: Partial<Record<PortfolioIntent["kind"], string>> = {
+    about: "summary experience education",
+    experience: "experience",
+    education: "education KIET CGPA",
+    skills: "skills",
+    projects: "projects",
+    "ai-experience": "RAG AI LLM creator Chronicle",
+    "mobile-experience": "React Native Flutter mobile",
+    contact: "contact",
+    resume: "contact résumé",
+  };
+  return {
+    query:
+      `${question} ${contextEntity} ${categories[intent.kind] || ""}`.trim(),
+    intent,
+    contextEntity,
+  };
+}
+export function searchChunks(query: string, vector?: number[]) {
+  const expanded = query
+    .replace(/experiencia|अनुभव/gi, "experience")
+    .replace(/शिक्षा/gi, "education KIET")
+    .replace(/proyectos|प्रोजेक्ट/gi, "projects")
+    .replace(/कौशल|compétences/gi, "skills");
+  const terms = usefulTerms(expanded),
+    qv = vector || localEmbedding(expanded);
+  const matches = matchedEntities(expanded);
+  const topic = matches.filter(
+    (e) => e.section === "projects" || e.section === "experience",
+  );
+  const employerRoles = topic.some(e => e.section === "experience") && !topic.some(e => e.section === "projects") && /work|role|experience|job|position|responsibilit/i.test(expanded) && !/project|creator|course|\bRAG\b|\bAI\b/i.test(expanded);
+  const category = employerRoles ? "experience" : /\bsummary\b/i.test(expanded)
+    ? "summary"
+    : /education|degree|cgpa|college/i.test(expanded)
+      ? "education"
+      : /\bprojects\b/i.test(expanded) && !topic.length
+        ? "projects"
+        : /\bexperience\b/i.test(expanded) &&
+            !topic.some((e) => e.section === "projects")
+          ? "experience"
+          : /\bskills\b/i.test(expanded)
+            ? "skills"
+            : "";
+  return knowledge.chunks
+    .map((chunk) => {
+      const body = `${chunk.section} ${chunk.title || ""}\n${chunk.text}`;
+      const lexical =
+        terms.reduce((n, t) => n + (includes(body, t) ? 1 : 0), 0) /
+        Math.max(terms.length, 1);
+      const exact =
+        matches.filter((e) => e.aliases.some((a) => includes(body, a))).length /
+        Math.max(matches.length, 1);
+      const focused =
+        !topic.length ||
+        topic.some((e) =>
+          e.aliases.some((a) => includes(chunk.title || "", a)),
+        );
+      const sectionBoost =
+        category === chunk.section?.toLowerCase()?.trim() ? 0.35 :
+        category === "summary" && ["experience", "education"].includes(chunk.section) ? 0.25 : 0;
+      const score =
+        lexical * 0.5 +
+        Math.max(0, cosine(qv, chunk.embedding)) * 0.15 +
+        exact * 0.55 +
+        sectionBoost +
+        (topic.length && focused ? 0.35 : 0);
+      return {
+        ...chunk,
+        title: chunk.title || chunk.section,
+        score,
+        lexical,
+        focused,
+      };
     })
-    .slice(0, 6);
+    .filter(
+      (c) =>
+        (c.lexical > 0 || c.section === category) &&
+        c.score >= 0.2 &&
+        c.focused &&
+        (!category || category !== "education" || c.section === "education") &&
+        (!category || category !== "projects" || c.section === "projects") &&
+        (!category || category !== "experience" || c.section === "experience"),
+    )
+    .sort((a, b) => b.score - a.score);
+}
+function overlap(a: string, b: string) {
+  const sa = new Set(usefulTerms(a)),
+    sb = new Set(usefulTerms(b));
+  return (
+    [...sa].filter((t) => sb.has(t)).length /
+    Math.max(1, Math.min(sa.size, sb.size))
+  );
+}
+function roleIdentity(title: string) {
+  const company = title.match(/Exly|UKG|Dao Studio/i)?.[0]?.toLowerCase();
+  const role = title.match(/Junior Software Engineer|Software Engineering Intern|Software Engineer Intern|Data Services Consultant I/i)?.[0]?.toLowerCase();
+  return company && role ? `${company}:${role}` : "";
+}
+export async function retrieve(query: string, _signal?: AbortSignal) {
+  const selected: ReturnType<typeof searchChunks> = [];
+  let remaining = 10000;
+  for (const chunk of searchChunks(query)) {
+    if (/\bsummary\b/i.test(query) && chunk.section === "summary" && selected.some(c => c.section === "summary")) continue;
+    if (chunk.section === "experience" && roleIdentity(chunk.title) && selected.some(c => c.section === "experience" && roleIdentity(c.title) === roleIdentity(chunk.title))) continue;
+    if (
+      selected.some(
+        (c) =>
+          c.section === chunk.section && overlap(c.text, chunk.text) > 0.78,
+      )
+    )
+      continue;
+    if (chunk.text.length > remaining) continue;
+    selected.push(chunk);
+    remaining -= chunk.text.length;
+    if (selected.length === 6) break;
+  }
+  return selected;
 }

@@ -92,7 +92,6 @@ export const presets = [
     question: "What projects have you built?",
   },
   { id: "skills", label: "Skills", question: "What are your skills?" },
-  { id: "fun", label: "Fun", question: "What do you enjoy outside of work?" },
   { id: "contact", label: "Contact", question: "How can I reach you?" },
 ] as const;
 export type Section = (typeof presets)[number]["id"];
@@ -111,8 +110,6 @@ export function sectionSummary(section: Section): string {
       return `Here's what I've built: ${profile.projects.map((p) => `${p.title} — ${p.description}`).join(" ")}`;
     case "skills":
       return `I work with ${profile.skills.join(", ")}. My AI experience includes ${profile.learning.join(", ")}.`;
-    case "fun":
-      return "My résumés focus on my engineering work and don’t cover personal hobbies. I’d be happy to share more directly—head to Contact to say hello.";
     case "contact":
       return `You can reach me at ${profile.contact.email}, or find me on GitHub and LinkedIn. Three résumé versions are available below, tailored to mobile engineering, Applied AI, and forward-deployed engineering.`;
   }

@@ -104,11 +104,7 @@ export function fastReply(input: string): FastReply | null {
         ? "मैं बातचीत के लिए तैयार हूँ! मैं देवांश का AI पोर्टफोलियो सहायक हूँ—उनके काम के बारे में क्या जानना चाहेंगे?"
         : "I’m ready to chat! You’re talking with my AI portfolio assistant. What would you like to know about my work?",
     );
-  if (
-    /^(who are you|what can you do|what do you do|introduce yourself)$/i.test(
-      text,
-    )
-  )
+  if (/^(who are you|what can you do|what do you do)$/i.test(text))
     return reply(
       "I’m Devansh’s AI portfolio assistant, speaking in his voice. I can walk you through my projects, skills, work experience, and three résumé versions, using only verified résumé information.",
     );
@@ -129,7 +125,7 @@ export function fastReply(input: string): FastReply | null {
 }
 export function policyReply(input: string): string | null {
   if (
-    /ignore.{0,30}(instructions|rules|previous)|system prompt|developer message|jailbreak|pretend (you|to)|reveal.{0,30}(prompt|secret|key)|OPENAI_API_KEY|(?:sk-proj-|sk-)[a-z0-9]{8}/i.test(
+    /ignore.{0,30}(instructions|rules|previous)|system prompt|developer message|jailbreak|pretend (you|to)|reveal.{0,30}(prompt|secret|key)|(?:[A-Z]+_API_KEY|GROQ_API_KEY|UPSTASH|RATE_LIMIT_SALT|environment variables)|(?:sk-proj-|sk-)[a-z0-9]{8}/i.test(
       input,
     )
   )

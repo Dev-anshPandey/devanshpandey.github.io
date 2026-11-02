@@ -82,16 +82,14 @@ export async function makeResumePdf(resume: ResumeData) {
     (l) => l !== resume.contact.github && l !== resume.contact.linkedin,
   ))
     line(link, 9);
-  document
-    .getPages()
-    .forEach((p, i, pages) =>
-      p.drawText(`Privacy-safe copy | ${i + 1} / ${pages.length}`, {
-        x: 44,
-        y: 28,
-        size: 8,
-        font: regular,
-        color: rgb(0.45, 0.48, 0.54),
-      }),
-    );
+  document.getPages().forEach((p, i, pages) =>
+    p.drawText(`Privacy-safe copy | ${i + 1} / ${pages.length}`, {
+      x: 44,
+      y: 28,
+      size: 8,
+      font: regular,
+      color: rgb(0.45, 0.48, 0.54),
+    }),
+  );
   return document.save();
 }
