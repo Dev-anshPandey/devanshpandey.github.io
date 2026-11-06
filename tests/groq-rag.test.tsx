@@ -84,8 +84,8 @@ for (const query of [
   "GitHub",
   "LinkedIn",
 ])
-  test(`local ${query} never invokes provider`, async () => {
-    const a = await answer(query, { model: never });
+  test(`limit reached: ${query} uses general local answer`, async () => {
+    const a = await answer(query, { allowModel: false, model: never });
     assert.ok(a.text);
     assert.equal(a.metadata.mode, "local");
   });
@@ -348,7 +348,7 @@ test("no hosted embedding dependency or provider credentials in client source", 
     );
 });
 
-test("route keeps greeting/contact free and returns cards after six model requests", async () => {
+test("route asks Groq first for all questions and uses general answers after limit reached", async () => {
   const previousKey = process.env.GROQ_API_KEY;
   const originalFetch = globalThis.fetch;
   process.env.GROQ_API_KEY = "test-placeholder";
@@ -363,11 +363,6 @@ test("route keeps greeting/contact free and returns cards after six model reques
     body: JSON.stringify({ messages: [msg(question)] }),
   });
   try {
-    for (let i = 0; i < 9; i++) {
-      await (await POST(request("hi"))).text();
-      await (await POST(request("Contact"))).text();
-    }
-    assert.equal(calls, 0);
     for (let i = 0; i < 6; i++) {
       const body = await (await POST(request("Me"))).text();
       assert.match(body, /"mode":"rag-model"/);
@@ -378,6 +373,9 @@ test("route keeps greeting/contact free and returns cards after six model reques
     const body = await limited.text();
     assert.match(body, /"mode":"predefined-fallback"/);
     assert.match(body, /"kind":"about"/);
+    assert.equal(calls, 6);
+    const limitedGreeting = await (await POST(request("hi"))).text();
+    assert.match(limitedGreeting, /"mode":"local"/);
     assert.equal(calls, 6);
   } finally {
     globalThis.fetch = originalFetch;

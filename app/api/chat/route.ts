@@ -1,8 +1,6 @@
 import { chatSchema, readLimitedJson } from "@/lib/chat-validation";
 import { rateLimit } from "@/lib/rate-limit";
 import { createAnswerResponse } from "@/lib/chat-response";
-import { fastReply, policyReply } from "@/lib/chat-policy";
-import { detectIntent } from "@/lib/intent";
 export const runtime = "nodejs";
 export const maxDuration = 30;
 const failure = (
@@ -59,29 +57,17 @@ export async function POST(request: Request) {
       ),
     })),
   }));
-  const question = messages
-    .at(-1)!
-    .parts.map((p) => p.text)
-    .join("");
-  if (
-    fastReply(question) ||
-    policyReply(question) ||
-    detectIntent(question).local ||
-    !process.env.GROQ_API_KEY
-  )
-    return createAnswerResponse(messages, {
-      signal: request.signal,
-      allowModel: false,
-    });
-  let allowModel = true;
-  try {
-    const result = await rateLimit(request);
-    allowModel = result.success;
-  } catch {
-    allowModel = false;
-    console.warn(
-      "[portfolio] Shared rate limiting unavailable; using fallback.",
-    );
+  let allowModel = Boolean(process.env.GROQ_API_KEY);
+  if (allowModel) {
+    try {
+      const result = await rateLimit(request);
+      allowModel = result.success;
+    } catch {
+      allowModel = false;
+      console.warn(
+        "[portfolio] Shared rate limiting unavailable; using fallback.",
+      );
+    }
   }
   return createAnswerResponse(messages, { signal: request.signal, allowModel });
 }

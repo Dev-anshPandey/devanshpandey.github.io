@@ -232,7 +232,8 @@ export function createFluidCursor(canvas: HTMLCanvasElement, dark: boolean) {
     color: number[],
   ) => {
     const aspect = innerWidth / innerHeight;
-    const radius = 0.0013 * (aspect > 1 ? aspect : 1);
+    const isMobile = matchMedia("(pointer: coarse)").matches || aspect < 1;
+    const radius = (isMobile ? 0.0022 : 0.0013) * (aspect > 1 ? aspect : 1);
     const common = { point: [x, 1 - y], aspect, radius };
     run(splat, flow.write, {
       ...common,

@@ -9,7 +9,7 @@ export async function GET(
   const resume = knowledge.resumes.find((r) => r.id === id);
   if (!resume)
     return Response.json(
-      { error: "That résumé is not available." },
+      { error: "That resume is not available." },
       { status: 404 },
     );
   const bytes = await makeResumePdf(resume);

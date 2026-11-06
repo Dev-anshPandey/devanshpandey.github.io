@@ -24,6 +24,30 @@
     cursor.style.opacity = '0';
   });
 
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches[0]) {
+      mouseX = e.touches[0].clientX;
+      mouseY = e.touches[0].clientY;
+      cursor.style.opacity = '1';
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (e.touches[0]) {
+      mouseX = e.touches[0].clientX;
+      mouseY = e.touches[0].clientY;
+      cursor.style.opacity = '1';
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    cursor.style.opacity = '0';
+  });
+
+  document.addEventListener('touchcancel', () => {
+    cursor.style.opacity = '0';
+  });
+
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function loop() {

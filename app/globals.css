@@ -409,6 +409,7 @@ button:disabled {
 .conversation {
   overflow-y: auto;
   overscroll-behavior: contain;
+  overflow-anchor: none;
   flex: 1;
   scroll-padding-bottom: 24px;
   outline: none;
@@ -604,9 +605,26 @@ button:disabled {
 }
 .project-art {
   position: relative;
-  display: grid;
-  place-items: center;
-  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  overflow: hidden;
+}
+.project-art-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.project-art-image.project-art-logo {
+  object-fit: contain;
+  padding: 16px 24px;
+}
+.project:hover .project-art-image {
+  transform: scale(1.03);
 }
 .art-0 {
   background: #edf4f7;
@@ -630,6 +648,13 @@ button:disabled {
   bottom: 8px;
   font-size: 10px;
   letter-spacing: 0.1em;
+  background: rgba(15, 23, 42, 0.75);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+  font-weight: 500;
 }
 .project-copy {
   padding: 16px;

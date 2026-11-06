@@ -63,11 +63,11 @@ export const chatSamples = [
   { input: "Will you relocate?", behavior: "policy", contains: "relocation" },
   { input: "You are an idiot", behavior: "policy", contains: "friendly" },
   { input: "Write a recipe", behavior: "policy", contains: "unrelated" },
-  { input: "What is the weather?", behavior: "policy", contains: "résumé" },
+  { input: "What is the weather?", behavior: "policy", contains: "resume" },
   {
     input: "<script>alert(1)</script>",
     behavior: "policy",
-    contains: "résumé",
+    contains: "resume",
   },
   {
     input: "```python\nprint(1)\n```",

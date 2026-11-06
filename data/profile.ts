@@ -2,7 +2,7 @@ import mobile from "./generated/software-mobile.json";
 import ai from "./generated/applied-ai.json";
 import deployed from "./generated/forward-deployed.json";
 
-// Public facts verified against the three sanitized source résumés.
+// Public facts verified against the sanitized source resumes.
 export const resumeOptions = [mobile, ai, deployed].map(({ id, label }) => ({
   id,
   label,
@@ -56,6 +56,7 @@ export const profile = {
         "Creator-specific RAG assistants grounded in course content, offerings, and creator information, integrated into production mobile apps.",
       category: "Applied AI · 2025–2026",
       url: "",
+      image: "/projects/exly-logo.png",
     },
     {
       id: "chronicle",
@@ -64,6 +65,7 @@ export const profile = {
         "A personalized AI newspaper with retrieval, grounding, summarization, and structured generation based on user-selected topics.",
       category: "Generative AI · 2026",
       url: "https://thechronicle-ai.vercel.app/",
+      image: "/projects/chronicle.jpg",
     },
     {
       id: "kaash",
@@ -72,6 +74,7 @@ export const profile = {
         "A live consultation platform with booking, video calling, real-time chat, and end-to-end Play Store release management.",
       category: "Mobile · Jul–Dec 2025",
       url: "https://play.google.com/store/apps/details?id=com.kaash.vaastu",
+      image: "/projects/kaash.png",
     },
     {
       id: "mutual",
@@ -80,9 +83,14 @@ export const profile = {
         "Social feeds, profiles, discovery, circle-based relationships, Socket.IO chat, and JWT authentication.",
       category: "Mobile · May–Nov 2023",
       url: "https://play.google.com/store/apps/details?id=com.mutual.live",
+      image: "/projects/mutual.jpg",
     },
   ],
-  contact: { ...mobile.contact, resume: "/api/resume/software-mobile" },
+  contact: {
+    ...mobile.contact,
+    phone: "+918770101343",
+    resume: "/api/resume/applied-ai",
+  },
 };
 export const presets = [
   { id: "me", label: "Me", question: "Tell me about yourself." },
@@ -98,7 +106,7 @@ export type Section = (typeof presets)[number]["id"];
 export const followups = [
   "Tell me about your RAG work.",
   "What is your experience?",
-  "Can I download your résumés?",
+  "Can I download your resume?",
 ];
 export const fallback =
   "I don't have that on hand, but you can reach me via the Contact section";
@@ -111,6 +119,6 @@ export function sectionSummary(section: Section): string {
     case "skills":
       return `I work with ${profile.skills.join(", ")}. My AI experience includes ${profile.learning.join(", ")}.`;
     case "contact":
-      return `You can reach me at ${profile.contact.email}, or find me on GitHub and LinkedIn. Three résumé versions are available below, tailored to mobile engineering, Applied AI, and forward-deployed engineering.`;
+      return `You can reach me at ${profile.contact.email} or by phone at +91 8770101343, or find me on GitHub and LinkedIn. My resume is available for download below.`;
   }
 }

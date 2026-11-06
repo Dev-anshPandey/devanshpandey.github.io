@@ -100,15 +100,15 @@ export function constructRetrievalQuery(
     }
   }
   const categories: Partial<Record<PortfolioIntent["kind"], string>> = {
-    about: "summary experience education",
-    experience: "experience",
-    education: "education KIET CGPA",
-    skills: "skills",
-    projects: "projects",
-    "ai-experience": "RAG AI LLM creator Chronicle",
-    "mobile-experience": "React Native Flutter mobile",
-    contact: "contact",
-    resume: "contact résumé",
+    about: "summary experience education skills",
+    experience: "experience roles companies Exly UKG Dao Studio",
+    education: "education KIET CGPA B.Tech",
+    skills: "skills React Native Flutter Python TypeScript AI",
+    projects: "projects Exly Creator Chronicle Kaash Mutual Network Vitals",
+    "ai-experience": "RAG AI LLM creator-specific Creator App Chronicle",
+    "mobile-experience": "React Native Flutter mobile iOS Android",
+    contact: "contact email github linkedin",
+    resume: "contact résumé resume",
   };
   return {
     query:
@@ -119,29 +119,45 @@ export function constructRetrievalQuery(
 }
 export function searchChunks(query: string, vector?: number[]) {
   const expanded = query
+    .replace(/\b(total\s+)?exp\b/gi, "experience")
+    .replace(/\b(tech\s+stack|stack)\b/gi, "skills technologies")
+    .replace(/\b(school|studied|study|academics|grade|marks|b\.?tech)\b/gi, "education KIET")
+    .replace(/\b(jobs?|roles?|positions?|internships?|intern|employers?|companies|company|tenure)\b/gi, "$& experience")
     .replace(/experiencia|अनुभव/gi, "experience")
     .replace(/शिक्षा/gi, "education KIET")
     .replace(/proyectos|प्रोजेक्ट/gi, "projects")
-    .replace(/कौशल|compétences/gi, "skills");
+    .replace(/कौशल|compétences/gi, "skills")
+    .replace(/\b(companies|company|employers|employer)\b/gi, "$& experience");
   const terms = usefulTerms(expanded),
     qv = vector || localEmbedding(expanded);
   const matches = matchedEntities(expanded);
   const topic = matches.filter(
     (e) => e.section === "projects" || e.section === "experience",
   );
-  const employerRoles = topic.some(e => e.section === "experience") && !topic.some(e => e.section === "projects") && /work|role|experience|job|position|responsibilit/i.test(expanded) && !/project|creator|course|\bRAG\b|\bAI\b/i.test(expanded);
-  const category = employerRoles ? "experience" : /\bsummary\b/i.test(expanded)
-    ? "summary"
-    : /education|degree|cgpa|college/i.test(expanded)
-      ? "education"
-      : /\bprojects\b/i.test(expanded) && !topic.length
-        ? "projects"
-        : /\bexperience\b/i.test(expanded) &&
-            !topic.some((e) => e.section === "projects")
-          ? "experience"
-          : /\bskills\b/i.test(expanded)
-            ? "skills"
-            : "";
+  const employerRoles =
+    topic.some((e) => e.section === "experience") &&
+    !topic.some((e) => e.section === "projects") &&
+    /work|role|experience|job|position|responsibilit|compan|intern/i.test(
+      expanded,
+    ) &&
+    !/project|creator|course|\bRAG\b|\bAI\b/i.test(expanded);
+  const category = employerRoles
+    ? "experience"
+    : /\bsummary|background|profile|overview|bio\b/i.test(expanded)
+      ? "summary"
+      : /education|degree|cgpa|gpa|college|university|school|kiet/i.test(
+            expanded,
+          )
+        ? "education"
+        : /\bprojects?|apps?|applications?\b/i.test(expanded) && !topic.length
+          ? "projects"
+          : /\b(experience|companies|company|employers?|roles?|jobs?|internships?|intern|exp)\b/i.test(
+                expanded,
+              ) && !topic.some((e) => e.section === "projects")
+            ? "experience"
+            : /\b(skills?|stack|technologies|tools)\b/i.test(expanded)
+              ? "skills"
+              : "";
   return knowledge.chunks
     .map((chunk) => {
       const body = `${chunk.section} ${chunk.title || ""}\n${chunk.text}`;
@@ -214,6 +230,43 @@ export async function retrieve(query: string, _signal?: AbortSignal) {
     selected.push(chunk);
     remaining -= chunk.text.length;
     if (selected.length === 6) break;
+  }
+  if (
+    selected.length === 0 &&
+    !/favorite|favourite|movie|hobby|hobbies|recipe|weather|bitcoin|finite\s+press/i.test(
+      query,
+    )
+  ) {
+    const baseline = [
+      knowledge.chunks.find((c) => c.section === "summary"),
+      ...knowledge.chunks.filter((c) => c.section === "experience"),
+      knowledge.chunks.find((c) => c.section === "skills"),
+      knowledge.chunks.find((c) => c.section === "education"),
+    ].filter(Boolean) as ReturnType<typeof searchChunks>;
+
+    for (const chunk of baseline) {
+      if (
+        chunk.section === "experience" &&
+        roleIdentity(chunk.title) &&
+        selected.some(
+          (c) =>
+            c.section === "experience" &&
+            roleIdentity(c.title) === roleIdentity(chunk.title),
+        )
+      )
+        continue;
+      if (
+        selected.some(
+          (c) =>
+            c.section === chunk.section && overlap(c.text, chunk.text) > 0.78,
+        )
+      )
+        continue;
+      if (chunk.text.length > remaining) continue;
+      selected.push(chunk);
+      remaining -= chunk.text.length;
+      if ((selected as ReturnType<typeof searchChunks>).length >= 6) break;
+    }
   }
   return selected;
 }

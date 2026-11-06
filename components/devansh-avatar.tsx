@@ -20,10 +20,10 @@ export function DevanshAvatar({
     let frame = 0,
       x = 0,
       y = 0;
-    const move = (e: PointerEvent) => {
-      if (media.matches || e.pointerType === "touch") return;
-      x = (e.clientX / innerWidth - 0.5) * 10;
-      y = (e.clientY / innerHeight - 0.5) * -7;
+    const handleMove = (clientX: number, clientY: number) => {
+      if (media.matches) return;
+      x = (clientX / innerWidth - 0.5) * 10;
+      y = (clientY / innerHeight - 0.5) * -7;
       if (!frame)
         frame = requestAnimationFrame(() => {
           frame = 0;
@@ -31,10 +31,18 @@ export function DevanshAvatar({
           ref.current?.style.setProperty("--portrait-y", `${y}deg`);
         });
     };
-    addEventListener("pointermove", move, { passive: true });
+    const onPointerMove = (e: PointerEvent) => {
+      handleMove(e.clientX, e.clientY);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    };
+    addEventListener("pointermove", onPointerMove, { passive: true });
+    addEventListener("touchmove", onTouchMove, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
-      removeEventListener("pointermove", move);
+      removeEventListener("pointermove", onPointerMove);
+      removeEventListener("touchmove", onTouchMove);
     };
   }, []);
   return (

@@ -43,20 +43,20 @@ export function CursorTrail() {
         lastFrame = 0;
       }
     };
-    const move = (event: PointerEvent) => {
-      if (!engine || reduced.matches || event.pointerType === "touch") return;
-      const x = event.clientX / innerWidth,
-        y = event.clientY / innerHeight,
+    const handleMove = (clientX: number, clientY: number) => {
+      if (!engine || reduced.matches) return;
+      const x = clientX / innerWidth,
+        y = clientY / innerHeight,
         time = performance.now();
-      if (previous && time - lastMove < 200) {
+      if (previous && time - lastMove < 300) {
         const dx = x - previous.x,
           dy = y - previous.y;
         if (Math.hypot(dx, dy) > 0.00001)
           pending.push({
             x,
             y,
-            dx: Math.max(-0.12, Math.min(0.12, dx)),
-            dy: Math.max(-0.12, Math.min(0.12, dy)),
+            dx: Math.max(-0.15, Math.min(0.15, dx)),
+            dy: Math.max(-0.15, Math.min(0.15, dy)),
             color: palette(time),
           });
         if (pending.length > 32) pending.splice(0, pending.length - 32);
@@ -64,6 +64,49 @@ export function CursorTrail() {
       previous = { x, y };
       lastMove = time;
       if (!frame) frame = requestAnimationFrame(draw);
+    };
+    const handleDown = (clientX: number, clientY: number) => {
+      if (!engine || reduced.matches) return;
+      const x = clientX / innerWidth,
+        y = clientY / innerHeight,
+        time = performance.now();
+      if (previous && Math.hypot(x - previous.x, y - previous.y) < 0.001 && time - lastMove < 30) {
+        return;
+      }
+      previous = { x, y };
+      lastMove = time;
+      pending.push({
+        x,
+        y,
+        dx: (Math.random() - 0.5) * 0.03,
+        dy: (Math.random() - 0.5) * 0.03,
+        color: palette(time),
+      });
+      if (!frame) frame = requestAnimationFrame(draw);
+    };
+    const handleUp = () => {
+      previous = null;
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      handleMove(e.clientX, e.clientY);
+    };
+    const onPointerDown = (e: PointerEvent) => {
+      handleDown(e.clientX, e.clientY);
+    };
+    const onPointerUp = () => {
+      handleUp();
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (!e.touches[0]) return;
+      handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      if (!e.touches[0]) return;
+      handleDown(e.touches[0].clientX, e.touches[0].clientY);
+    };
+    const onTouchEnd = () => {
+      handleUp();
     };
     const stop = () => {
       cancelAnimationFrame(frame);
@@ -98,7 +141,14 @@ export function CursorTrail() {
       engine = null;
     };
     setup();
-    addEventListener("pointermove", move, { passive: true });
+    addEventListener("pointermove", onPointerMove, { passive: true });
+    addEventListener("pointerdown", onPointerDown, { passive: true });
+    addEventListener("pointerup", onPointerUp, { passive: true });
+    addEventListener("pointercancel", onPointerUp, { passive: true });
+    addEventListener("touchstart", onTouchStart, { passive: true });
+    addEventListener("touchmove", onTouchMove, { passive: true });
+    addEventListener("touchend", onTouchEnd, { passive: true });
+    addEventListener("touchcancel", onTouchEnd, { passive: true });
     addEventListener("resize", resize, { passive: true });
     document.addEventListener("pointerleave", leave);
     document.addEventListener("visibilitychange", setup);
@@ -108,7 +158,14 @@ export function CursorTrail() {
     return () => {
       stop();
       engine?.dispose();
-      removeEventListener("pointermove", move);
+      removeEventListener("pointermove", onPointerMove);
+      removeEventListener("pointerdown", onPointerDown);
+      removeEventListener("pointerup", onPointerUp);
+      removeEventListener("pointercancel", onPointerUp);
+      removeEventListener("touchstart", onTouchStart);
+      removeEventListener("touchmove", onTouchMove);
+      removeEventListener("touchend", onTouchEnd);
+      removeEventListener("touchcancel", onTouchEnd);
       removeEventListener("resize", resize);
       document.removeEventListener("pointerleave", leave);
       document.removeEventListener("visibilitychange", setup);

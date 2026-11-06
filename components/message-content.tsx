@@ -5,6 +5,7 @@ import { profile, resumeOptions } from "@/data/profile";
 const allowed = new Set(
   [
     `mailto:${profile.contact.email}`,
+    profile.contact.phone ? `tel:${profile.contact.phone}` : "tel:+918770101343",
     profile.contact.github,
     profile.contact.linkedin,
     profile.contact.portfolio,

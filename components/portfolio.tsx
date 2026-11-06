@@ -31,7 +31,7 @@ import {
   readStoredChat,
   resilientFetch,
 } from "@/lib/chat-client";
-import { contextualSuggestions, fastReply } from "@/lib/chat-policy";
+import { contextualSuggestions } from "@/lib/chat-policy";
 import type { PortfolioMessage } from "@/lib/chat-types";
 import { ProfileCard } from "./profile-card";
 import { CursorTrail } from "./cursor-trail";
@@ -91,6 +91,7 @@ export function Portfolio() {
   const nearBottom = useRef(true);
   const sending = useRef(false);
   const persistedAt = useRef(0);
+  const lastScrolledUserMessageId = useRef<string | null>(null);
   const busy = status === "submitted" || status === "streaming";
   const started = messages.length > 0;
   const last = messages.at(-1);
@@ -138,13 +139,28 @@ export function Portfolio() {
     return () => clearTimeout(timer);
   }, [cooldown]);
   useEffect(() => {
-    const area = scrollRef.current;
-    if (area && nearBottom.current)
+    const latestUserMessage = [...messages].reverse().find((m) => m.role === "user");
+    if (!latestUserMessage || latestUserMessage.id === lastScrolledUserMessageId.current) return;
+    lastScrolledUserMessageId.current = latestUserMessage.id;
+
+    const userMessageCount = messages.filter((m) => m.role === "user").length;
+    if (userMessageCount <= 1) return;
+
+    requestAnimationFrame(() => {
+      const area = scrollRef.current;
+      const el = document.getElementById(`msg-${latestUserMessage.id}`);
+      if (!area || !el) return;
+
+      const areaRect = area.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const targetTop = elRect.top - areaRect.top + area.scrollTop - 20;
+
       area.scrollTo({
-        top: area.scrollHeight,
-        behavior: reducedMotion || busy ? "instant" : "smooth",
+        top: Math.max(0, targetTop),
+        behavior: reducedMotion ? "instant" : "smooth",
       });
-  }, [messages, busy, reducedMotion, error, notice]);
+    });
+  }, [messages, reducedMotion]);
   useEffect(() => {
     const input = inputRef.current;
     if (input) {
@@ -181,8 +197,7 @@ export function Portfolio() {
       );
       return;
     }
-    const fast = fastReply(text);
-    if (cooldown && !fast) {
+    if (cooldown) {
       setNotice(
         `You can send another question in ${cooldown}s. The portfolio sections still work.`,
       );
@@ -192,25 +207,6 @@ export function Portfolio() {
     setNotice("");
     nearBottom.current = true;
     setInput("");
-    if (fast) {
-      setExpression(fast.expression);
-      setWave((value) => value + 1);
-      setMessages((current) => [
-        ...current,
-        {
-          id: crypto.randomUUID(),
-          role: "user",
-          parts: [{ type: "text", text: text.trim() }],
-        },
-        {
-          id: crypto.randomUUID(),
-          role: "assistant",
-          parts: [{ type: "text", text: fast.text }],
-          metadata: { suggestions: fast.suggestions, mode: "local" },
-        },
-      ]);
-      return;
-    }
     sending.current = true;
     void sendMessage({ text: text.trim() }).finally(() => {
       sending.current = false;
@@ -234,6 +230,7 @@ export function Portfolio() {
   async function clear() {
     await stop();
     sending.current = false;
+    lastScrolledUserMessageId.current = null;
     setMessages([]);
     clearError();
     setInput("");
@@ -251,6 +248,7 @@ export function Portfolio() {
     clearError();
     sending.current = true;
     nearBottom.current = true;
+    lastScrolledUserMessageId.current = null;
     void regenerate(messageId ? { messageId } : undefined).finally(() => {
       sending.current = false;
     });
@@ -373,11 +371,6 @@ export function Portfolio() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: reducedMotion ? 0 : 0.2 }}
-            onAnimationComplete={() => {
-              const area = scrollRef.current;
-              if (area && nearBottom.current)
-                area.scrollTop = area.scrollHeight;
-            }}
           >
             <div className="compact-identity">
               <DevanshAvatar
@@ -414,14 +407,15 @@ export function Portfolio() {
                 {messages.map((message, index) => (
                   <motion.article
                     key={message.id}
+                    id={`msg-${message.id}`}
                     className={`message ${message.role}`}
                     aria-label={
                       message.role === "user"
                         ? "Your message"
                         : "Devansh’s reply"
                     }
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration: reducedMotion ? 0 : 0.2 }}
                   >
                     {message.role === "assistant" &&
@@ -649,7 +643,7 @@ export function Portfolio() {
             : cooldown
               ? `Another question in ${cooldown}s. You can still say hi.`
               : storageNotice ||
-                "AI answers from my résumés. Chat saved on this device."}
+                "AI answers from my resume. Chat saved on this device."}
         </p>
       </div>
       {!started && (

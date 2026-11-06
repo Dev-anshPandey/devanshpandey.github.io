@@ -106,7 +106,7 @@ export function fastReply(input: string): FastReply | null {
     );
   if (/^(who are you|what can you do|what do you do)$/i.test(text))
     return reply(
-      "I’m Devansh’s AI portfolio assistant, speaking in his voice. I can walk you through my projects, skills, work experience, and three résumé versions, using only verified résumé information.",
+      "I’m Devansh’s AI portfolio assistant, speaking in his voice. I can walk you through my projects, skills, work experience, and resume, using only verified resume information.",
     );
   if (
     /^[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\ufe0f\s]+$/u.test(
@@ -141,7 +141,7 @@ export function policyReply(input: string): string | null {
       input,
     )
   )
-    return "My résumés don’t specify salary expectations, current availability, or relocation preferences. It’s best to discuss those with me directly through Contact.";
+    return "My resume doesn’t specify salary expectations, current availability, or relocation preferences. It’s best to discuss those with me directly through Contact.";
   if (/\b(fuck|shit|idiot|stupid|bastard)\b/i.test(input))
     return "Let’s keep this friendly. I’m happy to talk about my engineering work, projects, or experience.";
   if (
@@ -149,7 +149,7 @@ export function policyReply(input: string): string | null {
       input,
     )
   )
-    return "I’m here to talk about my work and résumé. I can explain the technologies I’ve used, but I don’t take on unrelated tasks here.";
+    return "I’m here to talk about my work and resume. I can explain the technologies I’ve used, but I don’t take on unrelated tasks here.";
   if (
     /^([a-z])\1{5,}$/i.test(input.trim()) ||
     /^(asdf|qwerty|zxcv|lorem ipsum)/i.test(input.trim())

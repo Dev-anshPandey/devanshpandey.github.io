@@ -8,6 +8,7 @@ import {
   Code2,
   BriefcaseBusiness,
   FileText,
+  Phone,
 } from "lucide-react";
 import {
   profile,
@@ -103,8 +104,18 @@ export function ProfileCard({
             )
             .map((project, i) => (
               <article className="project" key={project.id}>
-                <div className={`project-art art-${i % 2}`} aria-hidden="true">
-                  {i % 2 === 0 ? (
+                <div
+                  className={`project-art art-${i % 2}`}
+                  style={project.id === "creator-ai" ? { background: "#473bab" } : undefined}
+                  aria-hidden="true"
+                >
+                  {"image" in project && project.image ? (
+                    <img
+                      src={project.image as string}
+                      alt={project.title}
+                      className={`project-art-image ${project.id === "creator-ai" ? "project-art-logo" : ""}`}
+                    />
+                  ) : i % 2 === 0 ? (
                     <Radar size={66} strokeWidth={1} />
                   ) : (
                     <Compass size={66} strokeWidth={1} />
@@ -127,11 +138,7 @@ export function ProfileCard({
                     >
                       Explore project <ArrowUpRight size={16} />
                     </a>
-                  ) : (
-                    <span className="unavailable">
-                      Project link coming soon
-                    </span>
-                  )}
+                  ) : null}
                 </div>
               </article>
             ))}
@@ -164,16 +171,28 @@ export function ProfileCard({
   const links = [
     {
       name: "Email",
+      label: profile.contact.email,
       url: profile.contact.email ? `mailto:${profile.contact.email}` : "",
       Icon: Mail,
     },
-    { name: "GitHub", url: profile.contact.github, Icon: Code2 },
+    {
+      name: "Phone",
+      label: "+91 8770101343",
+      url: "tel:+918770101343",
+      Icon: Phone,
+    },
+    {
+      name: "GitHub",
+      label: "GitHub",
+      url: profile.contact.github,
+      Icon: Code2,
+    },
     {
       name: "LinkedIn",
+      label: "LinkedIn",
       url: profile.contact.linkedin,
       Icon: BriefcaseBusiness,
     },
-    { name: "Résumé", url: profile.contact.resume, Icon: FileText },
   ];
   return (
     <div className="rich-card">
@@ -181,18 +200,23 @@ export function ProfileCard({
       <h2>Good conversations start here.</h2>
       <p>{content?.intro || sectionSummary("contact")}</p>
       <div className="contact-grid">
-        {links.map(({ name, url, Icon }) =>
+        {links.map(({ name, label, url, Icon }) =>
           url ? (
-            <a key={name} href={url} target="_blank" rel="noopener noreferrer">
+            <a
+              key={name}
+              href={url}
+              target={name === "Phone" || name === "Email" ? undefined : "_blank"}
+              rel="noopener noreferrer"
+            >
               <Icon size={19} />
-              {name}
+              <span>{label || name}</span>
               <ArrowUpRight size={16} />
             </a>
           ) : (
             <div className="contact-pending" key={name}>
               <Icon size={19} />
               <span>
-                {name}
+                {label || name}
                 <small>Coming soon</small>
               </span>
             </div>
@@ -200,17 +224,18 @@ export function ProfileCard({
         )}
       </div>
       <div className="resume-downloads">
-        <h3 className="small-heading">Choose a résumé</h3>
-        {resumeOptions.map((resume) => (
-          <a key={resume.id} href={resume.url} download>
-            <FileText size={18} />
-            <span>
-              {resume.label}
-              <small>Download privacy-safe PDF</small>
-            </span>
-            <ArrowUpRight size={16} />
-          </a>
-        ))}
+        <h3 className="small-heading">Resume</h3>
+        <a
+          href="/api/resume/applied-ai"
+          download="Devansh_Pandey_Resume.pdf"
+        >
+          <FileText size={18} />
+          <span>
+            Resume
+            <small>Download PDF</small>
+          </span>
+          <ArrowUpRight size={16} />
+        </a>
       </div>
     </div>
   );

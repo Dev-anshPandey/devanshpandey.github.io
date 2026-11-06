@@ -70,14 +70,6 @@ export function createAnswerResponse(
           }
         };
         try {
-          const fast = fastReply(query),
-            policy = policyReply(query);
-          if (fast || policy) {
-            metadata.suggestions = fast?.suggestions || metadata.suggestions;
-            emit(fast?.text || policy!);
-            finish();
-            return;
-          }
           const resolved = constructRetrievalQuery(
             query,
             messages.slice(0, -1),
@@ -94,18 +86,31 @@ export function createAnswerResponse(
               title: knowledge.resumes.find((r) => r.id === id)?.label || "Original portfolio",
             }),
           );
-          const useFallback = () => {
+          const useGeneralFallback = () => {
+            const fast = fastReply(query);
+            if (fast) {
+              metadata.suggestions = fast.suggestions || metadata.suggestions;
+              metadata.mode = "local";
+              metadata.card = undefined;
+              emit(fast.text);
+              return;
+            }
+            const policy = policyReply(query);
+            if (policy) {
+              metadata.mode = "local";
+              metadata.card = undefined;
+              emit(policy);
+              return;
+            }
             metadata.mode = fallback.mode;
             metadata.card = fallback.card;
             emit(fallback.text);
           };
-          if (
-            resolved.intent.local ||
-            fallback.mode === "unknown-fallback" ||
-            options.allowModel === false ||
-            (!options.model && (!process.env.GROQ_API_KEY || !providerReady()))
-          ) {
-            useFallback();
+          const canCallModel =
+            options.allowModel !== false &&
+            (Boolean(options.model) || (Boolean(process.env.GROQ_API_KEY) && providerReady()));
+          if (!canCallModel) {
+            useGeneralFallback();
             finish();
             return;
           }
@@ -128,8 +133,9 @@ export function createAnswerResponse(
                 `SOURCE: ${s.resumeId} / ${s.title}\nRECORD TYPE: ${s.section === "projects" ? "PROJECT (not an employment position)" : s.section}\n${s.text}\nEND SOURCE`,
             )
             .join("\n\n");
-          const cardInstruction = fallback.card
-            ? `Return text for the ${fallback.card.kind} card. intro: concise answer to the question. experienceSummary: one factual short sentence (or empty if irrelevant). projectSummaries: ${fallback.card.kind === "projects" || fallback.card.kind === "project-detail" ? `include exactly these IDs: ${fallback.card.content.projectSummaries.map((p) => p.id).join(", ")}; descriptions must be grounded in retrieved project sources` : "return an empty array"}. No presentation markup.`
+          const isCardModel = Boolean(fallback.card);
+          const cardInstruction = isCardModel
+            ? `Return text for the ${fallback.card!.kind} card. intro: concise answer to the question. experienceSummary: one factual short sentence (or empty if irrelevant). projectSummaries: ${fallback.card!.kind === "projects" || fallback.card!.kind === "project-detail" ? `include exactly these IDs: ${fallback.card!.content.projectSummaries.map((p) => p.id).join(", ")}; descriptions must be grounded in retrieved project sources` : "return an empty array"}. No presentation markup.`
             : "";
           const settings = {
             model,
@@ -138,52 +144,43 @@ export function createAnswerResponse(
             maxOutputTokens: MAX_OUTPUT_TOKENS,
             maxRetries: 0,
             abortSignal,
-            providerOptions: {
-              groq: {
-                reasoningEffort: "low",
-                reasoningFormat: "hidden",
-                structuredOutputs: true,
-                strictJsonSchema: true,
-              },
-            },
+            ...(isCardModel
+              ? {
+                  providerOptions: {
+                    groq: {
+                      reasoningEffort: "low",
+                      reasoningFormat: "hidden",
+                      structuredOutputs: true,
+                      strictJsonSchema: true,
+                    },
+                  },
+                }
+              : {}),
           };
           let emitted = false;
           try {
-            if (fallback.card) {
+            if (isCardModel) {
               const result = await generateText({
                 ...settings,
                 output: Output.object({ schema: cardTextSchema }),
               });
-              const content = validateCardText(result.output, fallback.card);
-              metadata.card = { ...fallback.card, content };
+              const content = validateCardText(result.output, fallback.card!);
+              metadata.card = { ...fallback.card!, content };
               metadata.mode = "rag-model";
               emit(cardPlainText(metadata.card));
             } else {
               const result = streamText({ ...settings, onError: () => {} });
-              const reader = result.stream.getReader();
-              let buffered = "";
-              try {
-                while (true) {
-                  const { value, done } = await reader.read();
-                  if (done) break;
-                  if (value.type === "text-delta") {
-                    buffered += value.text;
-                    if (emitted || buffered.trim().length >= 40) {
-                      emit(buffered);
-                      buffered = "";
-                      emitted = true;
-                    }
+              for await (const part of result.fullStream) {
+                if (part.type === "text-delta") {
+                  if (part.text) {
+                    emit(part.text);
+                    emitted = true;
                   }
-                  if (value.type === "error") throw value.error;
-                  if (value.type === "abort")
-                    throw new DOMException("Timed out", "TimeoutError");
+                } else if (part.type === "error") {
+                  throw part.error;
+                } else if (part.type === "abort") {
+                  throw new DOMException("Timed out", "TimeoutError");
                 }
-              } finally {
-                reader.releaseLock();
-              }
-              if (buffered.trim()) {
-                emit(buffered);
-                emitted = true;
               }
               if (!emitted) throw new Error("Empty provider response");
               metadata.mode = "rag-model";
@@ -196,7 +193,7 @@ export function createAnswerResponse(
             if (emitted) {
               metadata.mode = "rag-model";
               metadata.interrupted = true;
-            } else useFallback();
+            } else useGeneralFallback();
           }
           finish();
         } catch {
